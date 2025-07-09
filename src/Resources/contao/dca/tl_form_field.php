@@ -1,5 +1,6 @@
 <?php
 
+use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\DataContainer;
 use Contao\Database;
 use Contao\Input;
