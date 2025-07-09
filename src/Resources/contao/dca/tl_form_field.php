@@ -11,7 +11,7 @@ use Contao\System;
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question'] = '{type_legend},type,name,label;{fconfig_legend},mandatory,help;{options_legend},options;{expert_legend:hide},class;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
 
 // Override the default 'options_callback' for the 'type' field with our custom function below
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= array('tl_test_field', 'getFilteredFields');
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] = array('tl_test_field', 'getFilteredFields');
 
 // customized extension of the 'tl_form_field' class
 class tl_test_field extends \tl_form_field
