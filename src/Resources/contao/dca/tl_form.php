@@ -36,6 +36,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
         'test' => 'Test',
         'default' => 'Default'
     ),
+    'filter'    => true,
     'eval'      => array('submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50'),
     'default'   => 'default',
     'sql'       => "varchar(255) NULL default 'default'"
