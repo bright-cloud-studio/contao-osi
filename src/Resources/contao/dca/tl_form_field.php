@@ -6,12 +6,12 @@ use Contao\Database;
 use Contao\Input;
 use Contao\System;
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= array('tl_test_field', 'getFields');
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= array('tl_test_field', 'getFilteredFields');
 
 
 class tl_test_field extends \tl_form_field
 {
-	public function getFields(DataContainer $dc)
+	public function getFilteredFields(DataContainer $dc)
 	{
 
         echo "ID: " . $dc->activeRecord->id . "<br>";
