@@ -7,33 +7,36 @@ use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 
-
-
+// Override the default 'options_callback' for the 'type' field with our custom function below
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= array('tl_test_field', 'getFilteredFields');
 
-
+// customized extension of the 'tl_form_field' class
 class tl_test_field extends \tl_form_field
 {
+
+    // Customized function to ask as a sort of switch, only displaying our custom 'multiple_choice_question' for 'test' Form types
 	public function getFilteredFields(DataContainer $dc)
 	{
         // Get our parent Form and check the type
         $parent_form = FormModel::findOneBy('id', $dc->activeRecord->pid);
         if($parent_form->formType == 'test') {
-            echo "Test!";
-            die();
+            $fields[] = 'multiple_choice_question';
+            return $fields;
+        } else {
+            
+    		$fields = array();
+    		$security = System::getContainer()->get('security.helper');
+    
+    		foreach ($GLOBALS['TL_FFL'] as $k=>$v)
+    		{
+    			if ($security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_FIELD_TYPE, $k))
+    			{
+                    if($k != 'multiple_choice_question')
+    				    $fields[] = $k;
+    			}
+    		}
+            
+    		return $fields;
         }
-
-		$fields = array();
-		$security = System::getContainer()->get('security.helper');
-
-		foreach ($GLOBALS['TL_FFL'] as $k=>$v)
-		{
-			if ($security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_FIELD_TYPE, $k))
-			{
-				$fields[] = $k;
-			}
-		}
-        
-		return $fields;
 	}
 }
