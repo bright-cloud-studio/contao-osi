@@ -11,7 +11,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= arr
 
 class tl_test_field extends \tl_form_field
 {
-	public function getFields($dc)
+	public function getFields(DataContainer $dc)
 	{
 
         echo "ID: " . $dc->activeRecord->id . "<br>";
