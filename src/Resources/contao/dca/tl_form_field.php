@@ -24,6 +24,11 @@ class tl_test_field extends \tl_form_field
 			}
 		}
 
+        echo "<pre>";
+        print_r($fields);
+        echo "</pre>";
+        die();
+        
 		return $fields;
 	}
 }
