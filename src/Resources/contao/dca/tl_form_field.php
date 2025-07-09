@@ -1,5 +1,10 @@
 <?php
 
+use Contao\DataContainer;
+use Contao\Database;
+use Contao\Input;
+use Contao\System;
+
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= array('tl_test_field', 'getFields');
 
 
