@@ -11,8 +11,13 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] 	= arr
 
 class tl_test_field extends \tl_form_field
 {
-	public function getFields()
+	public function getFields($dc)
 	{
+
+        echo "ID: " . $dc->activeRecord->id . "<br>";
+        echo "PID: " . $dc->activeRecord->pid . "<br>";
+        die();
+        
 		$fields = array();
 		$security = System::getContainer()->get('security.helper');
 
@@ -23,11 +28,6 @@ class tl_test_field extends \tl_form_field
 				$fields[] = $k;
 			}
 		}
-
-        echo "<pre>";
-        print_r($fields);
-        echo "</pre>";
-        die();
         
 		return $fields;
 	}
