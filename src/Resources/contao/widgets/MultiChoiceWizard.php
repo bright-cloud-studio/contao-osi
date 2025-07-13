@@ -20,7 +20,7 @@ class MultiChoiceWizard extends OptionWizard
 			$this->varValue = array(array(''));
 		}
 
-		return System::getContainer()->get('twig')->render('@Contao/backend/widget/option_wizard.html.twig', array(
+		return System::getContainer()->get('twig')->render('@Contao/backend/widget/multi_choice_wizard.html.twig', array(
 			'id' => $this->strId,
 			'rows' => $this->varValue,
 		));
