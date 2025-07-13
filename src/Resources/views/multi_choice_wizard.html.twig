@@ -27,7 +27,7 @@
                         .set('aria-hidden', 'true')
                         .addClass('drag-handle')
                     %}
-                    <button{{ drag_handle_attributes}}>{{ backend_icon('drag.svg', 'MSC.move'|trans) }}</button>
+                    <button{{ drag_handle_attributes}}>DRAG</button>
                 </td>
                 <td>
                     {% set value_attributes = attrs()
@@ -67,14 +67,14 @@
                         .set('type', 'button')
                         .set('data-action', 'contao--row-wizard#copy contao--scroll-offset#store')
                     %}
-                    <button{{ copy_button_attributes }}>{{ backend_icon('copy.svg', 'MSC.ow_copy'|trans) }}</button>
+                    <button{{ copy_button_attributes }}>COPY</button>
 
                     {# Delete row #}
                     {% set delete_button_attributes = attrs()
                         .set('type', 'button')
                         .set('data-action', 'contao--row-wizard#delete contao--scroll-offset#store')
                     %}
-                    <button{{ delete_button_attributes }}>{{ backend_icon('delete.svg', 'MSC.ow_delete'|trans) }}</button>
+                    <button{{ delete_button_attributes }}>DELETE</button>
                 </td>
             </tr>
         {% endfor %}
