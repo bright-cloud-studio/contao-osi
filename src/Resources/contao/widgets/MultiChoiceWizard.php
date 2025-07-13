@@ -4,6 +4,7 @@ namespace Bcs;
 
 use Contao\OptionWizard;
 use Contao\System;
+use Contao\Widget;
 
 class MultiChoiceWizard extends Widget
 {
