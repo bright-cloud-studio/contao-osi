@@ -2,6 +2,7 @@
 
 namespace Bcs;
 
+use Contao\Image;
 use Contao\OptionWizard;
 use Contao\StringUtil;
 use Contao\System;
