@@ -14,8 +14,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question'] = '{
 // Override the default 'options_callback' for the 'type' field with our custom function below
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] = array('tl_test_field', 'getFilteredFields');
 
-$GLOBALS['TL_DCA']['tl_form_field']['fields']['options']['inputType'] = "Bcs\MultiChoiceWizard";
-
 // customized extension of the 'tl_form_field' class
 class tl_test_field extends \tl_form_field
 {
