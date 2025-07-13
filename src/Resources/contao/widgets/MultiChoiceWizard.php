@@ -5,7 +5,7 @@ namespace Bcs;
 use Contao\OptionWizard;
 use Contao\System;
 
-class MultiChoiceWizard extends OptionWizard
+class MultiChoiceWizard extends Widget
 {
     protected $blnSubmitInput = true;
 	protected $strTemplate = 'be_widget';
