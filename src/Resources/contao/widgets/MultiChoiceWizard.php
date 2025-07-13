@@ -3,6 +3,7 @@
 namespace Bcs;
 
 use Contao\OptionWizard;
+use Contao\StringUtil;
 use Contao\System;
 use Contao\Widget;
 
