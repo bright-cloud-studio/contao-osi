@@ -21,9 +21,9 @@ class FormHooks
 
     public function onSubmitTest($submittedData, $formData, $files, $labels, $form)
     {
-        echo "Hooked";
-        die();
-        if($formData['formID'] == 'pool_quote_estimator') {
+        if($form['formType'] == 'test') {
+            echo "Test Submitted";
+            die();
         }
     }
 
