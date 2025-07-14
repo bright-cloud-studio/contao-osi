@@ -25,7 +25,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         (
             'mode'                    => 1,
             'panelLayout'             => 'filter;search,limit,sort',
-            'fields'                  => array('approved','country'),
+            'fields'                  => array('submission_date'),
             'flag'                    => 12,
         ),
         'label' => array
