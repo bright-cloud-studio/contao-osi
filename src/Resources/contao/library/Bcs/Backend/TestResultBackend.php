@@ -11,6 +11,21 @@ use Bcs\Model\TestResult;
 
 class TestResultBackend extends Backend
 {
+    // Get Members as options for a Select DCA field
+    public function getMembers(DataContainer $dc) { 
+
+        $members = array();
+
+		$this->import('Database');
+		$result = $this->Database->prepare("SELECT * FROM tl_member WHERE disable=0 ORDER BY firstname ASC")->execute();
+		while($result->next())
+		{
+            // Add ti array with ID as the value and firstname lastname as the label
+            $members[] = array($result->id => ($result->firstname . " " . $result->lastname));   
+		}
+
+		return $members;
+	}
 
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
