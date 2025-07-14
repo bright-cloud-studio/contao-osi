@@ -84,7 +84,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{test_legend}test, submission_date, result_total_correct, result_percentage, answers;{publish_legend},published;'
+        'default'                       => '{test_legend}test, member, submission_date, result_total_correct, result_percentage, answers;{publish_legend},published;'
     ),
  
     // Fields
@@ -106,6 +106,17 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         'test' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['test'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'filter'                  => false,
+            'search'                  => false,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+
+        'member' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['member'],
             'inputType'               => 'text',
             'default'                 => '',
             'filter'                  => false,
