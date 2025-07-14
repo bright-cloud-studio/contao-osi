@@ -27,6 +27,22 @@ class TestResultBackend extends Backend
 		return $members;
 	}
 
+    // Get Tests as options for a Select DCA field
+    public function getTests(DataContainer $dc) { 
+
+        $tests = array();
+
+		$this->import('Database');
+		$result = $this->Database->prepare("SELECT * FROM tl_form WHERE formType='test' ORDER BY title ASC")->execute();
+		while($result->next())
+		{
+            // Add ti array with ID as the value and firstname lastname as the label
+            $tests = $tests + array($result->id => ($result->title));   
+		}
+
+		return $tests;
+	}
+
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
 		if (strlen(Input::get('tid')))
