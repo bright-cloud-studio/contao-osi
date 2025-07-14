@@ -13,3 +13,7 @@ $GLOBALS['BE_FFL']['multi_choice_wizard'] = 'Bcs\MultiChoiceWizard';
 $GLOBALS['TL_HOOKS']['processFormData'][]      = array('Bcs\Hooks\FormHooks', 'onSubmitTest');
 
 $GLOBALS['TL_MODELS']['tl_test_result'] = 'Bcs\Model\TestResult';
+
+$GLOBALS['BE_MOD']['content']['test_result'] = array(
+	'tables' => array('tl_test_result')
+);
