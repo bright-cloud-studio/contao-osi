@@ -117,23 +117,21 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         'member' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['member'],
-            'inputType'               => 'text',
-            'default'                 => '',
-            'filter'                  => false,
-            'search'                  => false,
-            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'inputType'               => 'select',
+            'filter'                  => true,
+            'search'                  => true,
+            'flag'                    => DataContainer::SORT_ASC,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50', 'chosen'=>true),
+            'options_callback'	      => array('Bcs\Backend\TestResultBackend', 'getMembers'),
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         
         'submission_date' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['submission_date'],
             'inputType'               => 'text',
-            'default'                 => '',
-            'filter'                  => false,
-            'search'                  => false,
-            'eval'                    => array('rgxp'=>'date', 'datepicker'=>true, 'mandatory'=>true, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(20) NOT NULL default ''",
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'mandatory'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
             'default'                 => time()
         ),
 
