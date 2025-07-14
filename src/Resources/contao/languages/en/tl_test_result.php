@@ -26,7 +26,11 @@ $GLOBALS['TL_LANG']['tl_test_result']['published']                  = array('Pub
 $GLOBALS['TL_LANG']['tl_test_result']['test_legend']    = 'Practice Details';
 $GLOBALS['TL_LANG']['tl_test_result']['test']                   = array('Test', 'ID of the Test');
 $GLOBALS['TL_LANG']['tl_test_result']['member']              = array('Member', 'ID of the Member who took the Test');
+
+$GLOBALS['TL_LANG']['tl_test_result']['submission_legend']    = 'Submission Details';
 $GLOBALS['TL_LANG']['tl_test_result']['submission_date']              = array('Submission Date', 'Date this submission was made');
 $GLOBALS['TL_LANG']['tl_test_result']['answers']              = array('Answers', 'Saved Answers');
+
+$GLOBALS['TL_LANG']['tl_test_result']['results_legend']    = 'Result Details';
 $GLOBALS['TL_LANG']['tl_test_result']['result_total_correct']           = array('Total Correct Answers', 'Count of the number of correct Answers');
 $GLOBALS['TL_LANG']['tl_test_result']['result_percentage']              = array('Total Percentage', 'Percentage of correct Answers');
