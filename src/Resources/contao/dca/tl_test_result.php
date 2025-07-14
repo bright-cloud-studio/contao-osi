@@ -13,8 +13,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         (
             'keys' => array
             (
-                'id' 	=> 	'primary',
-                'alias' =>  'index'
+                'id' 	=> 	'primary'
             )
         )
     ),
