@@ -107,12 +107,14 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         'test' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['test'],
-            'inputType'               => 'text',
-            'default'                 => '',
-            'filter'                  => false,
-            'search'                  => false,
-            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'inputType'               => 'select',
+            'filter'                  => true,
+            'search'                  => true,
+            'flag'                    => DataContainer::SORT_ASC,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50', 'chosen'=>true),
+            'options_callback'	      => array('Bcs\Backend\TestResultBackend', 'getTests'),
+            'foreignKey'              => 'tl_form.title',
+            'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
 
         'member' => array
@@ -124,6 +126,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'flag'                    => DataContainer::SORT_ASC,
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50', 'chosen'=>true),
             'options_callback'	      => array('Bcs\Backend\TestResultBackend', 'getMembers'),
+            'foreignKey'              => 'tl_member.CONCAT(firstname," ",lastname)',
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
         
