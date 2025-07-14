@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{test_legend},test,member,submission_date,result_total_correct,result_percentage,answers;{publish_legend},published;'
+        'default'                       => '{test_legend},test,member;{submission_legend},submission_date,answers;{results_legend},result_total_correct,result_percentage;{publish_legend},published;'
     ),
  
     // Fields
