@@ -21,7 +21,7 @@ class TestResultBackend extends Backend
 		while($result->next())
 		{
             // Add ti array with ID as the value and firstname lastname as the label
-            $members[] = array($result->id => ($result->firstname . " " . $result->lastname));   
+            $members = $members + array($result->id => ($result->firstname . " " . $result->lastname));   
 		}
 
 		return $members;
