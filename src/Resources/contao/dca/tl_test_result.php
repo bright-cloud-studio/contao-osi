@@ -131,7 +131,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['submission_date'],
             'inputType'               => 'text',
             'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'mandatory'=>true, 'tl_class'=>'w50 wizard'),
-            'sql'                     => "varchar(10) NOT NULL default ''"
+            'sql'                     => "varchar(10) NOT NULL default ''",
             'default'                 => time()
         ),
 
