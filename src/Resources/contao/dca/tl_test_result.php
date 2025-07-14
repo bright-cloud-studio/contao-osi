@@ -116,7 +116,6 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'foreignKey'              => 'tl_form.title',
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
-
         'member' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['member'],
@@ -129,6 +128,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'foreignKey'              => 'tl_member.CONCAT(firstname," ",lastname)',
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ),
+
         
         'submission_date' => array
         (
@@ -137,6 +137,16 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'mandatory'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(10) NOT NULL default ''",
             'default'                 => time()
+        ),
+        'answers' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['answers'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'filter'                  => false,
+            'search'                  => false,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'clr w100'),
+            'sql'                     => 'blob NULL'
         ),
 
         
@@ -153,18 +163,6 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         'result_percentage' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['test'],
-            'inputType'               => 'text',
-            'default'                 => '',
-            'filter'                  => false,
-            'search'                  => false,
-            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-
-        
-        'answers' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['answers'],
             'inputType'               => 'text',
             'default'                 => '',
             'filter'                  => false,
