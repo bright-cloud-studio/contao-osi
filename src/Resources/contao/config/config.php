@@ -11,3 +11,5 @@ $GLOBALS['BE_FFL']['multi_choice_wizard'] = 'Bcs\MultiChoiceWizard';
 
 // Hook when form is submitted
 $GLOBALS['TL_HOOKS']['processFormData'][]      = array('Bcs\Hooks\FormHooks', 'onSubmitTest');
+
+$GLOBALS['TL_MODELS']['tl_test_result'] = 'Bcs\Model\TestResult';
