@@ -162,7 +162,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         ),
         'result_percentage' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['test'],
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['result_percentage'],
             'inputType'               => 'text',
             'default'                 => '',
             'filter'                  => false,
