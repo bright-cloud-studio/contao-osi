@@ -43,6 +43,21 @@ class TestResultBackend extends Backend
 		return $tests;
 	}
 
+    public function generateLabel($row, $label)
+	{
+        // Clear out our current label
+        $label = '';
+
+        // Add our formatted date and a dash
+        $label .= date('m/d/Y', $row['submission_date']) . " - ";
+
+        // Add the Psy's name
+        $psy = MemberModel::findBy('id', $row['member']);
+        $label .= $psy->firstname . " " . $psy->lastname . " - ";
+
+        return $label;
+	}
+    
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
 		if (strlen(Input::get('tid')))
