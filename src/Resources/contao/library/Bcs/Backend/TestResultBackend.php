@@ -4,8 +4,10 @@ namespace Bcs\Backend;
 
 use Contao\Backend;
 use Contao\DataContainer;
+use Contao\FormModel;
 use Contao\Image;
 use Contao\Input;
+use Contao\MemberModel;
 use Contao\StringUtil;
 use Bcs\Model\TestResult;
 
@@ -48,6 +50,13 @@ class TestResultBackend extends Backend
         // Clear out our current label
         $label = '';
         $label .= date('m/d/Y', $row['submission_date']) . " - ";
+        
+        $test = FormModel::findBy('id', $row['test']);
+        $label .= $test->title . " - ";
+        
+        $member = MemberModel::findBy('id', $row['member']);
+        $label .= $member->firstname . " " . $member->lastname;
+        
         return $label;
     }
     
