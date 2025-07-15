@@ -31,7 +31,9 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         ),
         'label' => array
         (
-            'label_callback'          => array('Bcs\Backend\TestResultBackend', 'generateLabel'),
+            'fields'                  => array('submission_date', 'test', 'member'),
+			'format'                  => '%s | %s | %s',
+			'label_callback' 		  => array('Bcs\Backend\TestResultBackend', 'generateLabel')
         ),
         'global_operations' => array
         (
