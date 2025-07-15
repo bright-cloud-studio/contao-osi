@@ -24,10 +24,10 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     (
         'sorting' => array
         (
-            'mode'                    => 1,
-            'panelLayout'             => 'filter;search,limit,sort',
-            'fields'                  => array('submission_date'),
-            'flag'                    => 12,
+            'mode'                    => DataContainer::MODE_UNSORTED,
+            'flag'                    => DataContainer::SORT_ASC,
+            'fields'                  => array('submission_date DESC'),
+            'panelLayout'             => 'filter;search,limit,sort'
         ),
         'label' => array
         (
