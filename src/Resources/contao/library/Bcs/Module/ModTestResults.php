@@ -8,11 +8,11 @@ use Contao\BackendTemplate;
 use Contao\System;
 use Contao\FrontendUser;
 
-class ModTestResult extends \Contao\Module
+class ModTestResults extends \Contao\Module
 {
 
     /* Default Template */
-    protected $strTemplate = 'mod_test_result';
+    protected $strTemplate = 'mod_test_results';
 
     /* Construct function */
     public function __construct($objModule, $strColumn='main')
