@@ -1,3 +1,30 @@
 <div class="mod_test_results size100 marbot60">
-	<h2>Your Test Results</h2>
+	<p>
+		<strong>Your Test Results</strong><br>
+		Submission Date: <?= $this->results['submission_date'] ?><br>
+		Total Correct Answers: <?= $this->results['total_correct_answers'] ?><br>
+		Results Percentage: <?= $this->results['percentage'] ?>
+	</p>
+	
+	<hr>
+	
+	<?php foreach($this->results['questions'] as $question) { ?>
+	<table>
+		<tbody>
+			<tr>
+				<td>Question:</td>
+				<td><?= $question['question'] ?></td>
+			</tr>
+			<tr>
+				<td>Answer:</td>
+				<td><?= $question['answer'] ?></td>
+			</tr>
+			<tr>
+				<td>Correct:</td>
+				<td><?= $question['correct'] ?></td>
+			</tr>
+		</tbody>
+	</table>
+	<?php } ?>
+		
 </div>
