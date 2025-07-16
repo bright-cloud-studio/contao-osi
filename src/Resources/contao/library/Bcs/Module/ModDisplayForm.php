@@ -45,7 +45,10 @@ class ModDisplayForm extends \Contao\Module
 
     protected function compile()
     {
-        $this->Template->results_history = "test";
+        $test_id = Input::get('test');
+        if($test_id != '') {
+            $this->Template->test_id = $test_id;
+        }   
     }
 
 }
