@@ -56,6 +56,11 @@ class FormHooks
             
             $test_result->save();
             
+            // Pass our result ID to the result page
+            $_SESSION['test_results_id'] = $test_result->id;
+            $_SESSION['test_123'] = '456';
+            
+            
         }
     }
 
