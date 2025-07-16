@@ -43,4 +43,9 @@ class ModDisplayForm extends \Contao\Module
         return parent::generate();
     }
 
+    protected function compile()
+    {
+        $this->Template->results_history = "test";
+    }
+
 }
