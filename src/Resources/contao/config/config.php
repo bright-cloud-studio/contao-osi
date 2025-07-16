@@ -5,6 +5,8 @@ use Bcs\MultiChoiceWizard;
 
 // Module to display a Test's results
 $GLOBALS['FE_MOD']['osi']['mod_test_results'] = 'Bcs\Module\ModTestResults';
+$GLOBALS['FE_MOD']['osi']['mod_test_history'] = 'Bcs\Module\ModTestHistory';
+
 
 // Customized version of Contao's Form Checkbox field
 $GLOBALS['TL_FFL']['multiple_choice_question'] = 'Bcs\OSIBundle\FormMultipleChoiceQuestion';
