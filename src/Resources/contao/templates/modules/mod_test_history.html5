@@ -1,0 +1,8 @@
+<div class="mod_test_history size100 marbot60">
+	<p>
+		<strong>Your Test History</strong><br>
+		Submission Date: <?= $this->results['submission_date'] ?><br>
+		Total Correct Answers: <?= $this->results['total_correct_answers'] ?><br>
+		Results Percentage: <?= $this->results['percentage'] ?>
+	</p>
+</div>
