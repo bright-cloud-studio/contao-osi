@@ -51,6 +51,7 @@ class ModTestHistory extends \Contao\Module
         
         $results_data = [];
         $result_counter = 0;
+        
         foreach($results as $result) {
             $results_data[$result_counter]['id'] = $result->id;
             $results_data[$result_counter]['test'] = $result->test;
