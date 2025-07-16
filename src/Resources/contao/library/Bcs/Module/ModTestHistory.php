@@ -60,10 +60,6 @@ class ModTestHistory extends \Contao\Module
             $result_counter++;
         }
         
-        echo "<pre>";
-        print_r($results_data);
-        die();
-        
         $this->Template->results_history = $results_data;
     }
   
