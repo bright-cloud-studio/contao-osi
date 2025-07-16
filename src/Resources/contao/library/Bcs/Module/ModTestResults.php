@@ -5,6 +5,8 @@ namespace Bcs\Module;
 use Bcs\Model\TestResult;
 
 use Contao\BackendTemplate;
+use Contao\FormFieldModel;
+use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
 
@@ -45,8 +47,55 @@ class ModTestResults extends \Contao\Module
     protected function compile()
     {
         $member = FrontendUser::getInstance();
+        
+        if(isset($_SESSION['test_results_id'])) {
+            $results = TestResult::findOneBy('id', $_SESSION['test_results_id']);
+            
+            $results_data = [];
+            
+            $results_data['submission_date'] = date('m/d/Y g:i a', $results->submission_date);
+            $results_data['total_correct_answers'] = $results->result_total_correct;
+            $results_data['percentage'] = $results->result_percentage;
+            
+            
+            // Questions
+            $questions = FormFieldModel::findBy('pid', $results->test);
+            // Answers
+            $answers = json_decode($results->answers, true);
+            
+            $question_counter = 0;
+            foreach($questions as $question) {
+                
+                if($question->type == 'multiple_choice_question') {
+                    // Add question text to template data
+                    $results_data['questions'][$question_counter]['question'] = $question->label;
+                    
+                    $options =  unserialize($question->options);
+                    foreach($options as $option) {
+                        
+                        if($option['value'] == $answers[$question->name]) {
+                            //echo "Option Value: " . $option['value'] . "<br>";
+                            //echo "Answer: " . $answers[$question->name] . "<br>";
+                            
+                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name];
+                            
+                            if($option['correct'] == 1)
+                                $results_data['questions'][$question_counter]['correct'] = 'true';
+                            else
+                                $results_data['questions'][$question_counter]['correct'] = 'false';
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    $question_counter++;
+                }
+            }
 
-        //$this->Template->service_prices = $service_prices;
+            $this->Template->results = $results_data;
+            
+        }
         
     }
   
