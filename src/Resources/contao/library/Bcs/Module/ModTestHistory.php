@@ -39,11 +39,11 @@ class ModTestHistory extends \Contao\Module
  
             return $objTemplate->parse();
         }
- 
+        
         return parent::generate();
     }
 
-
+    /* Compile */
     protected function compile()
     {
         $member = FrontendUser::getInstance();
@@ -56,12 +56,10 @@ class ModTestHistory extends \Contao\Module
             $results_data[$result_counter]['test'] = $result->test;
             $results_data[$result_counter]['submission_date'] = $result->submission_date;
             $results_data[$result_counter]['result_total_correct'] = $result->result_total_correct;
-            $results_data[$result_counter]['result_percentage'] = $result->result_percentage;
-            $result_counter++;
+            $results_data[$result_counter]['result_percentage'] = $result->result_percentag;
         }
         
         $this->Template->results_history = $results_data;
     }
   
-
 }
