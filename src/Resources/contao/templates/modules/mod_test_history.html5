@@ -1,8 +1,11 @@
-<div class="mod_test_history size100 marbot60">
-	<p>
-		<strong>Your Test History</strong><br>
-		Submission Date: <?= $this->results['submission_date'] ?><br>
-		Total Correct Answers: <?= $this->results['total_correct_answers'] ?><br>
-		Results Percentage: <?= $this->results['percentage'] ?>
-	</p>
+<div class="mod_test_history size100 nopad">
+	<?php foreach($this->results_history as $result) { ?>
+		<div class="result_wrapper marbot30">
+			<p>ID<br><?= $result['id'] ?></p>
+			<p>Submission Date<br><?= date('m/d/Y g:i a', $result['submission_date']) ?></p>
+			<p>Test<br><?= date('m/d/Y g:i a', $result['test']) ?></p>
+			<p>Total Correct Answers<br><?= date('m/d/Y g:i a', $result['result_total_correct']) ?></p>
+			<p>Total Percentage<br><?= date('m/d/Y g:i a', $result['result_percentage']) ?></p>
+		</div>
+	<?php } ?>
 </div>
