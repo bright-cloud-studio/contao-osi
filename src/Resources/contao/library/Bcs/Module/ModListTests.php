@@ -48,12 +48,13 @@ class ModListTests extends \Contao\Module
     protected function compile()
     {
         $test_data = [];
-        $tests = FormFieldModel::findBy('formType', 'test');
+        $tests = FormModel::findBy('formType', 'test');
         $test_counter = 0;
         foreach($tests as $test) {
             $test_data[$test_counter]['title'] = $test->title;
             $test_counter++;
         }
+        
         $this->Template->tests = $test_data;
     }
 
