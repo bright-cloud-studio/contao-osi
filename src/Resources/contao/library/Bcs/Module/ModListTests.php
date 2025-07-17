@@ -7,7 +7,7 @@ use Bcs\Model\TestResult;
 use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\BackendTemplate;
-use Contao\FormFieldModel;
+use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
@@ -47,6 +47,13 @@ class ModListTests extends \Contao\Module
 
     protected function compile()
     {
+        $test_data = [];
+        $tests = FormFieldModel::findBy('formType', 'test');
+        $test_counter = 0;
+        foreach($tests as $test) {
+            $test_data[$test_counter]['title'] = $test->title;
+            $test_counter++;
+        }
     }
 
 }
