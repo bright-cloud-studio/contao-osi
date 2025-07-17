@@ -46,13 +46,23 @@
 
 	$test_result_id = $_POST['result_id'];
     
-    $title = '';
+    $test_result = [];
+    $test = [];
     
     $test_result_query =  "SELECT * FROM tl_test_result WHERE id='".$test_result_id."'";
-    $test_result = $dbh->query($test_result_query);
-    if($test_result) {
-        while($result = $test_result->fetch_assoc()) {
-            $title = $result['result_percentage'];
+    $test_result_db = $dbh->query($test_result_query);
+    if($test_result_db) {
+        while($result = $test_result_db->fetch_assoc()) {
+            $test_result['test'] = $result['test'];
+            $test_result['result_percentage'] = $result['result_percentage'];
+        }
+    }
+    
+    $test_query =  "SELECT * FROM tl_form WHERE id='".$test_result['test']."'";
+    $test_db = $dbh->query($test_query);
+    if($test_db) {
+        while($result = $test_db->fetch_assoc()) {
+            $test['title'] = $result['title'];
         }
     }
 
@@ -91,8 +101,11 @@
 		            case 'id':
 		                $html = str_replace($tag, $test_result_id, $html);
 		                break;
+		            case 'title':
+		                $html = str_replace($tag, $test['title'], $html);
+		                break;
 		            case 'result_percentage':
-		                $html = str_replace($tag, $title, $html);
+		                $html = str_replace($tag, $test_result['result_percentage'], $html);
 		                break;
 		        }
 		    break;
