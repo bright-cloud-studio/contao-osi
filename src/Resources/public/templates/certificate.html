@@ -4,15 +4,30 @@
 		    /* These are necessary to remove the margin on the paper */
 		    @page { margin: 5px; }
         body { margin: 5px; }
+        
+        .cert_wrapper {
+            text-align: center;
+            border: 2px solid black;
+            margin: 10px;
+        }
+        
 		</style>
 	</head>
 	<body>
-
-    <h1>{{result::title}}</h1>
+	    
+	    <div class="cert_wrapper">
+	        
+            <h1>CERTIFICATE OF COMPLETION</h1>
     
-    <p>Name: {{member::name}}</p>
-    <p>Result ID: {{result::id}}</p>
-    <p>Result Percentage: {{result::result_percentage}}</p>
+            <p>PRESENTED TO</p>
+            <p><strong>{{member::name}}</strong></p>
+            <p>FOR THE SUCCESSFUL COMPLETION OF THE FOLLOWING COURSE</p>
+            <p>{{test::title}}</p>
+            <p>{{result::submission_date}}</p>
+	        
+	    </div>
+
+
     
 	</body>
 </html>
