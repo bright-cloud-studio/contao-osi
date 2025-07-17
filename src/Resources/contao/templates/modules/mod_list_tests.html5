@@ -1,5 +1,5 @@
 <div class="mod_list_tests size100 marbot60">
   <?php foreach($this->tests as $test) { ?>
-    <p>Test: <?= $test->title ?></p>
+    <p>Test: <?= $test['title'] ?></p>
   <?php } ?>
 </div>
