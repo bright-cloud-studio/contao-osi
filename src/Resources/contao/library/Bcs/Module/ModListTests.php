@@ -51,6 +51,7 @@ class ModListTests extends \Contao\Module
         $tests = FormModel::findBy('formType', 'test');
         $test_counter = 0;
         foreach($tests as $test) {
+            $test_data[$test_counter]['id'] = $test->id;
             $test_data[$test_counter]['title'] = $test->title;
             $test_counter++;
         }
