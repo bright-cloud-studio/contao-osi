@@ -7,8 +7,6 @@ use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 
-
-
 // Add our custom 'multiple_choice_question' palette
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question'] = '{type_legend},type,name,label;{fconfig_legend},mandatory,help;{options_legend},options;{expert_legend:hide},class;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
 
@@ -16,6 +14,10 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question'] = '{
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] = array('tl_test_field', 'getFilteredFields');
 
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['options']['inputType'] = 'multi_choice_wizard';
+
+// Change the SQL definition of the “label” field to TEXT so Contao’s database updater will ALTER the column for you.
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['label']['eval']['maxlength'] = null;
+$GLOBALS['TL_DCA']['tl_form_field']['fields']['label']['sql'] = "text NULL";
 
 // customized extension of the 'tl_form_field' class
 class tl_test_field extends \tl_form_field
