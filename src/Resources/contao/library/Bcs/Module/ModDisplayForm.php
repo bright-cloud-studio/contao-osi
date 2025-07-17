@@ -4,6 +4,8 @@ namespace Bcs\Module;
 
 use Bcs\Model\TestResult;
 
+use Contao\ArrayUtil;
+use Contao\Controller;
 use Contao\BackendTemplate;
 use Contao\FormFieldModel;
 use Contao\Input;
@@ -48,7 +50,7 @@ class ModDisplayForm extends \Contao\Module
         $test_id = Input::get('test');
         if($test_id != '') {
             $this->Template->test_id = $test_id;
-        }   
+        }
     }
 
 }
