@@ -12,11 +12,11 @@ use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
 
-class ModTestList extends \Contao\Module
+class ModListTests extends \Contao\Module
 {
 
     /* Default Template */
-    protected $strTemplate = 'mod_test_list';
+    protected $strTemplate = 'mod_list_tests';
 
     /* Construct function */
     public function __construct($objModule, $strColumn='main')
