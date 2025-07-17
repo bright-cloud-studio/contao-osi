@@ -3,8 +3,6 @@
 	use Dompdf\Dompdf;
     use Dompdf\Options;
     
-    use Bcs\Model\TestResult;
-    
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
 
@@ -12,16 +10,13 @@
 	$serializedData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/../db.txt');
 	$db_info = unserialize($serializedData);
     
+    // Connect to database using our privately hidden information
     $dbh = new mysqli("localhost", $db_info[0], $db_info[1], $db_info[2]);
     if ($dbh->connect_error) {
         die("Connection failed: " . $dbh->connect_error);
     }
     
     
-    
-
-    
-	
 	/********************/
 	/* INITALIZE STUFFS */
 	/********************/
@@ -46,23 +41,40 @@
 
 	$test_result_id = $_POST['result_id'];
     
+    /*****************************/
+	/* DATABASE STUFFS */
+	/*****************************/
+    
     $test_result = [];
     $test = [];
+    $member = [];
     
+    // Get our Test Result database info and store in $test_result
     $test_result_query =  "SELECT * FROM tl_test_result WHERE id='".$test_result_id."'";
     $test_result_db = $dbh->query($test_result_query);
     if($test_result_db) {
         while($result = $test_result_db->fetch_assoc()) {
             $test_result['test'] = $result['test'];
+            $test_result['member'] = $result['member'];
             $test_result['result_percentage'] = $result['result_percentage'];
         }
     }
     
+    // Get our Test database info and store in $test
     $test_query =  "SELECT * FROM tl_form WHERE id='".$test_result['test']."'";
     $test_db = $dbh->query($test_query);
     if($test_db) {
         while($result = $test_db->fetch_assoc()) {
             $test['title'] = $result['title'];
+        }
+    }
+    
+    // Get our Member database info and store in $member
+    $member_query =  "SELECT * FROM tl_member WHERE id='".$test_result['member']."'";
+    $member_db = $dbh->query($member_query);
+    if($member_db) {
+        while($result = $member_db->fetch_assoc()) {
+            $member['name'] = $result['firstname'] . " " . $result['lastname'];
         }
     }
 
@@ -91,21 +103,27 @@
 		    case 'member':
 		        switch($explodedTag[1]) {
 		            case 'name':
-		                $html = str_replace($tag, $asdf, $html);
+		                $html = str_replace($tag, $member['name'], $html);
 		                break;
 		        }
 		    break;
+		    
+		    case 'test':
+		        switch($explodedTag[1]) {
+		            case 'title':
+		                $html = str_replace($tag, $test['title'], $html);
+		                break;
+		        }
+		    break;
+		    
 		    
 		    case 'result':
 		        switch($explodedTag[1]) {
 		            case 'id':
 		                $html = str_replace($tag, $test_result_id, $html);
 		                break;
-		            case 'title':
-		                $html = str_replace($tag, $test['title'], $html);
-		                break;
-		            case 'result_percentage':
-		                $html = str_replace($tag, $test_result['result_percentage'], $html);
+		            case 'submission_date':
+		                $html = str_replace($tag, date('F j, Y', $test_result['submission_date']), $html);
 		                break;
 		        }
 		    break;
@@ -122,7 +140,7 @@
 	$dompdf->loadHtml($html);
 	
 	// Set our paper size and orientation
-	$dompdf->setPaper('A4', 'portrait');
+	$dompdf->setPaper('A4', 'landscape');
 	
 	// Render our PDF using the loaded HTML
 	$dompdf->render();
