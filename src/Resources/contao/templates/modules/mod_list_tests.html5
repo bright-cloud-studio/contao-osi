@@ -1,5 +1,5 @@
 <div class="mod_list_tests size100 marbot60">
   <?php foreach($this->tests as $test) { ?>
-    <p>Test: <?= $test['title'] ?></p>
+    <a href="{{link_url::67}}?test=<?= $test['id'] ?>"><?= $test['title'] ?></a><br>
   <?php } ?>
 </div>
