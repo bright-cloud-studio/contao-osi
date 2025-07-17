@@ -8,6 +8,7 @@ $GLOBALS['FE_MOD']['osi']['mod_test_results'] = 'Bcs\Module\ModTestResults';
 $GLOBALS['FE_MOD']['osi']['mod_test_history'] = 'Bcs\Module\ModTestHistory';
 $GLOBALS['FE_MOD']['osi']['mod_display_form'] = 'Bcs\Module\ModDisplayForm';
 $GLOBALS['FE_MOD']['osi']['mod_list_tests'] = 'Bcs\Module\ModListTests';
+$GLOBALS['FE_MOD']['osi']['mod_generate_certificate'] = 'Bcs\Module\ModGenerateCertificate';
 
 
 // Customized version of Contao's Form Checkbox field
