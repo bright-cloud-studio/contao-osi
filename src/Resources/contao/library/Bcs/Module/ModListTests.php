@@ -54,6 +54,7 @@ class ModListTests extends \Contao\Module
             $test_data[$test_counter]['title'] = $test->title;
             $test_counter++;
         }
+        $this->Template->tests = $test_data;
     }
 
 }
