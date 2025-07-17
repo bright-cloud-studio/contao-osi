@@ -1,14 +1,26 @@
 <?php
 	
-	/*******************/
-	/* REQUIRED STUFFS */
-	/*******************/
-	
-	session_start();
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-	
 	use Dompdf\Dompdf;
     use Dompdf\Options;
+    
+    use Bcs\Model\TestResult;
+    
+	session_start();
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+
+	// Load our database connection information from a txt file on the root of the server, for safety
+	$serializedData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/../db.txt');
+	$db_info = unserialize($serializedData);
+    
+    $dbh = new mysqli("localhost", $db_info[0], $db_info[1], $db_info[2]);
+    if ($dbh->connect_error) {
+        die("Connection failed: " . $dbh->connect_error);
+    }
+    
+    
+    
+
+    
 	
 	/********************/
 	/* INITALIZE STUFFS */
@@ -32,7 +44,19 @@
 	/* MANUALLY PASSED IN STUFFS */
 	/*****************************/
 
-	$product_id = $_POST['product_id'];
+	$test_result_id = $_POST['result_id'];
+    
+    $title = '';
+    
+    $test_result_query =  "SELECT * FROM tl_test_result WHERE id='".$test_result_id."'";
+    $test_result = $dbh->query($test_result_query);
+    if($test_result) {
+        while($result = $test_result->fetch_assoc()) {
+            $title = $result['result_percentage'];
+        }
+    }
+
+	
 
 	/*******************/
 	/* TEMPLATE STUFFS */
@@ -55,13 +79,22 @@
 		    
 		    // If the first part of our exploded tag is "product" we are looking for an attribute
 		    case 'member':
-		        
 		        switch($explodedTag[1]) {
 		            case 'name':
-		                $html = str_replace($tag, "member_name", $html);
+		                $html = str_replace($tag, $asdf, $html);
 		                break;
 		        }
-		        
+		    break;
+		    
+		    case 'result':
+		        switch($explodedTag[1]) {
+		            case 'id':
+		                $html = str_replace($tag, $test_result_id, $html);
+		                break;
+		            case 'result_percentage':
+		                $html = str_replace($tag, $title, $html);
+		                break;
+		        }
 		    break;
 
 	    }
