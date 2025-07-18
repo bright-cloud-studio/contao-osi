@@ -7,9 +7,11 @@ use Bcs\Model\TestResult;
 use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\BackendTemplate;
+use Contao\FilesModel;
 use Contao\FormModel;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\StringUtil;
 use Contao\System;
 
 class ModListTests extends \Contao\Module
@@ -69,6 +71,13 @@ class ModListTests extends \Contao\Module
                 if($in_group) {
                     $test_data[$test_counter]['id'] = $test->id;
                     $test_data[$test_counter]['title'] = $test->title;
+                    
+                    $uuid = StringUtil::binToUuid($test->cert_image);
+                    $objFile = FilesModel::findByUuid($uuid);
+                    if ($objFile) {
+        				$test_data[$test_counter]['cert_image'] = $objFile->path;
+                    }
+                    
                     $test_counter++;
                 }
                 
