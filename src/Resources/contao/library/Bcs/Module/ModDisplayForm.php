@@ -47,19 +47,35 @@ class ModDisplayForm extends \Contao\Module
 
     protected function compile()
     {
+        // Get the signed in Member and their assigned groups
+        $member = FrontendUser::getInstance();
+        $members_groups = $member->groups;
+        
         // Get the 'test_id' in the URL
         $test_id = Input::get('test');
         if($test_id != '') {
             
             // Get the Test
             $test = FormModel::findBy('id', $test_id);
-            
             if($test->member_groups) {
                 
+                $in_group = false;
+                
                 $member_groups = unserialize($test->member_groups);
+                
+                foreach($member_groups as $group) {
+                    // If this Tests group matches our Member's assigned group, we're 'in_group'!
+                    if (in_array($group, $members_groups))
+                        $in_group = true;
+                }
 
-                $this->Template->test_id = $test_id;
+                if($in_group) {
+                    $this->Template->test_id = $test_id;
+                    $this->Template->has_permission = 'true';
+                } else
+                    $this->Template->has_permission = 'false';
             }
+            
         }
     }
 
