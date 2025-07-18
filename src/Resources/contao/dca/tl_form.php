@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
 $GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'inputType' => 'textarea',
-    'eval'      => array('mandatory' => false, 'tl_class' => 'w100'),
+    'eval'      => array('allowHtml' => true, 'mandatory' => false, 'tl_class' => 'w100'),
     'default'   => 'default',
     'sql'       => "text NULL"
 );
