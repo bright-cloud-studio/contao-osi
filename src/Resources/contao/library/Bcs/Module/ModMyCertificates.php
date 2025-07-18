@@ -5,7 +5,7 @@ namespace Bcs\Module;
 use Bcs\Model\TestResult;
 
 use Contao\BackendTemplate;
-use Contao\FormFieldModel;
+use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
@@ -47,22 +47,17 @@ class ModMyCertificates extends \Contao\Module
     protected function compile()
     {
         $member = FrontendUser::getInstance();
-        $results = TestResult::findBy('member', $member->id);
+        $results = TestResult::findBy(['member = ?', 'result_passed = ?'], [$member->id, 'yes']);
         
-        $results_data = [];
-        $result_counter = 0;
+        $certificates = [];
         foreach($results as $result) {
-            $results_data[$result_counter]['id'] = $result->id;
-            $results_data[$result_counter]['test'] = $result->test;
-            $results_data[$result_counter]['submission_date'] = $result->submission_date;
-            $results_data[$result_counter]['result_passed'] = $result->result_passed;
-            $results_data[$result_counter]['result_total_correct'] = $result->result_total_correct;
-            $results_data[$result_counter]['result_percentage'] = $result->result_percentage;
             
-            $result_counter++;
+            $test = FormModel::findBy(['id = ?'], [$result->test]);
+            $certificates[$result->test]['title'] = $test->title;
+
         }
         
-        $this->Template->my_certificates = $results_data;
+        $this->Template->my_certificates = $certificates;
     }
   
 
