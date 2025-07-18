@@ -1,5 +1,5 @@
 <div class="mod_my_certificates size100 nopad">
-	<?php foreach($this->results_history as $result) { ?>
+	<?php foreach($this->my_certificates as $result) { ?>
 		<div class="result_wrapper marbot30">
 			<p><strong>ID</strong><br><?= $result['id'] ?></p>
 			<p><strong>Submission Date</strong><br><?= date('m/d/Y g:i a', $result['submission_date']) ?></p>
