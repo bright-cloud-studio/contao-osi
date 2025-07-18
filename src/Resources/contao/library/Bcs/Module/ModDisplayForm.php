@@ -7,7 +7,7 @@ use Bcs\Model\TestResult;
 use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\BackendTemplate;
-use Contao\FormFieldModel;
+use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
@@ -47,9 +47,19 @@ class ModDisplayForm extends \Contao\Module
 
     protected function compile()
     {
+        // Get the 'test_id' in the URL
         $test_id = Input::get('test');
         if($test_id != '') {
-            $this->Template->test_id = $test_id;
+            
+            // Get the Test
+            $test = FormModel::findBy('id', $test_id);
+            
+            if($test->member_groups) {
+                
+                $member_groups = unserialize($test->member_groups);
+
+                $this->Template->test_id = $test_id;
+            }
         }
     }
 
