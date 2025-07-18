@@ -24,11 +24,11 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
 
 // Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{member_group_legend},member_groups;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 
-// Fields for the 'newsType' selection
+// New 'formType' selector
 $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['formType'],
     'inputType' => 'select',
@@ -43,6 +43,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
 );
 
 
+/* TEST PAGE CONTENT */
 $GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'inputType' => 'textarea',
@@ -50,13 +51,23 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
     'default'   => 'default',
     'sql'       => "text NULL"
 );
-
 $GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'inputType' => 'textarea',
     'eval'      => array('mandatory' => false, 'tl_class' => 'w100'),
     'default'   => 'default',
     'sql'       => "text NULL"
+);
+
+
+/* MEMBER GROUP SELECTION */
+$GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
+    'label'            => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
+    'inputType'        => 'checkbox',
+    'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
+    'flag'             => DataContainer::SORT_ASC,
+    'options_callback' => array('Bcs\Backend\TestBackend', 'getMemberGroups'),
+    'sql'              => "blob NULL"
 );
 
 
