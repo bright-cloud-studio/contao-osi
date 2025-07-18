@@ -20,6 +20,7 @@ class FormHooks
 
     public function onSubmitTest($answers, $formData, $files, $labels, $test)
     {
+        
         if($test->formType == 'test') {
             
             // Grade the Test
@@ -28,16 +29,22 @@ class FormHooks
             
             foreach($answers as $question_id => $answer) {
                 $total_questions++;
-                $question = FormFieldModel::findOneBy('name', $question_id);
-                $options =  unserialize($question->options);
-                foreach($options as $option) {
-                    if($option['value'] == $answer) {
-                        if($option['correct'] == 1) {
-                            $total_correct_answers++;
-                        } else {
+                
+                $questions = FormFieldModel::findBy(['type = ?', 'pid = ?'], ['multiple_choice_question', $formData['id']]);
+                
+                foreach($questions as $question) {
+                    if($question->name == $question_id) {
+                        $options =  unserialize($question->options);
+                        foreach($options as $option) {
+                            if($option['value'] == $answer) {
+                                if($option['correct'] == 1) {
+                                    $total_correct_answers++;
+                                } else {
+                                }
+                            }
+                            
                         }
                     }
-                    
                 }
             }
             
@@ -54,13 +61,13 @@ class FormHooks
             $test_result->result_total_correct = $total_correct_answers;
             $test_result->result_percentage = ($total_correct_answers / $total_questions) * 100;
             
+            if($test_result->result_percentage == '100')
+                $test_result->result_passed = 'yes';
+            
             $test_result->save();
             
             // Pass our result ID to the result page
             $_SESSION['test_results_id'] = $test_result->id;
-            $_SESSION['test_123'] = '456';
-            
-            
         }
     }
 
