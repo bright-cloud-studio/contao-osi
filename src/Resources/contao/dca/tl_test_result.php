@@ -156,8 +156,8 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'inputType'               => 'radio',
             'options'                 => array('yes' => 'Yes', 'no' => 'No'),
             'default'                 => 'no',
-            'filter'                  => yes,
-            'search'                  => yes,
+            'filter'                  => true,
+            'search'                  => true,
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
             'sql'                     => "varchar(5) NOT NULL default 'no'"
             
