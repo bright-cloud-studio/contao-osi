@@ -1,7 +1,27 @@
-<div class="mod_display_form size100 marbot60">
-    <?php if($this->has_permission) { ?>
-    	{{insert_form::<?= $this->test_id ?>}}
-    <?php } else { ?>
-    	<p>You do not have permission to view this Test. Please return to your '<a href="{{link_url::42}}">My Trainings</a>' page and select a valid Test.</p>
+<?php if($this->has_permission) { ?>
+
+    <h2 class="size100 center_element center_text background_color_dblue">
+        <?= $this->test_title ?>
+    </h2>
+    
+    <div class="test_embed width_1000 marbot60 center_element">
+        <?= $this->embed_code ?>
+    </div>
+    
+    <?php if($this->additional_info) { ?>
+        <div class="additional_info size100 marbot60">
+            <?= $this->additional_info ?>
+        </div>
     <?php } ?>
-</div>
+    
+    <div class="mod_display_form size100 marbot60">
+        {{insert_form::<?= $this->test_id ?>}}
+    </div>
+    
+<?php } else { ?>
+
+    <div class="mod_display_form size100 center_text marbot60">
+	    <p>You do not have permission to view this Test. Please return to your '<a href="{{link_url::42}}">My Trainings</a>' page and select a valid Test.</p>
+    </div>
+	
+<?php } ?>
