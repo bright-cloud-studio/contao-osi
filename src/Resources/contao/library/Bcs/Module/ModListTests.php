@@ -8,9 +8,9 @@ use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\BackendTemplate;
 use Contao\FormModel;
+use Contao\FrontendUser;
 use Contao\Input;
 use Contao\System;
-use Contao\FrontendUser;
 
 class ModListTests extends \Contao\Module
 {
@@ -47,10 +47,24 @@ class ModListTests extends \Contao\Module
 
     protected function compile()
     {
+        $member = FrontendUser::getInstance();
+        
+        echo "Member: " . $member->id;
+        die();
+        
+        
         $test_data = [];
         $tests = FormModel::findBy('formType', 'test');
         $test_counter = 0;
         foreach($tests as $test) {
+            
+            if($test->member_groups) {            
+            $member_groups = unserialize($test->member_groups);
+            echo "<pre>";
+            print_r($member_groups);
+            die();
+            }
+            
             $test_data[$test_counter]['id'] = $test->id;
             $test_data[$test_counter]['title'] = $test->title;
             $test_counter++;
