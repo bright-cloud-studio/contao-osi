@@ -13,10 +13,10 @@ use Contao\StringUtil;
 class TestBackend extends Backend
 {
     // Get Members as options for a Select DCA field
-    public function getMembers(DataContainer $dc) {
+    public function getMemberGroups(DataContainer $dc) {
         $member_groups = array();
         $this->import('Database');
-        $result = $this->Database->prepare("SELECT * FROM tl_member WHERE disable=0 ORDER BY firstname ASC")->execute();
+        $result = $this->Database->prepare("SELECT * FROM tl_member_group WHERE disable=0 ORDER BY name ASC")->execute();
         while($result->next())
         {
             $member_groups = $member_groups + array($result->id => $result->name);   
