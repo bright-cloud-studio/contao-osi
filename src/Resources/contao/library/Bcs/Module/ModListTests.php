@@ -48,10 +48,7 @@ class ModListTests extends \Contao\Module
     protected function compile()
     {
         $member = FrontendUser::getInstance();
-        
-        echo "Member: " . $member->id;
-        die();
-        
+        $members_groups = $member->groups;
         
         $test_data = [];
         $tests = FormModel::findBy('formType', 'test');
@@ -59,15 +56,25 @@ class ModListTests extends \Contao\Module
         foreach($tests as $test) {
             
             if($test->member_groups) {            
-            $member_groups = unserialize($test->member_groups);
-            echo "<pre>";
-            print_r($member_groups);
-            die();
+                
+                $in_group = false;
+                
+                $member_groups = unserialize($test->member_groups);
+                
+                foreach($member_groups as $group) {
+                    if (in_array($group, $members_groups))
+                        $in_group = true;
+                }
+                
+                if($in_group) {
+                    $test_data[$test_counter]['id'] = $test->id;
+                    $test_data[$test_counter]['title'] = $test->title;
+                    $test_counter++;
+                }
+                
             }
             
-            $test_data[$test_counter]['id'] = $test->id;
-            $test_data[$test_counter]['title'] = $test->title;
-            $test_counter++;
+            
         }
         
         $this->Template->tests = $test_data;
