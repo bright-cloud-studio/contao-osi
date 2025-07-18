@@ -47,9 +47,11 @@ class ModListTests extends \Contao\Module
 
     protected function compile()
     {
+        // Get the signed in Member and their assigned groups
         $member = FrontendUser::getInstance();
         $members_groups = $member->groups;
         
+        // Loop through all the Tests
         $test_data = [];
         $tests = FormModel::findBy('formType', 'test');
         $test_counter = 0;
@@ -59,13 +61,15 @@ class ModListTests extends \Contao\Module
                 
                 $in_group = false;
                 
+                // Loop through this Tests groups
                 $member_groups = unserialize($test->member_groups);
-                
                 foreach($member_groups as $group) {
+                    // If this Tests group matches our Member's assigned group, we're 'in_group'!
                     if (in_array($group, $members_groups))
                         $in_group = true;
                 }
                 
+                // If we are in group, add this to our template
                 if($in_group) {
                     $test_data[$test_counter]['id'] = $test->id;
                     $test_data[$test_counter]['title'] = $test->title;
@@ -73,7 +77,6 @@ class ModListTests extends \Contao\Module
                 }
                 
             }
-            
             
         }
         
