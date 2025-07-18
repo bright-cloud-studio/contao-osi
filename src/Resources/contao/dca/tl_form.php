@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
 
 // Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = '{test_legend},test_embed;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = '{test_content_legend},embed_code,additional_info;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 
@@ -43,10 +43,18 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
 );
 
 
-$GLOBALS['TL_DCA']['tl_form']['fields']['test_embed'] = array(
+$GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'inputType' => 'textarea',
-    'eval'      => array('mandatory' => false, 'tl_class' => 'w50'),
+    'eval'      => array('mandatory' => false, 'tl_class' => 'w100'),
+    'default'   => 'default',
+    'sql'       => "text NULL"
+);
+
+$GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
+    'inputType' => 'textarea',
+    'eval'      => array('mandatory' => false, 'tl_class' => 'w100'),
     'default'   => 'default',
     'sql'       => "text NULL"
 );
