@@ -55,8 +55,9 @@ class ModTestHistory extends \Contao\Module
             $results_data[$result_counter]['id'] = $result->id;
             $results_data[$result_counter]['test'] = $result->test;
             $results_data[$result_counter]['submission_date'] = $result->submission_date;
+            $results_data[$result_counter]['result_passed'] = $result->result_passed;
             $results_data[$result_counter]['result_total_correct'] = $result->result_total_correct;
-            $results_data[$result_counter]['result_percentage'] = $result->result_percentag;
+            $results_data[$result_counter]['result_percentage'] = $result->result_percentage;
             
             $result_counter++;
         }
