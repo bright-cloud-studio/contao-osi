@@ -150,7 +150,18 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'sql'                     => 'blob NULL'
         ),
 
-        
+        'result_passed' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['result_passed'],
+            'inputType'               => 'radio',
+            'options'                 => array('yes' => 'Yes', 'no' => 'No'),
+            'default'                 => 'no',
+            'filter'                  => yes,
+            'search'                  => yes,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(5) NOT NULL default 'no'"
+            
+        ),
         'result_total_correct' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['result_correct_answers'],
