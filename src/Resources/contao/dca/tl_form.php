@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
 
 // Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = 'stepImage, stepDownload, stepVideo, stepDixonMaterials, stepOtherMaterials, stepObjectives';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = '{test_legend},test_embed;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 
@@ -41,6 +41,16 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
     'default'   => 'default',
     'sql'       => "varchar(255) NULL default 'default'"
 );
+
+
+$GLOBALS['TL_DCA']['tl_form']['fields']['test_embed'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
+    'inputType' => 'textarea',
+    'eval'      => array('mandatory' => false, 'tl_class' => 'w50'),
+    'default'   => 'default',
+    'sql'       => "text NULL"
+);
+
 
 // Ensure newsType dropdown appears when editing old content
 $GLOBALS['TL_DCA']['tl_form']['config']['onload_callback'][] = function (DataContainer $dc) {
