@@ -1,18 +1,32 @@
 <div class="mod_test_history size100 nopad">
-	<?php foreach($this->results_history as $result) { ?>
-		<div class="result_wrapper marbot30">
-			<p><strong>ID</strong><br><?= $result['id'] ?></p>
-			<p><strong>Submission Date</strong><br><?= date('m/d/Y g:i a', $result['submission_date']) ?></p>
-			<p><strong>Test</strong><br><?= $result['test'] ?></p>
-			<p><strong>Result Passed</strong><br><?= $result['result_passed'] ?></p>
-			<p><strong>Total Correct Answers</strong><br><?= $result['result_total_correct'] ?></p>
-			<p><strong>Total Percentage</strong><br><?= $result['result_percentage'] ?></p>
-
-			<?php // Only show if 'passed' ?>
-			<?php if($result['result_passed'] == 'yes') { ?>
-				<p><a id="generate_certificate" onclick="genPDF(<?= $result['id'] ?>);">Download Certificate</a></p>
+	
+	<table style="width:100%; border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th style="border: 1px solid black; padding: 8px; text-align: left;">TEST NAME</th>
+				<th style="border: 1px solid black; padding: 8px; text-align: left;">DATE</th>
+				<th style="border: 1px solid black; padding: 8px; text-align: left;">SCORE</th>
+				<th style="border: 1px solid black; padding: 8px; text-align: left;">PASSED</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			<?php foreach($this->results_history as $result) { ?>
+				<tr>
+					<td style="border: 1px solid black; padding: 8px;"><?= $result['test'] ?></td>
+					<td style="border: 1px solid black; padding: 8px;"><?= date('m/d/Y g:i a', $result['submission_date']) ?></td>
+					<td style="border: 1px solid black; padding: 8px;"><?= $result['result_percentage'] ?></td>
+					<td style="border: 1px solid black; padding: 8px;">
+						<?php if($result['result_passed'] == 'yes') { ?>
+							<p><a id="generate_certificate" onclick="genPDF(<?= $result['id'] ?>);">Yes</a></p>
+						<?php } else { ?>
+							no
+						<?php } ?>
+					</td>
+				</tr>
 			<?php } ?>
 
-		</div>
-	<?php } ?>
+		</tbody>
+	</table>
+	
 </div>
