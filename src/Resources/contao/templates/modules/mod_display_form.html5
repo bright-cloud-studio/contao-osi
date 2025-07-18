@@ -1,5 +1,5 @@
 <div class="mod_display_form size100 marbot60">
-    <?php if($this->has_permission == 'true') { ?>
+    <?php if($this->has_permission) { ?>
     	{{insert_form::<?= $this->test_id ?>}}
     <?php } else { ?>
     	<p>You do not have permission to view this Test. Please return to your '<a href="{{link_url::42}}">My Trainings</a>' page and select a valid Test.</p>
