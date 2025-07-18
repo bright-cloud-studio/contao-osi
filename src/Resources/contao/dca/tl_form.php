@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
 
 // Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{member_group_legend},member_groups;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{member_group_legend},member_groups;{certificate_legend}, cert_image';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 
@@ -68,6 +68,21 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['member_groups'] = array(
     'flag'             => DataContainer::SORT_ASC,
     'options_callback' => array('Bcs\Backend\TestBackend', 'getMemberGroups'),
     'sql'              => "blob NULL"
+);
+
+
+/* CERTIFICATE */
+$GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['cert_image'],
+    'exclude'   => true,
+    'inputType' => 'fileTree',
+    'eval'      => array(
+        'fieldType' => 'radio',
+        'filesOnly' => true,
+        'extensions' => '%contao.image.valid_extensions%',
+        'mandatory' => false // Set to true if it's required
+    ),
+    'sql'       => "binary(16) NULL"
 );
 
 
