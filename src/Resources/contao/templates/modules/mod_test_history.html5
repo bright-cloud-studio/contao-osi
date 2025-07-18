@@ -3,9 +3,16 @@
 		<div class="result_wrapper marbot30">
 			<p>ID<br><?= $result['id'] ?></p>
 			<p>Submission Date<br><?= date('m/d/Y g:i a', $result['submission_date']) ?></p>
-			<p>Test<br><?= date('m/d/Y g:i a', $result['test']) ?></p>
-			<p>Total Correct Answers<br><?= date('m/d/Y g:i a', $result['result_total_correct']) ?></p>
-			<p>Total Percentage<br><?= date('m/d/Y g:i a', $result['result_percentage']) ?></p>
+			<p>Test<br><?= $result['test'] ?></p>
+			<p>Result Passed<br><?= $result['result_passed'] ?></p>
+			<p>Total Correct Answers<br><?= $result['result_total_correct'] ?></p>
+			<p>Total Percentage<br><?= $result['result_percentage'] ?></p>
+
+			<?php // Only show if 'passed' ?>
+			<?php if($result['result_passed'] == 'yes') { ?>
+				<p><a id="generate_certificate" onclick="genPDF(<?= $result['id'] ?>);">Download Certificate</a></p>
+			<?php } ?>
+
 		</div>
 	<?php } ?>
 </div>
