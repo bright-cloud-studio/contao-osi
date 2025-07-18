@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
 
 // Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = '{test_content_legend},embed_code,additional_info;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 
