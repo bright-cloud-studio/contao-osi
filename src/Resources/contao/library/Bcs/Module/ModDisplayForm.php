@@ -72,7 +72,9 @@ class ModDisplayForm extends \Contao\Module
                 if($in_group) {
                     $this->Template->test_id = $test_id;
                     $this->Template->has_permission = 'true';
+                    $this->Template->test_title = $test->title;
                     $this->Template->embed_code = $test->embed_code;
+                    $this->Template->additional_info = $test->additional_info;
                 } else
                     $this->Template->has_permission = 'false';
             }
