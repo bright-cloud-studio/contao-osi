@@ -61,7 +61,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
 
 
 /* MEMBER GROUP SELECTION */
-$GLOBALS['TL_DCA']['tl_form']['fields']['embed_code'] = array(
+$GLOBALS['TL_DCA']['tl_form']['fields']['member_groups'] = array(
     'label'            => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'inputType'        => 'checkbox',
     'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
