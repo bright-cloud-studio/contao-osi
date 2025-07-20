@@ -9,6 +9,7 @@ use Contao\Controller;
 use Contao\BackendTemplate;
 use Contao\FormModel;
 use Contao\Input;
+use Contao\MemberGroupModel;
 use Contao\System;
 use Contao\FrontendUser;
 
@@ -50,36 +51,32 @@ class ModDisplayForm extends \Contao\Module
         // Get the signed in Member and their assigned groups
         $member = FrontendUser::getInstance();
         $members_groups = $member->groups;
-        
-        // Get the 'test_id' in the URL
-        $test_id = Input::get('test');
-        if($test_id != '') {
-            
-            // Get the Test
-            $test = FormModel::findBy('id', $test_id);
-            if($test->member_groups) {
-                
-                $in_group = false;
-                
-                $member_groups = unserialize($test->member_groups);
-                
-                foreach($member_groups as $group) {
-                    // If this Tests group matches our Member's assigned group, we're 'in_group'!
-                    if (in_array($group, $members_groups))
-                        $in_group = true;
-                }
 
-                if($in_group) {
-                    $this->Template->test_id = $test_id;
-                    $this->Template->has_permission = 'true';
-                    $this->Template->test_title = $test->title;
-                    $this->Template->embed_code = $test->embed_code;
-                    $this->Template->additional_info = $test->additional_info;
-                } else
-                    $this->Template->has_permission = 'false';
+        $test_id = Input::get('test');
+        
+        $in_group = false;
+        
+        foreach($members_groups as $group) {
+         
+            $member_group = MemberGroupModel::findBy('id', $group);
+            $assignments = unserialize($member_group->test_assignment);
+            foreach($assignments as $assignment) {
+                if($assignment == $test_id)
+                    $in_group = true;
             }
             
         }
+        
+        if($in_group) {
+            $test = FormModel::findBy('id', $test_id);
+            $this->Template->test_id = $test_id;
+            $this->Template->has_permission = 'true';
+            $this->Template->test_title = $test->title;
+            $this->Template->embed_code = $test->embed_code;
+            $this->Template->additional_info = $test->additional_info;
+        } else
+            $this->Template->has_permission = 'false';
+        
     }
 
 }
