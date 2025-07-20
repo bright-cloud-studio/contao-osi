@@ -72,10 +72,12 @@ class ModListTests extends \Contao\Module
                     $test_data[$test_counter]['id'] = $test->id;
                     $test_data[$test_counter]['title'] = $test->title;
                     
-                    $uuid = StringUtil::binToUuid($test->cert_image);
-                    $objFile = FilesModel::findByUuid($uuid);
-                    if ($objFile) {
-        				$test_data[$test_counter]['cert_image'] = $objFile->path;
+                    if($test->cert_image) {
+                        $uuid = StringUtil::binToUuid($test->cert_image);
+                        $objFile = FilesModel::findByUuid($uuid);
+                        if ($objFile) {
+            				$test_data[$test_counter]['cert_image'] = $objFile->path;
+                        }
                     }
                     
                     $test_counter++;
