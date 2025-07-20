@@ -11,6 +11,7 @@ use Contao\FilesModel;
 use Contao\FormModel;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\MemberGroupModel;
 use Contao\StringUtil;
 use Contao\System;
 
@@ -53,38 +54,27 @@ class ModListTests extends \Contao\Module
         $members_groups = $member->groups;
         
         $test_data = [];
-        $tests = FormModel::findBy('formType', 'test');
         $test_counter = 0;
-        foreach($tests as $test) {
+        foreach($members_groups as $group) {
             
-            if($test->member_groups) {            
+            $member_group = MemberGroupModel::findBy('id', $group);
+            $assignments = unserialize($member_group->test_assignment);
+            foreach($assignments as $assignment) {
+                $test = FormModel::findBy('id', $assignment);
                 
-                $in_group = false;
+                $test_data[$test_counter]['id'] = $test->id;
+                $test_data[$test_counter]['title'] = $test->title;
                 
-                $member_groups = unserialize($test->member_groups);
-                
-                foreach($member_groups as $group) {
-                    if (in_array($group, $members_groups))
-                        $in_group = true;
-                }
-                
-                if($in_group) {
-                    $test_data[$test_counter]['id'] = $test->id;
-                    $test_data[$test_counter]['title'] = $test->title;
-                    
-                    if($test->cert_image) {
-                        $uuid = StringUtil::binToUuid($test->cert_image);
-                        $objFile = FilesModel::findByUuid($uuid);
-                        if ($objFile) {
-            				$test_data[$test_counter]['cert_image'] = $objFile->path;
-                        }
+                if($test->cert_image) {
+                    $uuid = StringUtil::binToUuid($test->cert_image);
+                    $objFile = FilesModel::findByUuid($uuid);
+                    if ($objFile) {
+        				$test_data[$test_counter]['cert_image'] = $objFile->path;
                     }
-                    
-                    $test_counter++;
                 }
                 
+                $test_counter++;
             }
-            
             
         }
         
