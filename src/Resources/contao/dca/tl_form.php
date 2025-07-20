@@ -22,11 +22,12 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 
 // Append 'newsType' to the existing __selector__ array rather than overwriting it.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
-
-// Define subpalettes for the various newsType options
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{certificate_legend}, cert_image';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, asdf;{certificate_legend}, cert_image';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
+$GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'scoringType';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['scoringType_percentage_correct'] = 'percentage;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['scoringType_total_correct'] = 'total_correct';
 
 // New 'formType' selector
 $GLOBALS['TL_DCA']['tl_form']['fields']['formType'] = array(
@@ -56,6 +57,35 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
     'inputType' => 'textarea',
     'eval'      => array('allowHtml' => true, 'mandatory' => false, 'tl_class' => 'w100'),
     'default'   => 'default',
+    'sql'       => "text NULL"
+);
+
+
+// New 'formType' selector
+$GLOBALS['TL_DCA']['tl_form']['fields']['scoringType'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['scoringType'],
+    'inputType' => 'select',
+    'options'   => array(
+        'percentage_correct' => 'Percentage',
+        'total_correct' => 'Total Correct Answers'
+    ),
+    'filter'    => true,
+    'eval'      => array('submitOnChange' => true, 'mandatory' => true, 'tl_class' => 'w50'),
+    'default'   => 'percentage_correct',
+    'sql'       => "varchar(20) NULL default 'percentage_correct'"
+);
+$GLOBALS['TL_DCA']['tl_form']['fields']['percentage'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['percentage'],
+    'inputType' => 'text',
+    'eval'      => array('allowHtml' => false, 'mandatory' => false, 'tl_class' => 'w100'),
+    'default'   => '0',
+    'sql'       => "text NULL"
+);
+$GLOBALS['TL_DCA']['tl_form']['fields']['total_correct'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['total_correct'],
+    'inputType' => 'text',
+    'eval'      => array('allowHtml' => false, 'mandatory' => false, 'tl_class' => 'w100'),
+    'default'   => '0',
     'sql'       => "text NULL"
 );
 
