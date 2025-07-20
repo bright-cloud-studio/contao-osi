@@ -63,7 +63,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
 /* MEMBER GROUP SELECTION */
 $GLOBALS['TL_DCA']['tl_form']['fields']['member_groups'] = array(
     'label'            => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
-    'inputType'        => 'checkbox',
+    'inputType'        => 'checkboxWizard',
     'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
     'flag'             => DataContainer::SORT_ASC,
     'options_callback' => array('Bcs\Backend\TestBackend', 'getMemberGroups'),
