@@ -16,10 +16,10 @@ class MemberGroupBackend extends Backend
     public function getTests(DataContainer $dc) {
         $tests = array();
         $this->import('Database');
-        $result = $this->Database->prepare("SELECT * FROM tl_form WHERE disable=0 AND formType='test' ORDER BY tlte ASC")->execute();
+        $result = $this->Database->prepare("SELECT * FROM tl_form WHERE formType='test' ORDER BY title ASC")->execute();
         while($result->next())
         {
-            $tests = $tests + array($result->id => $result->title);   
+            $tests = $tests + array($result->id => $result->title . '[' . $result->id . ']');   
         }
         return $tests;
     }
