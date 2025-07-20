@@ -61,8 +61,16 @@ class FormHooks
             $test_result->result_total_correct = $total_correct_answers;
             $test_result->result_percentage = ($total_correct_answers / $total_questions) * 100;
             
-            if($test_result->result_percentage == '100')
-                $test_result->result_passed = 'yes';
+            // Scoring
+            if($test->scoringType == 'percentage_correct') {
+                if($test_result->result_percentage >= $test->percentage)
+                    $test_result->result_passed = 'yes';
+                
+            } else if ($test->scoringType == 'total_correct') {
+                if($test_result->result_total_correct >= $test->total_correct)
+                    $test_result->result_passed = 'yes';
+            }
+            
             
             $test_result->save();
             
