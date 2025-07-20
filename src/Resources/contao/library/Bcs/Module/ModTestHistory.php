@@ -47,7 +47,11 @@ class ModTestHistory extends \Contao\Module
     protected function compile()
     {
         $member = FrontendUser::getInstance();
-        $results = TestResult::findBy('member', $member->id);
+        
+        $options = [
+            'order' => 'submission_date DESC'
+        ];
+        $results = TestResult::findBy('member', $member->id, $options);
         
         $results_data = [];
         $result_counter = 0;
