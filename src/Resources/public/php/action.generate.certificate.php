@@ -16,7 +16,6 @@
         die("Connection failed: " . $dbh->connect_error);
     }
     
-    
 	/********************/
 	/* INITALIZE STUFFS */
 	/********************/
@@ -78,8 +77,6 @@
         }
     }
 
-	
-
 	/*******************/
 	/* TEMPLATE STUFFS */
 	/*******************/
@@ -116,7 +113,6 @@
 		        }
 		    break;
 		    
-		    
 		    case 'result':
 		        switch($explodedTag[1]) {
 		            case 'id':
@@ -124,6 +120,14 @@
 		                break;
 		            case 'submission_date':
 		                $html = str_replace($tag, date('F j, Y', $test_result['submission_date']), $html);
+		                break;
+		        }
+		    break;
+		    
+		    case 'server':
+		        switch($explodedTag[1]) {
+		            case 'root':
+		                $html = str_replace($tag, $_SERVER["DOCUMENT_ROOT"], $html);
 		                break;
 		        }
 		    break;
