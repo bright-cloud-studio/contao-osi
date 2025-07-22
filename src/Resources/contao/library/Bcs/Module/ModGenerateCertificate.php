@@ -5,16 +5,18 @@ namespace Bcs\Module;
 use Bcs\Model\TestResult;
 
 use Contao\BackendTemplate;
-use Contao\FormFieldModel;
+use Contao\FilesModel;
+use Contao\FormModel;
 use Contao\Input;
+use Contao\StringUtil;
 use Contao\System;
 use Contao\FrontendUser;
 
-class ModGenerateCertificate extends \Contao\Module
+class ModMyCertificates extends \Contao\Module
 {
 
     /* Default Template */
-    protected $strTemplate = 'mod_generate_certificate';
+    protected $strTemplate = 'mod_my_certificates';
 
     /* Construct function */
     public function __construct($objModule, $strColumn='main')
@@ -43,10 +45,30 @@ class ModGenerateCertificate extends \Contao\Module
         return parent::generate();
     }
 
-
+ 
     protected function compile()
     {
         $member = FrontendUser::getInstance();
+        $results = TestResult::findBy(['member = ?', 'result_passed = ?'], [$member->id, 'yes']);
+        
+        $certificates = [];
+        foreach($results as $result) {
+            
+            $test = FormModel::findBy(['id = ?'], [$result->test]);
+            $certificates[$result->test]['title'] = $test->title;
+            
+            $uuid = StringUtil::binToUuid($test->cert_image);
+            $objFile = FilesModel::findByUuid($uuid);
+            if ($objFile) {
+				$certificates[$result->test]['cert_image'] = $objFile->path;
+				$certificates[$result->test]['id'] = $result->id;
+            }
+            
+
+        }
+        
+        $this->Template->my_certificates = $certificates;
     }
+  
 
 }
