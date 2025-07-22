@@ -21,7 +21,8 @@
 	/********************/
 	
     $options = new Options();
-    $options->set("defaultFont", "Helvetica");
+    //$options->set("defaultFont", "Helvetica");
+    $options->set("defaultFont", "Times-Roman");
     $options->set("isRemoteEnabled", "true");
     $options->setChroot('/');
 	$dompdf = new Dompdf($options);
