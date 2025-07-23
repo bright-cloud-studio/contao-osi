@@ -26,10 +26,13 @@ class FormHooks
     {
         
         if($test->formType == 'test') {
-            
-            $ourMailer = new SendFormEmail();
-            $ourMailer->sendMessage();
-            die();
+
+            $arrTokens = [
+                'firstname' => 'TEST1',
+                'lastname' => 'test_2'
+            ];
+            $objNotificationCenter = System::getContainer()->get('bcs.services.notification_center');
+            $objNotificationCenter->send(1, $arrTokens);
             
             
             // Grade the Test
