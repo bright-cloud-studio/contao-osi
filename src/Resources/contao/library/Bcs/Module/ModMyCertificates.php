@@ -61,6 +61,7 @@ class ModMyCertificates extends \Contao\Module
             $objFile = FilesModel::findByUuid($uuid);
             if ($objFile) {
 				$certificates[$result->test]['cert_image'] = $objFile->path;
+				$certificates[$result->test]['id'] = $result->id;
             }
             
 
