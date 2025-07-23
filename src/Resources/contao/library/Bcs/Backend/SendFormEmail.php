@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme;
+namespace Bcs\Backend;
 
 use Terminal42\NotificationCenterBundle\NotificationCenter;
 
