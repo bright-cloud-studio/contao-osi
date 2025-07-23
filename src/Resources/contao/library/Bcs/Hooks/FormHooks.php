@@ -4,6 +4,8 @@ namespace Bcs\Hooks;
 
 use Bcs\Model\TestResult;
 
+use Bcs\Backend\SendFormEmail;
+
 use Contao\Controller;
 use Contao\Environment;
 use Contao\FilesModel;
@@ -25,13 +27,8 @@ class FormHooks
         
         if($test->formType == 'test') {
             
-            $notificationId = 1;
-            $tokens = [
-                'firstname' => 'value1',
-                'lastname' => 'value2',   
-            ];
-            
-            $receipts = $this->notificationCenter->sendNotification($notificationId, $tokens);
+            $ourMailer = new SendFormEmail();
+            $ourMailer->sendMessage();
             die();
             
             
