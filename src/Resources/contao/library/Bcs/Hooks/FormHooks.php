@@ -15,6 +15,8 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use DateTime;
 
+use Terminal42\NotificationCenterBundle\NotificationCenter;
+
 class FormHooks
 {
 
@@ -22,6 +24,16 @@ class FormHooks
     {
         
         if($test->formType == 'test') {
+            
+            $notificationId = 1;
+            $tokens = [
+                'firstname' => 'value1',
+                'lastname' => 'value2',   
+            ];
+            
+            $receipts = $this->notificationCenter->sendNotification($notificationId, $tokens);
+            die();
+            
             
             // Grade the Test
             $total_questions = 0;
