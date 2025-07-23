@@ -15,6 +15,7 @@ use Contao\Input;
 use Contao\MemberModel;
 use Contao\PageModel;
 use Contao\StringUtil;
+use Contao\System;
 use DateTime;
 
 use Terminal42\NotificationCenterBundle\NotificationCenter;
@@ -31,7 +32,7 @@ class FormHooks
                 'firstname' => 'TEST1',
                 'lastname' => 'test_2'
             ];
-            $objNotificationCenter = System::getContainer()->get('bcs.services.notification_center');
+            $objNotificationCenter = System::getContainer()->get('frontendediting.services.notification_center');
             $objNotificationCenter->send(1, $arrTokens);
             
             
