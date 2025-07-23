@@ -1,6 +1,6 @@
 <?php
 
-namespace Bcs\Services;
+namespace Bcs\FrontendEditingBundle\Services;
 
 use Terminal42\NotificationCenterBundle\BulkyItem\BulkyItemStorage;
 use Terminal42\NotificationCenterBundle\NotificationCenter as NC;
@@ -8,7 +8,7 @@ use Terminal42\NotificationCenterBundle\Parcel\StampCollection;
 use Terminal42\NotificationCenterBundle\Receipt\ReceiptCollection;
 use Terminal42\NotificationCenterBundle\Token\TokenCollection;
 
-class NotificationCenterHelper
+class NotificationCenter
 {
     public function __construct(readonly private NC $notificationCenter)
     {
