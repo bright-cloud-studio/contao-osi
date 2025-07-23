@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  bcs.services.notification_center:
+    class: Bcs\Services\NotificationCenterHelper
+    public: true
+    arguments:
+      - '@Terminal42\NotificationCenterBundle\NotificationCenter'
