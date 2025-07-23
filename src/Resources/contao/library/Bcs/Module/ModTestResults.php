@@ -5,6 +5,7 @@ namespace Bcs\Module;
 use Bcs\Model\TestResult;
 
 use Contao\BackendTemplate;
+use Contao\FormModel;
 use Contao\FormFieldModel;
 use Contao\Input;
 use Contao\System;
@@ -50,12 +51,15 @@ class ModTestResults extends \Contao\Module
         
         if(isset($_SESSION['test_results_id'])) {
             $results = TestResult::findOneBy('id', $_SESSION['test_results_id']);
+            $test = FormModel::findOneBy('id', $results->test);
             
             $results_data = [];
             
             $results_data['submission_date'] = date('m/d/Y g:i a', $results->submission_date);
             $results_data['total_correct_answers'] = $results->result_total_correct;
             $results_data['percentage'] = $results->result_percentage;
+            $results_data['result_passed'] = $results->result_passed;
+            $results_data['test_name'] = $test->title;
             
             
             // Questions
