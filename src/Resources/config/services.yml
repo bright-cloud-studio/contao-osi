@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
-  bcs.services.notification_center:
-    class: Bcs\Services\NotificationCenterHelper
+  frontendediting.services.notification_center:
+    class: Bcs\FrontendEditingBundle\Services\NotificationCenter
     public: true
     arguments:
       - '@Terminal42\NotificationCenterBundle\NotificationCenter'
