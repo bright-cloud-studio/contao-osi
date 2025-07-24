@@ -84,4 +84,12 @@ class FormHooks
         }
     }
 
+
+    public function onPrepareFormData($answers, $formData, $files, $labels, $test)
+    {
+        // This calculates a deadline from a given timestamp
+        // and stores it as deadline in $submittedData.
+        $submittedData['member_name'] = "Member's Name!";
+    }
+
 }
