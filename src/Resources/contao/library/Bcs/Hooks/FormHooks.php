@@ -27,14 +27,6 @@ class FormHooks
     {
         
         if($test->formType == 'test') {
-
-            $arrTokens = [
-                'firstname' => 'TEST1',
-                'lastname' => 'test_2'
-            ];
-            $objNotificationCenter = System::getContainer()->get('frontendediting.services.notification_center');
-            $objNotificationCenter->send(1, $arrTokens);
-            
             
             // Grade the Test
             $total_questions = 0;
