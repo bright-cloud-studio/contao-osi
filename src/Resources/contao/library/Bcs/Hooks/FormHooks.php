@@ -34,6 +34,8 @@ class FormHooks
     {
         
         if($test->formType == 'test') {
+            
+            
 
             // Grade the Test
             $total_questions = 0;
@@ -42,7 +44,7 @@ class FormHooks
             foreach($answers as $question_id => $answer) {
                 $total_questions++;
                 
-                $questions = FormFieldModel::findBy(['type = ?', 'pid = ?'], ['multiple_choice_question', $formData['id']]);
+                $questions = FormFieldModel::findBy(['type = ?', 'pid = ?'], ['multiple_choice_question', $test->id]);
                 
                 foreach($questions as $question) {
                     if($question->name == $question_id) {
@@ -88,6 +90,15 @@ class FormHooks
             
             // Pass our result ID to the result page
             $_SESSION['test_results_id'] = $test_result->id;
+            
+            $answers['member_name'] = $member->firstname . " " . $member->lastname;
+            $answers['test_result_id'] = $test_result->id;
+            $answers['test'] = $test->title;
+            $answers['submission_date'] = date('m/d/Y g:i a', $test_result->submission_date);
+            $answers['result_total_correct'] = $test_result->result_total_correct;
+            $answers['result_percentage'] = $test_result->result_percentage;
+            $answers['result_passed'] = $test_result->result_passed;
+            
         }
         
     }
