@@ -26,6 +26,13 @@ class FormHooks
     public function onSubmitTest($answers, $formData, $files, $labels, $test)
     {
         
+        
+    }
+
+
+    public function onPrepareFormData(&$answers, $labels, $fields, $test, &$files)
+    {
+        
         if($test->formType == 'test') {
 
             // Grade the Test
@@ -82,20 +89,6 @@ class FormHooks
             // Pass our result ID to the result page
             $_SESSION['test_results_id'] = $test_result->id;
         }
-    }
-
-
-    public function onPrepareFormData(&$submittedData, $labels, $fields, $form, &$files)
-    {
-        $member = FrontendUser::getInstance();
-        
-        
-        // This calculates a deadline from a given timestamp
-        // and stores it as deadline in $submittedData.
-        $submittedData['member_name'] = "Member's Name!";
-        
-        
-        
         
     }
 
