@@ -25,10 +25,7 @@ class FormHooks
 
     public function onSubmitTest($answers, $formData, $files, $labels, $test)
     {
-        
-        
     }
-
 
     public function onPrepareFormData(&$answers, $labels, $fields, $test, &$files)
     {
