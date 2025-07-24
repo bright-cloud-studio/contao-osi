@@ -27,10 +27,6 @@ class FormHooks
     {
         
         if($test->formType == 'test') {
-            
-            echo "<pre>";
-            print_r($answers);
-            die();
 
             // Grade the Test
             $total_questions = 0;
@@ -91,6 +87,9 @@ class FormHooks
 
     public function onPrepareFormData(&$submittedData, $labels, $fields, $form, &$files)
     {
+        $member = FrontendUser::getInstance();
+        
+        
         // This calculates a deadline from a given timestamp
         // and stores it as deadline in $submittedData.
         $submittedData['member_name'] = "Member's Name!";
