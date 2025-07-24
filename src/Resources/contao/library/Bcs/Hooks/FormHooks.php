@@ -36,6 +36,7 @@ class FormHooks
         if($test->formType == 'test') {
             
             
+            $correct_answers = [];
 
             // Grade the Test
             $total_questions = 0;
@@ -53,14 +54,21 @@ class FormHooks
                             if($option['value'] == $answer) {
                                 if($option['correct'] == 1) {
                                     $total_correct_answers++;
+                                    
+                                    $correct_answers[] = $option['value'];
+                                    $answers[$question->name] = 'correct';
+                                    
                                 } else {
+                                    $answers[$question->name] = 'incorrect';
                                 }
                             }
                             
                         }
                     }
                 }
+                
             }
+
             
             // Get Member
             $member = FrontendUser::getInstance();
@@ -84,7 +92,6 @@ class FormHooks
                 if($test_result->result_total_correct >= $test->total_correct)
                     $test_result->result_passed = 'yes';
             }
-            
             
             $test_result->save();
             
