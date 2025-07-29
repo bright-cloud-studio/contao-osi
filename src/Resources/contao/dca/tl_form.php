@@ -20,9 +20,12 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
     $GLOBALS['TL_DCA']['tl_form']['palettes']['default']
 );
 
+// Append Publish Legend to palettes
+$GLOBALS['TL_DCA']['tl_form']['palettes']['default'] .= '{publish_legend},publish;';
+
 // Append 'newsType' to the existing __selector__ array rather than overwriting it.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, cert_image;{publish_legend},publish;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, cert_image;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'scoringType';
