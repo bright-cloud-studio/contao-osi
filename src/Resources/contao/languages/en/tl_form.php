@@ -11,3 +11,7 @@ $GLOBALS['TL_LANG']['tl_form']['additional_info'] = ['Additional Information', '
 
 $GLOBALS['TL_LANG']['tl_form']['member_group_legend'] = 'Member Group Assignment';
 $GLOBALS['TL_LANG']['tl_form']['member_groups'] = ['Member Groups', 'Select the Member Groups that will have access to this Test'];
+
+
+$GLOBALS['TL_LANG']['tl_form']['publish_legend'] = 'Publish Settings';
+$GLOBALS['TL_LANG']['tl_form']['publish'] = ['Published', 'Toggle if this form is Published or Unpublished. Only Published Tests will display on the frontend'];
