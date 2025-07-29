@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 );
 
 // Append Publish Legend to palettes
-$GLOBALS['TL_DCA']['tl_form']['palettes']['default'] .= '{publish_legend},publish;';
+$GLOBALS['TL_DCA']['tl_form']['palettes']['default'] .= ';{publish_legend},publish;';
 
 // Append 'newsType' to the existing __selector__ array rather than overwriting it.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
