@@ -61,19 +61,21 @@ class ModListTests extends \Contao\Module
             $assignments = unserialize($member_group->test_assignment);
             foreach($assignments as $assignment) {
                 $test = FormModel::findBy('id', $assignment);
-                
-                $test_data[$test_counter]['id'] = $test->id;
-                $test_data[$test_counter]['title'] = $test->title;
-                
-                if($test->cert_image) {
-                    $uuid = StringUtil::binToUuid($test->cert_image);
-                    $objFile = FilesModel::findByUuid($uuid);
-                    if ($objFile) {
-        				$test_data[$test_counter]['cert_image'] = $objFile->path;
+
+                if($test->publish == 1) {
+                    $test_data[$test_counter]['id'] = $test->id;
+                    $test_data[$test_counter]['title'] = $test->title;
+                    
+                    if($test->cert_image) {
+                        $uuid = StringUtil::binToUuid($test->cert_image);
+                        $objFile = FilesModel::findByUuid($uuid);
+                        if ($objFile) {
+            				$test_data[$test_counter]['cert_image'] = $objFile->path;
+                        }
                     }
+                    
+                    $test_counter++;
                 }
-                
-                $test_counter++;
             }
             
         }
