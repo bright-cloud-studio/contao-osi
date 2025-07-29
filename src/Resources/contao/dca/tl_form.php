@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
 
 
 // Publish toggle
-$GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
+$GLOBALS['TL_DCA']['tl_form']['fields']['publish'] = array(
     'label' => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
     'toggle' => true,
     'filter' => true,
