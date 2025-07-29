@@ -112,8 +112,9 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['publish'] = array(
     'toggle' => true,
     'filter' => true,
     'inputType' => 'checkbox',
+    'default' => '1',
     'eval' => array('doNotCopy'=>true),
-    'sql' => array('type' => 'boolean', 'default' => false)
+    'sql' => array('type' => 'boolean', 'default' => true)
 );
 
 
