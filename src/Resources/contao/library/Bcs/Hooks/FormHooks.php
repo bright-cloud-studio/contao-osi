@@ -25,7 +25,10 @@ class FormHooks
 
     public function onSubmitTest($answers, $formData, $files, $labels, $test)
     {
+        
+        
     }
+
 
     public function onPrepareFormData(&$answers, $labels, $fields, $test, &$files)
     {
@@ -65,7 +68,9 @@ class FormHooks
                 }
                 
             }
-
+            
+            
+            
             
             // Get Member
             $member = FrontendUser::getInstance();
@@ -90,6 +95,7 @@ class FormHooks
                     $test_result->result_passed = 'yes';
             }
             
+            
             $test_result->save();
             
             // Pass our result ID to the result page
@@ -102,6 +108,9 @@ class FormHooks
             $answers['result_total_correct'] = $test_result->result_total_correct;
             $answers['result_percentage'] = $test_result->result_percentage;
             $answers['result_passed'] = $test_result->result_passed;
+            $answers['correct_answers'] = serialize($correct_answers);
+
+            
             
         }
         
