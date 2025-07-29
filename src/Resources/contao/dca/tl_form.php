@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
 
 // Append 'newsType' to the existing __selector__ array rather than overwriting it.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, cert_image';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, cert_image;{publish_legend},published';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'scoringType';
@@ -103,6 +103,19 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
     ),
     'sql'       => "binary(16) NULL"
 );
+
+
+
+// Publish toggle
+$GLOBALS['TL_DCA']['tl_form']['fields']['additional_info'] = array(
+    'label' => &$GLOBALS['TL_LANG']['tl_form']['test_embed'],
+    'toggle' => true,
+    'filter' => true,
+    'inputType' => 'checkbox',
+    'eval' => array('doNotCopy'=>true),
+    'sql' => array('type' => 'boolean', 'default' => false)
+);
+
 
 
 // Ensure newsType dropdown appears when editing old content
