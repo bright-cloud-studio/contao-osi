@@ -34,3 +34,6 @@ $GLOBALS['TL_LANG']['tl_test_result']['answers']              = array('Answers',
 $GLOBALS['TL_LANG']['tl_test_result']['results_legend']    = 'Result Details';
 $GLOBALS['TL_LANG']['tl_test_result']['result_total_correct']           = array('Total Correct Answers', 'Count of the number of correct Answers');
 $GLOBALS['TL_LANG']['tl_test_result']['result_percentage']              = array('Total Percentage', 'Percentage of correct Answers');
+
+$GLOBALS['TL_LANG']['tl_test_result']['member_groups_legend']    = 'Member Group Details';
+$GLOBALS['TL_LANG']['tl_test_result']['member_groups']           = array('Member Groups', 'Used to allow filtering by Member Group for Test Results.');
