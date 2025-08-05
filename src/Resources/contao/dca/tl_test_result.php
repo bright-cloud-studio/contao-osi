@@ -190,6 +190,8 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'inputType'        => 'checkboxWizard',
             'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
             'flag'             => DataContainer::SORT_ASC,
+            'filter'           => true,
+            'foreignKey'       => 'tl_member_group.name',
             'options_callback' => array('Bcs\Backend\TestResultBackend', 'getMemberGroups'),
             'sql'              => "blob NULL"
         ),
