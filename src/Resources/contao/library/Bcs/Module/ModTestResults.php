@@ -66,6 +66,7 @@ class ModTestResults extends \Contao\Module
             $questions = FormFieldModel::findBy('pid', $results->test);
             // Answers
             $answers = json_decode($results->answers, true);
+
             
             $question_counter = 0;
             foreach($questions as $question) {
@@ -76,21 +77,15 @@ class ModTestResults extends \Contao\Module
                     
                     $options =  unserialize($question->options);
                     foreach($options as $option) {
-                        
-                        if($option['value'] == $answers[$question->name]) {
-                            //echo "Option Value: " . $option['value'] . "<br>";
-                            //echo "Answer: " . $answers[$question->name] . "<br>";
-                            
-                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name];
-                            
-                            if($option['correct'] == 1)
-                                $results_data['questions'][$question_counter]['correct'] = 'true';
-                            else
-                                $results_data['questions'][$question_counter]['correct'] = 'false';
-                            
+
+                        if($answers[$question->name]['correct'] == 'yes') {
+                            $results_data['questions'][$question_counter]['correct'] = 'true';
+                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name]['answer'];
+                        } else {
+                            $results_data['questions'][$question_counter]['correct'] = 'false';
+                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name]['answer'];
                         }
-                        
-                        
+
                     }
                     
                     $question_counter++;
