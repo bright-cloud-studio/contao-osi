@@ -49,7 +49,17 @@ class TestResultBackend extends Backend
     {
         // Clear out our current label
         $label = '';
-        $label .= date('m/d/Y g:i a', $row['submission_date']) . " - ";
+        
+        $label .= date('m/d/Y', $row['submission_date']) . " - ";
+        
+        if($row['result_passed'] == 'no')
+            $label .= "Failed - ";
+        else if($row['result_passed'] == 'yes')
+            $label .= "Passed - ";
+            
+        $label .= "(" . $row['result_percentage'] . "%) - ";
+        
+        
         
         $test = FormModel::findBy('id', $row['test']);
         $label .= $test->title . " - ";
