@@ -12,6 +12,12 @@ use Contao\StringUtil;
 
 class MemberGroupBackend extends Backend
 {
+
+    public function saveCallback($varValue, DataContainer $dc) {
+        echo "Die!";
+        die();
+    }
+    
     // Get Members as options for a Select DCA field
     public function getTests(DataContainer $dc) {
         $tests = array();
