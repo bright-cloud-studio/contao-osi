@@ -53,9 +53,9 @@ class TestResultBackend extends Backend
         $label .= date('m/d/Y', $row['submission_date']) . " - ";
         
         if($row['result_passed'] == 'no')
-            $label .= "Failed - ";
+            $label .= "<span style='color: red; font-weight: 600;'>Failed</span> - ";
         else if($row['result_passed'] == 'yes')
-            $label .= "Passed - ";
+            $label .= "<span style='color: green; font-weight: 600;'>Failed</span> - ";
             
         $label .= "(" . $row['result_percentage'] . "%) - ";
         
