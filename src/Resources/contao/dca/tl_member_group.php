@@ -19,5 +19,9 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['test_assignment'] = array(
     'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
     'flag'             => DataContainer::SORT_ASC,
     'options_callback' => array('Bcs\Backend\MemberGroupBackend', 'getTests'),
-    'sql'              => "blob NULL"
+    'sql'              => "blob NULL",
+    'save_callback' => array
+	(
+		array('Bcs\Backend\MemberGroupBackend', 'saveCallback')
+	),
 );
