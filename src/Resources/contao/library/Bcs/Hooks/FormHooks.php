@@ -37,6 +37,8 @@ class FormHooks
             
             
             $correct_answers = [];
+            
+            $our_answers = [];
 
             // Grade the Test
             $total_questions = 0;
@@ -57,9 +59,13 @@ class FormHooks
                                     
                                     $correct_answers[] = $option['value'];
                                     $answers[$question->name] = 'correct';
+                                    $our_answers[$question->name]['correct'] = 'yes';
+                                    $our_answers[$question->name]['answer'] = $option['label'];
                                     
                                 } else {
                                     $answers[$question->name] = 'incorrect';
+                                    $our_answers[$question->name]['correct'] = 'no';
+                                    $our_answers[$question->name]['answer'] = $option['label'];
                                 }
                             }
                             
@@ -68,7 +74,7 @@ class FormHooks
                 }
                 
             }
-            
+
             
             
             
@@ -81,7 +87,7 @@ class FormHooks
             $test_result->test = $test->id;
             $test_result->member = $member->id;
             $test_result->submission_date = time();
-            $test_result->answers = json_encode($answers);
+            $test_result->answers = json_encode($our_answers);
             $test_result->result_total_correct = $total_correct_answers;
             $test_result->result_percentage = ($total_correct_answers / $total_questions) * 100;
             
