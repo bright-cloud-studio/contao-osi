@@ -1,11 +1,23 @@
 <html>
 	<head>
+
 		<style>
+		
+		    @font-face {
+		        font-family: industry;
+		        src: url('../fonts/industry_2.ttf');
+		    }
+		    @font-face {
+		        font-family: industry_italic;
+		        src: url('../fonts/industry_2_italic.ttf');
+		    }
+		
 		    /* These are necessary to remove the margin on the paper */
 		    @page { margin: 5px; }
         body{
             margin: 5px;
             border: 5px double #000;
+            font-family: industry;
         }
         
         .cert_wrapper {
@@ -34,6 +46,7 @@
         }
         
         .name {
+            font-family: industry_italic;
             font-style: italic;
             font-weight: 500;
             font-size: 40px;
@@ -82,7 +95,7 @@
             <div class="submission_date">{{result::submission_date}}</div>
             
             <div class="logo_wrapper">
-                <img class="logo" src="{{server::root}}/../files/structure/images/logos/pdf_logo.jpg">
+                <img class="logo" src="{{server::root}}/../files/structure/images/logos/logo_for_pdf.jpg">
                 <div class="url">www.occserv.com</div>
             </div>
 	        
