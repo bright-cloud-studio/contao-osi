@@ -6,6 +6,7 @@ use Bcs\Model\TestResult;
 
 use Contao\BackendTemplate;
 use Contao\FormFieldModel;
+use Contao\FormModel;
 use Contao\Input;
 use Contao\System;
 use Contao\FrontendUser;
@@ -58,6 +59,13 @@ class ModTestHistory extends \Contao\Module
         foreach($results as $result) {
             $results_data[$result_counter]['id'] = $result->id;
             $results_data[$result_counter]['test'] = $result->test;
+            
+            $test = FormModel::findOneBy('id', $result->test);
+            
+            if($test)
+                $results_data[$result_counter]['test_name'] = $test->title;
+            
+            
             $results_data[$result_counter]['submission_date'] = $result->submission_date;
             $results_data[$result_counter]['result_passed'] = $result->result_passed;
             $results_data[$result_counter]['result_total_correct'] = $result->result_total_correct;
