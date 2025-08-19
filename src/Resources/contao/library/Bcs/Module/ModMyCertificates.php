@@ -21,12 +21,13 @@ class ModMyCertificates extends \Contao\Module
     /* Construct function */
     public function __construct($objModule, $strColumn='main')
     {
-        parent::__construct($objModule, $strColumn);
+        //parent::__construct($objModule, $strColumn);
     }
 
     /* Generate function */
     public function generate()
     {
+        /*
         $request = System::getContainer()->get('request_stack')->getCurrentRequest();
 
         if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
@@ -43,16 +44,17 @@ class ModMyCertificates extends \Contao\Module
         }
  
         return parent::generate();
+        */
     }
 
  
     protected function compile()
     {
+        /*
         $member = FrontendUser::getInstance();
         $results = TestResult::findBy(['member = ?', 'result_passed = ?'], [$member->id, 'yes']);
         
         $certificates = [];
-        /*
         foreach($results as $result) {
 
             
@@ -70,9 +72,9 @@ class ModMyCertificates extends \Contao\Module
             
 
         }
-        */
         
         $this->Template->my_certificates = $certificates;
+        */
     }
   
 
