@@ -54,16 +54,23 @@ class ModMyCertificates extends \Contao\Module
         $certificates = [];
         foreach($results as $result) {
             
+            echo "RESULT<br>";
+            echo print_r($result);
+            
+            
+            
             $test = FormModel::findBy(['id = ?'], [$result->test]);
+            
+            echo "<br><br>TEST<br>";
+            echo print_r($test);
+            
             $certificates[$result->test]['title'] = $test->title;
             
-            if(is_array($test->cert_image)) {
-                $uuid = StringUtil::binToUuid($test->cert_image);
-                $objFile = FilesModel::findByUuid($uuid);
-                if ($objFile) {
-    				$certificates[$result->test]['cert_image'] = $objFile->path;
-    				$certificates[$result->test]['id'] = $result->id;
-                }
+            $uuid = StringUtil::binToUuid($test->cert_image);
+            $objFile = FilesModel::findByUuid($uuid);
+            if ($objFile) {
+				$certificates[$result->test]['cert_image'] = $objFile->path;
+				$certificates[$result->test]['id'] = $result->id;
             }
             
 
