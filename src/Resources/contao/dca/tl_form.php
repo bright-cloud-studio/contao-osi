@@ -13,6 +13,10 @@ use Contao\Database;
 use Contao\Input;
 use Contao\System;
 
+
+// Change the default value for store data
+$GLOBALS['TL_DCA']['tl_form']['fields']['storeValues']['sql']['default'] = true;
+
 // Insert the newsType field into the palette at an appropriate spot.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] = str_replace(
     '{title_legend}',
