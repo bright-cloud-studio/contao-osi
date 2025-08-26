@@ -15,6 +15,23 @@ use Bcs\Model\TestResult;
 class TestResultBackend extends Backend
 {
 
+    public function saveCallback($varValue, DataContainer $dc) {
+
+        // Get the Test IDs
+        $group_ids = unserialize($varValue);
+        
+        // Loop through each ID, add to new array where the key is the title
+        $sorted = [];
+        foreach($group_ids as $id) {
+            $member_group = MemberGroupModel::findBy(['id = ?'], [$id]);
+            $sorted[$member_group->name] = $member_group->id;
+        }
+        
+        // send back a serialized array of our sorted version of selected values.
+        return serialize($sorted);
+        //return $varValue;
+    }
+    
     // Get Members as options for a Select DCA field
     public function getMemberGroups(DataContainer $dc) { 
 
