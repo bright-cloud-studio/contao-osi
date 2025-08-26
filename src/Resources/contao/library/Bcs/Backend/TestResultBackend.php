@@ -26,7 +26,7 @@ class TestResultBackend extends Backend
             $member_group = MemberGroupModel::findBy(['id = ?'], [$id]);
             $sorted[$member_group->name] = $member_group->id;
         }
-        
+
         // send back a serialized array of our sorted version of selected values.
         return serialize($sorted);
         //return $varValue;
