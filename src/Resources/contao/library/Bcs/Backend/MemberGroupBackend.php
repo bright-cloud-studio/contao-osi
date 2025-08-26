@@ -10,6 +10,8 @@ use Contao\MemberGroupModel;
 use Contao\MemberModel;
 use Contao\StringUtil;
 
+use Contao\FormModel;
+
 use Bcs\Model\TestResult;
 
 class MemberGroupBackend extends Backend
@@ -19,6 +21,14 @@ class MemberGroupBackend extends Backend
 
         // Get the Test IDs
         $group_ids = unserialize($varValue);
+        
+        // Loop through each ID, add to new array where the key is the title
+        $sorted = [];
+        foreach($group_ids as $id) {
+            $test = FormModel::findBy(['id = ?'], [$id]);
+            $sorted[$test->title] = $test->id;
+        }
+        
 
         // Foreach Test
         foreach($group_ids as $id) {
@@ -39,9 +49,10 @@ class MemberGroupBackend extends Backend
             }
             
         }
-
-
-        return $varValue;
+        
+        // send back a serialized array of our sorted version of selected values.
+        return serialize($sorted);
+        //return $varValue;
     }
     
     // Get Members as options for a Select DCA field
