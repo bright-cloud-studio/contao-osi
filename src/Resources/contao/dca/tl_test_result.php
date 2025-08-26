@@ -193,7 +193,10 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'filter'           => true,
             'foreignKey'       => 'tl_member_group.name',
             'options_callback' => array('Bcs\Backend\TestResultBackend', 'getMemberGroups'),
-            'save_callback'    => array('Bcs\Backend\TestResultBackend', 'saveCallback'),
+            'save_callback' => array
+        	(
+        		array('Bcs\Backend\TestResultBackend', 'saveCallback')
+        	),
             'sql'              => "blob NULL"
         ),
 
