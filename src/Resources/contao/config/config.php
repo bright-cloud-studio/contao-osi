@@ -1,5 +1,6 @@
 <?php
 
+use Contao\System;
 use Bcs\OSIBundle\FormMultipleChoiceQuestion;
 use Bcs\MultiChoiceWizard;
 
@@ -27,3 +28,10 @@ $GLOBALS['TL_MODELS']['tl_test_result'] = 'Bcs\Model\TestResult';
 $GLOBALS['BE_MOD']['content']['test_result'] = array(
 	'tables' => array('tl_test_result')
 );
+
+/* Add Backend CSS */
+$request = System::getContainer()->get('request_stack')->getCurrentRequest();
+if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
+{
+	$GLOBALS['TL_CSS'][] = 'bundles/bcsosi/css/be_multiple_choice.css';
+}
