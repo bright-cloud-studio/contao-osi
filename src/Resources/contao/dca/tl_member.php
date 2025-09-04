@@ -3,7 +3,7 @@
 use Contao\DataContainer;
 
 /* Modify default Member Group sorting to be alphabetical */
-$GLOBALS['TL_DCA']['tl_member']['fields']['groups']['flag'] = 1;
+$GLOBALS['TL_DCA']['tl_member']['fields']['groups']['flag'] = 2;
 $GLOBALS['TL_DCA']['tl_member']['fields']['groups']['save_callback'] = array
 (
     array('Bcs\Backend\MemberBackend', 'saveCallback')
