@@ -1,1 +1,5 @@
-.tl_formbody_edit { color: red; }
+.tl_optionwizard {
+    max-width: none;
+}
+
+.tl_optionwizard tbody tr td:first-of-type { width: 60px; }
