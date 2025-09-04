@@ -13,6 +13,8 @@ use Contao\Database;
 use Contao\Input;
 use Contao\System;
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+
 
 // Change the default value for store data
 $GLOBALS['TL_DCA']['tl_form']['fields']['storeValues']['sql']['default'] = false;
@@ -138,3 +140,7 @@ $GLOBALS['TL_DCA']['tl_form']['config']['onload_callback'][] = function (DataCon
         ->newsType;
 };
 
+// Attempt to remove Store Data from the palette
+PaletteManipulator::create()
+    ->removeField('storeValues', 'store_legend')
+    ->applyToPalette('default', 'tl_form');
