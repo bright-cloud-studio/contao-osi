@@ -8,7 +8,7 @@ use Contao\FormModel;
 
 class FormMultipleChoiceQuestion extends FormRadio
 {
-    protected $strTemplate = 'form_radio';
+    protected $strTemplate = 'form_multi_choice_question';
     protected $strPrefix = 'widget widget-radio widget-multi-choice-question';
   
 }
