@@ -47,29 +47,30 @@ class MultiChoiceWizard extends OptionWizard
               <div class="selector_container">
                 <ul id="sort_singleSRC" class=""></ul>
                 <p><a href="/contao/picker?context=file&amp;extras%5BfieldType%5D=radio&amp;extras%5BfilesOnly%5D=1&amp;extras%5Bextensions%5D=jpg,jpeg,gif,png,tif,tiff,bmp,svg,svgz,webp,avif&amp;value=" class="tl_submit" id="' . $this->strId . '_ft_upload_' . $i . '">Image</a></p>
-                
-            
-            <script>
-              $("' . $this->strId . '_ft_upload_' . $i . '").addEvent("click", function(e) {
-                e.preventDefault();
-                Backend.openModalSelector({
-                  "id": "tl_listing",
-                  "title": "Source file",
-                  "url": this.href + document.getElementById("' . $this->strId . '_upload_' . $i . '").value,
-                  "callback": function(table, value) {
-                    new Request.Contao({
-                      evalScripts: false,
-                      onSuccess: function(txt, json) {
-                        // add value to hidden input so it gets into the db
-                        document.getElementById("' . $this->strId . '_upload_' . $i . '").value = value;
-                        // add value to label, wrapping in image tag
-                        document.getElementById("' . $this->strId . '_label_' . $i . '").value = "<img src=\"" + value + "\">";
+                // Add script that will trigger our popup
+                <script>
+                  $("' . $this->strId . '_ft_upload_' . $i . '").addEvent("click", function(e) {
+                    e.preventDefault();
+                    Backend.openModalSelector({
+                      "id": "tl_listing",
+                      "title": "Source file",
+                      "url": this.href + document.getElementById("' . $this->strId . '_upload_' . $i . '").value,
+                      "callback": function(table, value) {
+                        new Request.Contao({
+                          evalScripts: false,
+                          onSuccess: function(txt, json) {
+                            // add value to hidden input so it gets into the db
+                            document.getElementById("' . $this->strId . '_upload_' . $i . '").value = value;
+                            // add value to label, wrapping in image tag
+                            document.getElementById("' . $this->strId . '_label_' . $i . '").value = "<img src=\"" + value + "\">";
+                          }
+                        }).post();
                       }
-                    }).post();
-                  }
-                });
-              });
-            </script></div></div>
+                    });
+                  });
+                </script>
+            </div>
+        </div>
       </td>
       
       <td><input type="checkbox" name="' . $this->strId . '[' . $i . '][correct]" id="' . $this->strId . '_correct_' . $i . '" class="fw_checkbox" value="1"' . (($this->varValue[$i]['correct'] ?? null) ? ' checked="checked"' : '') . '> <label for="' . $this->strId . '_correct_' . $i . '">Correct</label></td>';
