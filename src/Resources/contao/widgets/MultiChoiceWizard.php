@@ -40,6 +40,38 @@ class MultiChoiceWizard extends OptionWizard
     <tr>
       <td><input type="text" name="' . $this->strId . '[' . $i . '][value]" id="' . $this->strId . '_value_' . $i . '" class="tl_text" value="' . self::specialcharsValue($this->varValue[$i]['value'] ?? '') . '"></td>
       <td><input type="text" name="' . $this->strId . '[' . $i . '][label]" id="' . $this->strId . '_label_' . $i . '" class="tl_text" value="' . self::specialcharsValue($this->varValue[$i]['label'] ?? '') . '"></td>
+      
+      <td>
+          <div>
+            <input type="hidden" name="' . $this->strId . '[' . $i . '][image]" id="' . $this->strId . '_upload_' . $i . '" value="">
+              <div class="selector_container">
+                <ul id="sort_singleSRC" class=""></ul>
+                <p><a href="/contao/picker?context=file&amp;extras%5BfieldType%5D=radio&amp;extras%5BfilesOnly%5D=1&amp;extras%5Bextensions%5D=jpg,jpeg,gif,png,tif,tiff,bmp,svg,svgz,webp,avif&amp;value=" class="tl_submit" id="' . $this->strId . '_ft_upload_' . $i . '">Image</a></p>
+                
+            
+            <script>
+              $("' . $this->strId . '_ft_upload_' . $i . '").addEvent("click", function(e) {
+                e.preventDefault();
+                Backend.openModalSelector({
+                  "id": "tl_listing",
+                  "title": "Source file",
+                  "url": this.href + document.getElementById("' . $this->strId . '_upload_' . $i . '").value,
+                  "callback": function(table, value) {
+                    new Request.Contao({
+                      evalScripts: false,
+                      onSuccess: function(txt, json) {
+                        // add value to hidden input so it gets into the db
+                        document.getElementById("' . $this->strId . '_upload_' . $i . '").value = value;
+                        // add value to label, wrapping in image tag
+                        document.getElementById("' . $this->strId . '_label_' . $i . '").value = "<img src=\"" + value + "\">";
+                      }
+                    }).post();
+                  }
+                });
+              });
+            </script></div></div>
+      </td>
+      
       <td><input type="checkbox" name="' . $this->strId . '[' . $i . '][correct]" id="' . $this->strId . '_correct_' . $i . '" class="fw_checkbox" value="1"' . (($this->varValue[$i]['correct'] ?? null) ? ' checked="checked"' : '') . '> <label for="' . $this->strId . '_correct_' . $i . '">Correct</label></td>';
 
 			// Add row buttons
