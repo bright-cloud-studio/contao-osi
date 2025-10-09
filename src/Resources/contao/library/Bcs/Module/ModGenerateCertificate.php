@@ -12,7 +12,7 @@ use Contao\StringUtil;
 use Contao\System;
 use Contao\FrontendUser;
 
-class ModMyCertificates extends \Contao\Module
+class ModGenerateCertificate extends \Contao\Module
 {
 
     /* Default Template */
