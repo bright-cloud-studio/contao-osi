@@ -46,7 +46,7 @@ class MultiChoiceWizard extends OptionWizard
             <input type="hidden" name="' . $this->strId . '[' . $i . '][image]" id="' . $this->strId . '_upload_' . $i . '" value="">
               <div class="selector_container">
                 <ul id="sort_singleSRC" class=""></ul>
-                <p><a href="/contao/picker?context=file&amp;extras%5BfieldType%5D=radio&amp;extras%5BfilesOnly%5D=1&amp;extras%5Bextensions%5D=jpg,jpeg,gif,png,tif,tiff,bmp,svg,svgz,webp,avif&amp;value=" class="tl_submit" id="' . $this->strId . '_ft_upload_' . $i . '">Image</a></p>
+                <p><a href="/contao/picker?context=file&amp;extras%5BfieldType%5D=radio&amp;extras%5BfilesOnly%5D=1&amp;extras%5Bextensions%5D=jpg,jpeg,gif,png,tif,tiff,bmp,svg,svgz,webp,avif&amp;value=" class="tl_submit img_picker" id="' . $this->strId . '_ft_upload_' . $i . '">IMG</a></p>
                 
             
             <script>
