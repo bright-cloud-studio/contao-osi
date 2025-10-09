@@ -3,3 +3,7 @@
 }
 
 .tl_optionwizard tbody tr td:first-of-type { width: 60px; }
+
+.tl_optionwizard .img_picker {
+    padding: 7px 3px;
+}
