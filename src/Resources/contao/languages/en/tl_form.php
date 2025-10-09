@@ -15,3 +15,12 @@ $GLOBALS['TL_LANG']['tl_form']['member_groups'] = ['Member Groups', 'Select the 
 
 $GLOBALS['TL_LANG']['tl_form']['publish_legend'] = 'Publish Settings';
 $GLOBALS['TL_LANG']['tl_form']['publish'] = ['Published', 'Toggle if this form is Published or Unpublished. Only Published Tests will display on the frontend'];
+
+
+$GLOBALS['TL_LANG']['tl_form']['scoring_legend'] = 'Scoring Details';
+$GLOBALS['TL_LANG']['tl_form']['socringType'] = ['Scoring Type', 'Select if this Test will grade based on Percentage or Total Correct Answers'];
+$GLOBALS['TL_LANG']['tl_form']['percentage'] = ['Percentage', 'Enter the percentage the user has to hit, or exceed, to pass this Test'];
+$GLOBALS['TL_LANG']['tl_form']['total_correct'] = ['Total Correct', 'Enter the total number of correct answers the user has to reach to pass this Test'];
+
+$GLOBALS['TL_LANG']['tl_form']['certificate_legend'] = 'Image Details';
+$GLOBALS['TL_LANG']['tl_form']['cert_image'] = ['List Image', 'Select the image that will be used when displaying this Test on the \'My Trainings\' page'];
