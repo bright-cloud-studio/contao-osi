@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] .= ';{publish_legend},publi
 
 // Append 'newsType' to the existing __selector__ array rather than overwriting it.
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'formType';
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, cert_image;';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_test'] = ';{test_content_legend},embed_code,additional_info;{scoring_legend}, scoringType;{certificate_legend}, training_image, custom_image;';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['formType_default'] = '';
 
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'scoringType';
@@ -117,8 +117,8 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['training_image'] = array(
     'sql'              => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
-    'label'     => &$GLOBALS['TL_LANG']['tl_form']['cert_image'],
+$GLOBALS['TL_DCA']['tl_form']['fields']['custom_image'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['custom_image'],
     'exclude'   => true,
     'inputType' => 'fileTree',
     'eval'      => array(
@@ -129,6 +129,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
     ),
     'sql'       => "binary(16) NULL"
 );
+
 
 
 
