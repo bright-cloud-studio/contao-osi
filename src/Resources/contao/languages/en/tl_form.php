@@ -23,4 +23,5 @@ $GLOBALS['TL_LANG']['tl_form']['percentage'] = ['Percentage', 'Enter the percent
 $GLOBALS['TL_LANG']['tl_form']['total_correct'] = ['Total Correct', 'Enter the total number of correct answers the user has to reach to pass this Test'];
 
 $GLOBALS['TL_LANG']['tl_form']['certificate_legend'] = 'Image Details';
-$GLOBALS['TL_LANG']['tl_form']['cert_image'] = ['List Image', 'Select the image that will be used when displaying this Test on the \'My Trainings\' page'];
+$GLOBALS['TL_LANG']['tl_form']['custom_image'] = ['Training Image', 'Select from a predefined list of images to use when displaying this Test on the frontend'];
+$GLOBALS['TL_LANG']['tl_form']['custom_image'] = ['Custom Image', 'Choose a custom image to use when displaying this Test on the frontend'];
