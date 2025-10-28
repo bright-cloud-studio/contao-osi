@@ -57,11 +57,11 @@ class ModGenerateCertificates extends \Contao\Module
             $test = FormModel::findBy(['id = ?'], [$result->test]);
             $certificates[$result->test]['title'] = $test->title;
             
-            if($test->cert_image != null) {
-                $uuid = StringUtil::binToUuid($test->cert_image);
+            if($test->custom_image != null) {
+                $uuid = StringUtil::binToUuid($test->custom_image);
                 $objFile = FilesModel::findByUuid($uuid);
                 if ($objFile) {
-    				$certificates[$result->test]['cert_image'] = $objFile->path;
+    				$certificates[$result->test]['custom_image'] = $objFile->path;
     				
                 }
             }
