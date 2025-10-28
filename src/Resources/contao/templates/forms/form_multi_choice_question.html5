@@ -23,9 +23,37 @@
         <legend><?= $option['label'] ?></legend>
       <?php endif; ?>
 
+
       <?php if ('option' == $option['type']): ?>
-        <span><input type="radio" name="<?= $option['name'] ?>" id="opt_<?= $option['id'] ?>" class="radio" value="<?= $option['value'] ?>"<?= $option['checked'] ?><?= $option['attributes'] ?>> <label id="lbl_<?= $option['id'] ?>" for="opt_<?= $option['id'] ?>"><?= $option['label'] ?></label></span>
+      
+        <?php
+        
+          /* Display image if we find the [img] tag in our label */
+          $image_question = false;
+          if (str_contains($option['label'], "[img]")) {
+            $img_url = str_replace('[img]', '', $option['label']);
+            $img = \Contao\FilesModel::findOneBy('path', $img_url);
+            if($img) {
+              $image_question = true;
+              $meta = unserialize($img->meta);
+              $option['label'] ="<img class='image_question' src='".$img->path."' alt='".$meta['en']['alt']."'>";
+            }
+          }
+        
+        ?>
+      
+        <?php if($image_question) { ?>
+          <span class="image_question_wrapper">
+        <?php } else { ?>
+          <span>
+        <?php } ?>
+          <input type="radio" name="<?= $option['name'] ?>" id="opt_<?= $option['id'] ?>" class="radio" value="<?= $option['value'] ?>"<?= $option['checked'] ?><?= $option['attributes'] ?>>
+            <label id="lbl_<?= $option['id'] ?>" for="opt_<?= $option['id'] ?>"><?= $option['label'] ?></label>
+          </span>
+        
+        
       <?php endif; ?>
+
 
       <?php if ('group_end' == $option['type']): ?>
         </fieldset>
