@@ -99,7 +99,24 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['total_correct'] = array(
 );
 
 
-/* CERTIFICATE */
+/* IMAGES */
+
+$GLOBALS['TL_DCA']['tl_form']['fields']['training_image'] = array(
+    'label'     => &$GLOBALS['TL_LANG']['tl_form']['training_image'],
+    'exclude'   => true,
+    'filter'    => true,
+    'inputType' => 'select',
+    'eval'      => array(
+        'tl_class'=>'w50',
+        'chosen'=>true,
+        'includeBlankOption'=>true,
+        'blankOptionLabel'=>'Select a Psychologist',
+        'mandatory' => false
+    ),
+    'options_callback' => array('Bcs\Backend\TestBackend', 'getTrainingImages'),
+    'sql'              => "varchar(255) NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_form']['fields']['cert_image'] = array(
     'label'     => &$GLOBALS['TL_LANG']['tl_form']['cert_image'],
     'exclude'   => true,
