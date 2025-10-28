@@ -12,4 +12,16 @@ use Contao\StringUtil;
 
 class TestBackend extends Backend
 {
+
+    public function getTrainingImages(DataContainer $dc) { 
+
+        // Hold the psys
+        $training_images = array();
+
+        $training_images[] = array("img_1" => "Image One");
+        $training_images[] = array("img_2" => "Image Two");
+        
+		return $training_images;
+	}
+    
 }
