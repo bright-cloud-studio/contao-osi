@@ -18,8 +18,8 @@ class TestBackend extends Backend
         // Hold the psys
         $training_images = array();
 
-        $training_images[] = array("img_1" => "Image One");
-        $training_images[] = array("img_2" => "Image Two");
+        $training_images = $training_images + array('image_1' => 'Image One');
+        $training_images = $training_images + array('image_2' => 'Image Two');
         
 		return $training_images;
 	}
