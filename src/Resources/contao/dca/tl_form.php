@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['training_image'] = array(
         'tl_class'=>'w100',
         'chosen'=>true,
         'includeBlankOption'=>true,
-        'blankOptionLabel'=>'Select a Psychologist',
+        'blankOptionLabel'=>'Select a Training Image',
         'mandatory' => false
     ),
     'options_callback' => array('Bcs\Backend\TestBackend', 'getTrainingImages'),
