@@ -1,3 +1,6 @@
-<script>
-  console.log("BING");  
-</script>
+/* Once fully loaded */
+$(document).ready(function() {
+    
+    console.log("SCRIPT FOUND!");
+    
+});
