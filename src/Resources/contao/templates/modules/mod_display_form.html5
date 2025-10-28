@@ -1,13 +1,21 @@
-<?php if($this->has_permission) { ?>
+<?php if($this->has_permission == 'true') { ?>
 
     <h2 class="size100 center_element center_text background_color_dblue">
         <?= $this->test_title ?>
     </h2>
-    
-    <div class="test_embed width_1000 marbot60 center_element">
-        <?= $this->embed_code ?>
-    </div>
-    
+<?php if($this->embed_code): ?>    
+<div class="test_embed width_1000 marbot60 center_element">
+        <?php if (strpos($this->embed_code, '<iframe') !== false): ?>
+            <?= $this->embed_code ?>
+        <?php else: ?>
+            <?php
+                // Sanitize the URL: remove whitespace and trailing slash
+                $cleanUrl = rtrim(trim($this->embed_code), "/");
+            ?>
+            <iframe width="100%" height="900" src="<?= $cleanUrl ?>/?name={{user::username}}&email={{user::email}}#" frameborder="0" allowfullscreen></iframe>
+        <?php endif; ?>
+</div>
+ <?php endif; ?>   
     <?php if($this->additional_info) { ?>
         <div class="additional_info size100 marbot60">
             <?= $this->additional_info ?>
