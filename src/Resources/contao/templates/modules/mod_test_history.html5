@@ -3,24 +3,24 @@
 	<table style="width:100%; border-collapse: collapse;">
 		<thead>
 			<tr>
-				<th style="border: 1px solid black; padding: 8px; text-align: left;">TEST NAME</th>
-				<th style="border: 1px solid black; padding: 8px; text-align: left;">DATE</th>
-				<th style="border: 1px solid black; padding: 8px; text-align: left;">SCORE</th>
-				<th style="border: 1px solid black; padding: 8px; text-align: left;">PASSED</th>
+				<th>TEST NAME</th>
+				<th>DATE</th>
+				<th>SCORE</th>
+				<th>PASSED</th>
 			</tr>
 		</thead>
 		<tbody>
 			
 			<?php foreach($this->results_history as $result) { ?>
 				<tr>
-					<td style="border: 1px solid black; padding: 8px;"><?= $result['test'] ?></td>
-					<td style="border: 1px solid black; padding: 8px;"><?= date('m/d/Y g:i a', $result['submission_date']) ?></td>
-					<td style="border: 1px solid black; padding: 8px;"><?= $result['result_percentage'] ?></td>
-					<td style="border: 1px solid black; padding: 8px;">
+					<td><?= $result['test_name'] ?></td>
+					<td><?= date('m/d/Y g:i a', $result['submission_date']) ?></td>
+					<td><?= $result['result_percentage'] ?></td>
+					<td>
 						<?php if($result['result_passed'] == 'yes') { ?>
-							<p><a id="generate_certificate" onclick="genPDF(<?= $result['id'] ?>);">Yes</a></p>
+							<a id="generate_certificate" onclick="genPDF(<?= $result['id'] ?>);">Yes</a>
 						<?php } else { ?>
-							no
+							No
 						<?php } ?>
 					</td>
 				</tr>
