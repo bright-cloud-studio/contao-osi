@@ -33,6 +33,8 @@ $GLOBALS['BE_MOD']['content']['test_result'] = array(
 $request = System::getContainer()->get('request_stack')->getCurrentRequest();
 if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 {
+    $GLOBALS['TL_JAVASCRIPT'][] = 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js';
     $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/bcsosi/js/be_helper.js';
+    
     $GLOBALS['TL_CSS'][]        = 'bundles/bcsosi/css/be_multiple_choice.css';
 }
