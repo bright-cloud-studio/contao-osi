@@ -10,8 +10,8 @@
 			<div class="test">
 				<a class="select_test_wrapper" href="{{link_url::67}}?test=<?= $test['id'] ?>">
 					
-					<?php if($test['cert_image']) { ?>
-						<img src="<?= $test['cert_image'] ?>" />
+					<?php if($test['custom_image']) { ?>
+						<img src="<?= $test['custom_image'] ?>" />
 					<?php } else { ?>
 						<img src="/files/content/certificate_images/fallback.jpg" />
 					<?php } ?>
