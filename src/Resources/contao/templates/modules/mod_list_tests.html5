@@ -1,5 +1,26 @@
-<div class="mod_list_tests size100 marbot60">
-  <?php foreach($this->tests as $test) { ?>
-    <a href="{{link_url::67}}?test=<?= $test['id'] ?>"><?= $test['title'] ?></a><br>
-  <?php } ?>
+<div class="mod_list_tests size100 nopad flex_wrapper marbot60">
+	<?php if(!$this->tests): ?>
+	<div class="size100">
+		<h3>Tests Coming Soon</h3>
+		<p>There are currently no tests available for you.</p>
+	</div>
+	<?php else: ?>
+	<?php foreach($this->tests as $test) { ?>
+		<div class="test_wrapper size25 marbot30">
+			<div class="test">
+				<a class="select_test_wrapper" href="{{link_url::67}}?test=<?= $test['id'] ?>">
+					
+					<?php if($test['cert_image']) { ?>
+						<img src="<?= $test['cert_image'] ?>" />
+					<?php } else { ?>
+						<img src="/files/content/certificate_images/fallback.jpg" />
+					<?php } ?>
+						
+					<div><?= $test['title'] ?></div>
+				</a>
+			</div>
+		</div>
+	<?php } ?>
+	<?php endif; ?>
+	
 </div>
