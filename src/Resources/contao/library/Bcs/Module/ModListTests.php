@@ -65,6 +65,7 @@ class ModListTests extends \Contao\Module
                 if($test->publish == 1) {
                     $test_data[$test_counter]['id'] = $test->id;
                     $test_data[$test_counter]['title'] = $test->title;
+                    $test_data[$test_counter]['training_image'] = $test->training_image;
                     
                     if($test->custom_image) {
                         $uuid = StringUtil::binToUuid($test->custom_image);
