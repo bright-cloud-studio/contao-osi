@@ -148,6 +148,7 @@ class TestResultBackend extends Backend
 		$this->log('A new version of record "tl_test_result.id='.$intId.'" has been created'.$this->getParentEntries('tl_listing', $intId), __METHOD__, TL_GENERAL);
 	}
 
+    // Third party code, Mark St. Jean did not write this. I am not responsible for the quality of this function.
     public function exportTestResults()
 	{
 		$whereConditionFilter = '';
