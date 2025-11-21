@@ -64,12 +64,18 @@ class ModMyCertificates extends \Contao\Module
                 
                 $certificates[$result->test]['title'] = $test->title;
                 
-                $uuid = StringUtil::binToUuid($test->custom_image);
-                $objFile = FilesModel::findByUuid($uuid);
-                if ($objFile) {
-    				$certificates[$result->test]['custom_image'] = $objFile->path;
-    				$certificates[$result->test]['id'] = $result->id;
+                
+                if($test->custom_image) {
+                    $uuid = StringUtil::binToUuid($test->custom_image);
+                    $objFile = FilesModel::findByUuid($uuid);
+                    if ($objFile) {
+        				$certificates[$result->test]['image'] = $objFile->path;
+        				$certificates[$result->test]['id'] = $result->id;
+                    }
+                } else if($test->training_image) {
+                    $certificates[$result->test]['image'] = "/files/content/certificate_images/". $test->training_image . '.jpeg';
                 }
+                
                 
     
             }
