@@ -246,101 +246,10 @@ class TestResultBackend extends Backend
 		/** @var AttributeBagInterface $objSessionBag */
 		$objSessionBag = System::getContainer()->get('session')->getBag('contao_backend');
 		
-		$strFilterMode = 'accounting';
-		
-		$fields = "<fieldset id=\"pal_moss_filters\" class=\"tl_box\">
-		<legend onclick=\"AjaxRequest.toggleFieldset(this,'moss_filters','tl_moss_accounting')\">Accounting Filters</legend>";
-		$arrSession = $objSessionBag->all();
-		
-		if (!isset($arrSession['moss_filters']) || !is_array($arrSession['moss_filters'])) {
-			$arrSession['moss_filters'] = array();
-		}
-		if (!isset($arrSession['moss_filters'][$strFilterMode]) || !is_array($arrSession['moss_filters'][$strFilterMode])) {
-			$arrSession['moss_filters'][$strFilterMode] = array();
-		}
+		//$arrFilter[] = ["vendor IN (" .implode(",", $varValue) .")",''];
 
-		$arrSession['moss_filters'][$strFilterMode];
-		foreach($arrSession['moss_filters'][$strFilterMode] as $strFilter => $varValue) {
-			switch($strFilter) {
-				
-				case "moss_account":
-					if (!is_array($varValue)) {
-						if ($varValue != '') {
-							$varValue = array($varValue);
-						} else {
-							$varValue = array();
-						}
-					}
-					
-					if (!empty($varValue)) {
-						$arrFilter[] = ["account_number IN ('" .implode("','", $varValue) ."')",''];
-					}
-				break;
-				
-				case "moss_customer":
-					if (!is_array($varValue)) {
-						if ($varValue != '') {
-							$varValue = array($varValue);
-						} else {
-							$varValue = array();
-						}
-					}
-					
-					if (!empty($varValue)) {
-						$arrFilter[] = ["member IN (" .implode(",", $varValue) .")",''];
-					}
-				break;
-				
-				case "moss_vendor":
-					if (!is_array($varValue)) {
-						if ($varValue != '') {
-							$varValue = array($varValue);
-						} else {
-							$varValue = array();
-						}
-					}
-					
-					if (!empty($varValue)) {
-						$arrFilter[] = ["vendor IN (" .implode(",", $varValue) .")",''];
-					}
-				break;
-				
-				case "moss_amount_min":
-					if ($varValue != '') {
-						$arrFilter[] = ["transaction_amount > " .floatval($varValue), ''];
-					}
-				break;
-				
-				case "moss_amount_max":
-					if ($varValue != '') {
-						$arrFilter[] = ["transaction_amount < " .floatval($varValue), ''];
-					}
-				break;
-				
-				case "moss_date_recorded_start":
-					if ($varValue != '') {
-						list($intYear, $intMonth, $intDay) = explode('-', $varValue);
-						$intYear = intval($intYear);
-						$intMonth = intval($intMonth);
-						$intDay = intval($intDay);
-						$intCompare = mktime(0, 0, 0, $intMonth, $intDay, $intYear);
-						$arrFilter[] = ["date_recorded>=?", $intCompare];
-					}
-				break;
-				
-				case "moss_date_recorded_end":
-					if ($varValue != '') {
-						list($intYear, $intMonth, $intDay) = explode('-', $varValue);
-						$intYear = intval($intYear);
-						$intMonth = intval($intMonth);
-						$intDay = intval($intDay);
-						$intCompare = mktime(23, 59, 59, $intMonth, $intDay, $intYear);
-						$arrFilter[] = ["date_recorded<=?", $intCompare];
-					}
-				break;
-				
-			}
-		}
+        echo "HERE!";
+        die();
 			
 		$GLOBALS['TL_DCA']['tl_moss_accounting']['list']['sorting']['filter'] = $arrFilter;
 
