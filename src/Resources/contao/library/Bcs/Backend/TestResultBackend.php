@@ -147,5 +147,92 @@ class TestResultBackend extends Backend
 		$this->Database->prepare("UPDATE tl_test_result SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")->execute($intId);
 		$this->log('A new version of record "tl_test_result.id='.$intId.'" has been created'.$this->getParentEntries('tl_listing', $intId), __METHOD__, TL_GENERAL);
 	}
+
+    public function exportTestResults()
+	{
+		$whereConditionFilter = '';
+		if (!empty($_SESSION['_contao_be_attributes']['filter']['tl_test_result'])) {
+			$filters = $_SESSION['_contao_be_attributes']['filter']['tl_test_result'];
+			if (!empty($filters)) {
+				$filterParts = [];
+
+				foreach ($filters as $field => $value) {
+					if ($field!="limit" && ($value !== '' && $value !== null)) {
+						$filterParts[] = $field . " = '" . addslashes($value) . "'";
+					}
+				}
+
+				if (!empty($filterParts)) {
+					$whereConditionFilter = implode(' AND ', $filterParts);
+				}
+			}
+		}
+
+		$whereConditionSearch = '';
+		if (!empty($_SESSION['_contao_be_attributes']['search']['tl_test_result'])) {
+			$search  = $_SESSION['_contao_be_attributes']['search']['tl_test_result'] ?? [];
+			if (!empty($search)) {
+				$searchParts = [];
+
+				// foreach ($search as $field => $value) {
+				// 	if ($value !== '' && $value !== null) {
+						// Build LIKE condition for each search field
+						if(isset($search['value']) && $search['value'] !== '' && $search['value'] !== null){
+							$searchParts[] = "tr.".$search['field'] . " LIKE '%" . addslashes($search['value']) . "%'";
+						}
+				// 	}
+				// }
+
+				if (!empty($searchParts)) {
+					// join with OR
+					$whereConditionSearch = '(' . implode(' OR ', $searchParts) . ')';
+				}
+			}
+		}
+		// Get all records
+		$this->import('Database');
+		$sql="SELECT tr.id,DATE(FROM_UNIXTIME(tr.submission_date)) as TestDate,if(tr.result_passed='yes','Passed','Failed') as result,tr.result_percentage,f.title,CONCAT(m.firstname,' ',m.lastname) as name FROM `tl_test_result` tr
+			left JOIN tl_form f on tr.test=f.id
+			left JOIN tl_member m on tr.member=m.id
+			Where 1 ".($whereConditionFilter ? " AND ".$whereConditionFilter : "").($whereConditionSearch!='' ? " AND ".$whereConditionSearch : "")."
+			ORDER BY `tr`.`id` DESC;";
+		$testResults = $this->Database->prepare($sql)->execute()->fetchAllAssoc();
+
+		if (empty($testResults)) {
+			$csvContent='No test results found to export.';
+			// Send headers to trigger CSV download
+			header('Content-Type: text/csv; charset=utf-8');
+			header('Content-Disposition: attachment; filename="test_results_' . date('Ymd_His') . '.csv"');
+			header('Pragma: no-cache');
+			header('Expires: 0');
+
+			echo $csvContent;
+			exit;
+		}
+
+		// Build CSV headers dynamically from field names
+		$headers = array_keys($testResults[0]);
+		$csvContent = implode(',', $headers) . "\n";
+
+		// Build CSV rows
+		foreach ($testResults as $row) {
+			// Convert array values to CSV-safe format
+			$escaped = array_map(function ($value) {
+				$value = str_replace('"', '""', $value); // escape quotes
+				return '"' . $value . '"';
+			}, $row);
+
+			$csvContent .= implode(',', $escaped) . "\n";
+		}
+
+		// Send headers to trigger CSV download
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename="test_results_' . date('Ymd_His') . '.csv"');
+		header('Pragma: no-cache');
+		header('Expires: 0');
+
+		echo $csvContent;
+		exit;
+	}
 	
 }
