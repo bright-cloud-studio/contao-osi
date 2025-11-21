@@ -9,7 +9,10 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     'config' => array
     (
         'dataContainer'               => DC_Table::class,
-        'enableVersioning'            => true,
+        'enableVersioning'       => true,
+        'onload_callback'        => array(
+			array('Bcs\Backend\TestResultBackend', 'applyCustomFilter')
+		),
         'sql' => array
         (
             'keys' => array
