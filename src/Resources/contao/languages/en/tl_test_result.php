@@ -18,6 +18,7 @@ $GLOBALS['TL_LANG']['tl_test_result']['edit']                       = array('Edi
 $GLOBALS['TL_LANG']['tl_test_result']['copy']                       = array('Copy record', 'Copy record ID %s');
 $GLOBALS['TL_LANG']['tl_test_result']['delete']                     = array('Delete record', 'Delete record ID %s');
 $GLOBALS['TL_LANG']['tl_test_result']['toggle']                     = array('Toggle record', 'Toggle record ID %s');
+$GLOBALS['TL_LANG']['tl_test_result']['export']                     = array('Export','Export Test Results');
 
 /* System Fields */
 $GLOBALS['TL_LANG']['tl_test_result']['publish_legend']             = 'Publish';
