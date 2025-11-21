@@ -43,6 +43,13 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+            ),
+            'export' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_test_result']['export'],
+                'href'                => 'key=export',
+                'icon'                => 'export.svg',
+                'button_callback'     => ['Bcs\Backend\TestResultBackend', 'exportButton']
             )
         ),
         'operations' => array
