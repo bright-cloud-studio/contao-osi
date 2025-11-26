@@ -196,12 +196,13 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
 
         'member_groups' => array
         (
-            'label'            => &$GLOBALS['TL_LANG']['tl_test_result']['member_groups'],
-            'inputType'        => 'checkboxWizard',
-            'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
-            'flag'             => DataContainer::SORT_ASC,
             'filter'           => true,
+            'inputType'        => 'checkboxWizard',
             'foreignKey'       => 'tl_member_group.name',
+            'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
+            'relation'         => array('type'=>'belongsToMany', 'load'=>'lazy')
+            'label'            => &$GLOBALS['TL_LANG']['tl_test_result']['member_groups'],
+            'flag'             => DataContainer::SORT_ASC,
             'options_callback' => array('Bcs\Backend\TestResultBackend', 'getMemberGroups'),
             'save_callback' => array
         	(
