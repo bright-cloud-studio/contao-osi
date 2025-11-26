@@ -166,8 +166,10 @@ class TestResultBackend extends Backend
     }
 
     // Third party code, Mark St. Jean did not write this. I am not responsible for the quality of this function.
+    // UPDATE - NOVEMBER 26, 2026 - Mark updated this filter to work with the Member Groups filter
     public function exportTestResults()
 	{
+	    
 		$whereConditionFilter = '';
 		if (!empty($_SESSION['_contao_be_attributes']['filter']['tl_test_result'])) {
 			$filters = $_SESSION['_contao_be_attributes']['filter']['tl_test_result'];
@@ -175,11 +177,13 @@ class TestResultBackend extends Backend
 				$filterParts = [];
 
 				foreach ($filters as $field => $value) {
-					if ($field!="limit" && ($value !== '' && $value !== null)) {
+				    if($field == 'member_groups') {
+				        $filterParts[] = $field . " LIKE '%" . addslashes($value) . "%'";
+				    } else if ($field!="limit" && ($value !== '' && $value !== null)) {
 						$filterParts[] = $field . " = '" . addslashes($value) . "'";
 					}
 				}
-
+                
 				if (!empty($filterParts)) {
 					$whereConditionFilter = implode(' AND ', $filterParts);
 				}
@@ -192,14 +196,9 @@ class TestResultBackend extends Backend
 			if (!empty($search)) {
 				$searchParts = [];
 
-				// foreach ($search as $field => $value) {
-				// 	if ($value !== '' && $value !== null) {
-						// Build LIKE condition for each search field
-						if(isset($search['value']) && $search['value'] !== '' && $search['value'] !== null){
-							$searchParts[] = "tr.".$search['field'] . " LIKE '%" . addslashes($search['value']) . "%'";
-						}
-				// 	}
-				// }
+				if(isset($search['value']) && $search['value'] !== '' && $search['value'] !== null){
+					$searchParts[] = "tr.".$search['field'] . " LIKE '%" . addslashes($search['value']) . "%'";
+				}
 
 				if (!empty($searchParts)) {
 					// join with OR
@@ -264,11 +263,6 @@ class TestResultBackend extends Backend
 		    $GLOBALS['TL_DCA']['tl_test_result']['list']['sorting']['filter'] = $arrFilter;
 
 		}
-	
-		//$arrFilter = array();
-		//$GLOBALS['TL_DCA']['tl_moss_accounting']['list']['sorting']['filter'] = $arrFilter;
-
-		
 	}
     
 }
