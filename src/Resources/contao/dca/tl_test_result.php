@@ -200,7 +200,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'inputType'        => 'checkboxWizard',
             'foreignKey'       => 'tl_member_group.name',
             'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
-            'relation'         => array('type'=>'belongsToMany', 'load'=>'lazy')
+            'relation'         => array('type'=>'belongsToMany', 'load'=>'lazy'),
             'label'            => &$GLOBALS['TL_LANG']['tl_test_result']['member_groups'],
             'flag'             => DataContainer::SORT_ASC,
             'options_callback' => array('Bcs\Backend\TestResultBackend', 'getMemberGroups'),
