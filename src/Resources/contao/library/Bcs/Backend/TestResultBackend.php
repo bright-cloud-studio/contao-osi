@@ -94,7 +94,7 @@ class TestResultBackend extends Backend
         if($row['result_passed'] == 'no')
             $label .= "<span style='color: red; font-weight: 600;'>Failed</span> - ";
         else if($row['result_passed'] == 'yes')
-            $label .= "<span style='color: green; font-weight: 600;'>Failed</span> - ";
+            $label .= "<span style='color: green; font-weight: 600;'>Passed</span> - ";
             
         $label .= "(" . $row['result_percentage'] . "%) - ";
         
