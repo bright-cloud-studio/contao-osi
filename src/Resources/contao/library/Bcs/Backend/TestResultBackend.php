@@ -10,6 +10,7 @@ use Contao\Input;
 use Contao\MemberModel;
 use Contao\MemberGroupModel;
 use Contao\StringUtil;
+use Contao\System;
 use Bcs\Model\TestResult;
 
 class TestResultBackend extends Backend
@@ -147,6 +148,19 @@ class TestResultBackend extends Backend
 		$this->Database->prepare("UPDATE tl_test_result SET tstamp=". time() .", published='" . ($blnVisible ? 1 : '') . "' WHERE id=?")->execute($intId);
 		$this->log('A new version of record "tl_test_result.id='.$intId.'" has been created'.$this->getParentEntries('tl_listing', $intId), __METHOD__, TL_GENERAL);
 	}
+	
+	public function exportButton($href, $label, $title, $class, $attributes)
+    {
+        // Check if export triggered
+        if (Input::get('key') === 'export') {
+            return $this->exportTestResults();
+        }
+		
+        // Return button HTML
+        return '<a href="'.$this->addToUrl('key=export').'" class="'.$class.'" title="'.($title).'"'.$attributes.'>'
+            . ucfirst($label)
+            . '</a>';
+    }
 
     // Third party code, Mark St. Jean did not write this. I am not responsible for the quality of this function.
     public function exportTestResults()
@@ -239,19 +253,17 @@ class TestResultBackend extends Backend
 
 
     public function applyCustomFilter(DataContainer $dc = null)
-	{	
-	
-		$arrFilter = array();
-		
-		/** @var AttributeBagInterface $objSessionBag */
-		$objSessionBag = System::getContainer()->get('session')->getBag('contao_backend');
-		
-		//$arrFilter[] = ["vendor IN (" .implode(",", $varValue) .")",''];
+	{
+	    if (Input::post('FORM_SUBMIT') == 'tl_filters')
+		{
+		    $arrFilter = array();
+		    $arrFilter[] = ["id<=?", 75058];
+		    $GLOBALS['TL_DCA']['tl_test_result']['list']['sorting']['filter'] = $arrFilter;
 
-        echo "HERE!";
-        die();
-			
-		$GLOBALS['TL_DCA']['tl_moss_accounting']['list']['sorting']['filter'] = $arrFilter;
+		}
+	
+		//$arrFilter = array();
+		//$GLOBALS['TL_DCA']['tl_moss_accounting']['list']['sorting']['filter'] = $arrFilter;
 
 		
 	}
