@@ -1,13 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-
 namespace Bcs\OSIBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Form;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 use Bcs\Model\TestResult;
 use Bcs\Backend\SendFormEmail;
@@ -24,15 +20,14 @@ use Contao\System;
 use DateTime;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
 
-#[AsHook('prepareFormData')]
 readonly class PrepareFormDataListener
 {
     public function __construct(
-        private RequestStack $requestStack
     ) {
     }
 
-    public function __invoke(array &$answers, array &$labels, array $fields, Form $test, array &$files): void
+    #[AsHook('prepareFormData')]
+    public function onPrepareFormData(array &$answers, array $labels, array $fields, Form $test): void
     {
 
          if($test->formType == 'test') {
