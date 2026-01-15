@@ -28,8 +28,7 @@ use Terminal42\NotificationCenterBundle\NotificationCenter;
 readonly class PrepareFormDataListener
 {
     public function __construct(
-        private FileUploadNormalizer $fileUploadNormalizer,
-        private RequestStack $requestStack,
+        private RequestStack $requestStack
     ) {
     }
 
