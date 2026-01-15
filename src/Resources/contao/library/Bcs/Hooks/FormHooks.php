@@ -252,7 +252,7 @@ class FormHooks
     	
     	$to = $emai;
         $from = '"Occupational Services, Inc." <training@occserv.com>';
-        $subject = "Results from your OSI onlne training";
+        $subject = "Results from your OSI online training";
         $filename = "document.pdf";
         
         // Create a unique boundary
