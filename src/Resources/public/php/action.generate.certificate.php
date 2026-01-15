@@ -1,157 +1,81 @@
 <?php
-	
-	use Dompdf\Dompdf;
-    use Dompdf\Options;
     
-	session_start();
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
-
-	// Load our database connection information from a txt file on the root of the server, for safety
-	$serializedData = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/../db.txt');
-	$db_info = unserialize($serializedData);
+    // Initialize Session, start Composer
+    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
     
-    // Connect to database using our privately hidden information
-    $dbh = new mysqli("localhost", $db_info[0], $db_info[1], $db_info[2]);
+    // Includes
+    use Bcs\Model\Assignment;
+    use Contao\Config;
+    use Contao\MemberBodel;
+    
+    // Connect to the DB
+    $dbh = new mysqli("localhost", "staging_user", 'q&U,zA(+WUK$kQ!cZB', "staging_contao_5_3");
     if ($dbh->connect_error) {
         die("Connection failed: " . $dbh->connect_error);
     }
     
-	/********************/
-	/* INITALIZE STUFFS */
-	/********************/
-	
-    $options = new Options();
-    //$options->set("defaultFont", "Helvetica");
-    $options->set("defaultFont", "Times-Roman");
-    $options->set("isRemoteEnabled", "true");
-    $options->setChroot('/');
-	$dompdf = new Dompdf($options);
-	$context = stream_context_create([ 
-    	'ssl' => [ 
-    		'verify_peer' => FALSE, 
-    		'verify_peer_name' => FALSE,
-    		'allow_self_signed'=> TRUE 
-    	] 
+    
+    // Get passed in year if there is one, otherwise use the current year
+    $year = date('y');
+    if(isset($_GET['year']))
+        $year = $_GET['year'];
+    
+    
+    // Get all Districts
+    $assignments = array();
+    //$a_q =  "SELECT * FROM tl_assignment WHERE published='1'";
+    $a_q = "SELECT * FROM tl_assignment WHERE RIGHT(date_created, 2) = '".$year."';";
+    $a_r = $dbh->query($a_q);
+    if($a_r) {
+        while($a = $a_r->fetch_assoc()) {
+            $assignments[$a['id']] = $a['date_created'];
+            //echo "Assignment ID: ". $a['id'] ."<br>";
+            //echo "Date Created: ". $a['date_created'] ."<br><br>";
+        }
+    }
+    
+    $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    echo json_encode([
+        'labels' => $months,
+        'datasets' => [
+            [
+                'label' => 'Meetings',
+                'type' => 'bar',
+                'data' => [12, 15, 11, 17, 14, 13, 16, 18, 15, 20, 21, 23],
+                'backgroundColor' => 'rgba(52, 152, 219, 0.7)',
+                'yAxisID' => 'yCount'
+            ],
+            [
+                'label' => 'Psych Eval',
+                'type' => 'bar',
+                'data' => [10, 11, 9, 12, 13, 13, 14, 14, 13, 15, 16, 17],
+                'backgroundColor' => 'rgba(46, 204, 113, 0.7)',
+                'yAxisID' => 'yCount'
+            ],
+            [
+                'label' => 'Achvmnt',
+                'type' => 'bar',
+                'data' => [8, 9, 7, 11, 10, 9, 12, 11, 10, 13, 14, 15],
+                'backgroundColor' => 'rgba(155, 89, 182, 0.7)',
+                'yAxisID' => 'yCount'
+            ],
+            [
+                'label' => 'Parking',
+                'type' => 'bar',
+                'data' => [20, 22, 18, 25, 23, 21, 24, 26, 22, 28, 30, 31],
+                'backgroundColor' => 'rgba(241, 196, 15, 0.7)',
+                'yAxisID' => 'yCount'
+            ],
+            [
+                'label' => 'Editing',
+                'type' => 'bar',
+                'data' => [6, 7, 6, 8, 7, 8, 9, 9, 8, 10, 11, 12],
+                'backgroundColor' => 'rgba(231, 76, 60, 0.7)',
+                'yAxisID' => 'yCount'
+            ]
+        ]
     ]);
-    $dompdf->setHttpContext($context);
-	
-	/*****************************/
-	/* MANUALLY PASSED IN STUFFS */
-	/*****************************/
-
-	$test_result_id = $_POST['result_id'];
     
-    /*****************************/
-	/* DATABASE STUFFS */
-	/*****************************/
-    
-    $test_result = [];
-    $test = [];
-    $member = [];
-    
-    // Get our Test Result database info and store in $test_result
-    $test_result_query =  "SELECT * FROM tl_test_result WHERE id='".$test_result_id."'";
-    $test_result_db = $dbh->query($test_result_query);
-    if($test_result_db) {
-        while($result = $test_result_db->fetch_assoc()) {
-            $test_result['test'] = $result['test'];
-            $test_result['member'] = $result['member'];
-            $test_result['result_percentage'] = $result['result_percentage'];
-            $test_result['submission_date'] = $result['submission_date'];
-        }
-    }
-    
-    // Get our Test database info and store in $test
-    $test_query =  "SELECT * FROM tl_form WHERE id='".$test_result['test']."'";
-    $test_db = $dbh->query($test_query);
-    if($test_db) {
-        while($result = $test_db->fetch_assoc()) {
-            $test['title'] = $result['title'];
-        }
-    }
-    
-    // Get our Member database info and store in $member
-    $member_query =  "SELECT * FROM tl_member WHERE id='".$test_result['member']."'";
-    $member_db = $dbh->query($member_query);
-    if($member_db) {
-        while($result = $member_db->fetch_assoc()) {
-            $member['name'] = $result['firstname'] . " " . $result['lastname'];
-        }
-    }
-
-	/*******************/
-	/* TEMPLATE STUFFS */
-	/*******************/
-  	
-    // Load our HTML template
-    $html = file_get_contents('../templates/certificate.html', true);
-    
-    preg_match_all('/\{{2}(.*?)\}{2}/is', $html, $tags);
-    foreach($tags[0] as $tag) {
-        
-        // Remove brackets from our tag
-        $cleanTag = str_replace("{{","",$tag);
-        $cleanTag = str_replace("}}","",$cleanTag);
-        
-	    $explodedTag = explode("::", $cleanTag);
-	    
-	    // Do different things based on the first part of our tag
-	    switch($explodedTag[0]) {
-		    
-		    // If the first part of our exploded tag is "product" we are looking for an attribute
-		    case 'member':
-		        switch($explodedTag[1]) {
-		            case 'name':
-		                $html = str_replace($tag, $member['name'], $html);
-		                break;
-		        }
-		    break;
-		    
-		    case 'test':
-		        switch($explodedTag[1]) {
-		            case 'title':
-		                $html = str_replace($tag, $test['title'], $html);
-		                break;
-		        }
-		    break;
-		    
-		    case 'result':
-		        switch($explodedTag[1]) {
-		            case 'id':
-		                $html = str_replace($tag, $test_result_id, $html);
-		                break;
-		            case 'submission_date':
-		                $html = str_replace($tag, date('F j, Y', $test_result['submission_date']), $html);
-		                break;
-		        }
-		    break;
-		    
-		    case 'server':
-		        switch($explodedTag[1]) {
-		            case 'root':
-		                $html = str_replace($tag, $_SERVER["DOCUMENT_ROOT"], $html);
-		                break;
-		        }
-		    break;
-
-	    }
-        
-    }
-    
-    /***********************/
-	/* GENERATE PDF STUFFS */
-	/***********************/
-	
-    // Load our HTML into dompdf
-	$dompdf->loadHtml($html);
-	
-	// Set our paper size and orientation
-	$dompdf->setPaper('A4', 'landscape');
-	
-	// Render our PDF using the loaded HTML
-	$dompdf->render();
-	
-	// Output the generated PDF to Browser
-	$dompdf->stream("certificate.pdf");
-
-?>
+    // Return data
