@@ -15,9 +15,6 @@ services:
       Contao\CoreBundle\Migration\AbstractMigration:
          tags: [ 'contao.migration' ]
 
-   services:
-      Bcs\OSIBundle\Hook\FormHooks:
-         arguments:
-            - '@terminal42_notification_center.notification_center'
-         tags:
-            - { name: contao.hook, hook: prepareFormData, method: onPrepareFormData }
+   Bvs\OSIBundle\EventListener\PrepareFormDataListener:
+    tags:
+      - { name: 'contao.hook.prepareFormData' }
