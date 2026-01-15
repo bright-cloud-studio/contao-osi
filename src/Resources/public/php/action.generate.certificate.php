@@ -57,6 +57,7 @@
             $test_result['test'] = $result['test'];
             $test_result['member'] = $result['member'];
             $test_result['result_percentage'] = $result['result_percentage'];
+            $test_result['submission_date'] = $result['submission_date'];
         }
     }
     
