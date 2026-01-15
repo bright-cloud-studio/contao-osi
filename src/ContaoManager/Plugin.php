@@ -13,7 +13,7 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create('Bcs\OSI\BcsOSIBundle')
+            BundleConfig::create('Bcs\OSI\BcsOSI')
                 ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']),
         ];
     }
