@@ -25,11 +25,11 @@
         "terminal42/notification_center": "^2.0"
     },
     "extra":{
-        "contao-manager-plugin": "Bcs\\OSI\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Bcs\\OSIBundle\\ContaoManager\\Plugin"
     },
     "autoload": {
         "psr-4": {
-            "Bcs\\OSI\\": "src/"
+            "Bcs\\OSIBundle\\": "src/"
         },
         "classmap": [
             "src/Resources/contao"
