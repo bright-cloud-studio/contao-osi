@@ -1,6 +1,6 @@
 <?php
 
-namespace Bcs\OSIBundle\ContaoManager;
+namespace Bcs\OSI\ContaoManager;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
