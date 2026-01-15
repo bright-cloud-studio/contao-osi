@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bcs\OSIBundle\EventListener;
 
-use Contao\CoreBundle\Event\ReplaceInsertTagsEvent;
+use Contao\CoreBundle\Event\PrepareFormDataListener;
 use Contao\UserModel;
 use Contao\FilesModel;
 use Contao\Frontend;
