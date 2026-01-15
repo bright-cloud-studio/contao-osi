@@ -8,7 +8,7 @@
  * @see	       https://github.com/bright-cloud-studio/contao-OSI
  */
 
-namespace Bcs\OSIBundle;
+namespace Bcs\OSI;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
