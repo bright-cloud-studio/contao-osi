@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license    LGPL-3.0-or-later
  */
 
-namespace Bcs\OSI\Hook;
+namespace Bcs\OSIBundle\Hook;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Form;
