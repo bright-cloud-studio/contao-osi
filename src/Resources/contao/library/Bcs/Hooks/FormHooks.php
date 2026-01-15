@@ -89,7 +89,7 @@ class FormHooks
             $test_result->submission_date = time();
             $test_result->answers = json_encode($our_answers);
             $test_result->result_total_correct = $total_correct_answers;
-            $test_result->result_percentage = ($total_correct_answers / $total_questions) * 100;
+            $test_result->result_percentage = round(($total_correct_answers / $total_questions) * 100, 2);
             
             // Scoring
             if($test->scoringType == 'percentage_correct') {
