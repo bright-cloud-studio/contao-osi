@@ -20,6 +20,7 @@ use DateTime;
 
 use Terminal42\NotificationCenterBundle\NotificationCenter;
 
+
 class FormHooks
 {
 
@@ -28,7 +29,6 @@ class FormHooks
         
         
     }
-
 
     public function onPrepareFormData(&$answers, $labels, $fields, $test, &$files)
     {
@@ -103,6 +103,9 @@ class FormHooks
             
             
             $test_result->save();
+            
+
+            
             
             // Pass our result ID to the result page
             $_SESSION['test_results_id'] = $test_result->id;
