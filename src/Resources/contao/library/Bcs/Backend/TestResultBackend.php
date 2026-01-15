@@ -96,15 +96,18 @@ class TestResultBackend extends Backend
         else if($row['result_passed'] == 'yes')
             $label .= "<span style='color: green; font-weight: 600;'>Passed</span> - ";
             
-        $label .= "(" . $row['result_percentage'] . "%) - ";
-        
-        
+        if($row['result_percentage'])
+            $label .= "(" . $row['result_percentage'] . "%) - ";
         
         $test = FormModel::findBy('id', $row['test']);
-        $label .= $test->title . " - ";
+        if($test->title)
+            $label .= $test->title . " - ";
         
         $member = MemberModel::findBy('id', $row['member']);
-        $label .= $member->firstname . " " . $member->lastname;
+        if($member->firstname)
+            $label .= $member->firstname;
+        if($member->lastname)    
+            $label .= " " . $member->lastname;
         
         return $label;
     }
@@ -178,7 +181,7 @@ class TestResultBackend extends Backend
 
 				foreach ($filters as $field => $value) {
 				    if($field == 'member_groups') {
-				        $filterParts[] = $field . " LIKE '%" . addslashes($value) . "%'";
+				        $filterParts[] = $field . " LIKE '%\"" . addslashes($value) . "\"%'";
 				    } else if ($field!="limit" && ($value !== '' && $value !== null)) {
 						$filterParts[] = $field . " = '" . addslashes($value) . "'";
 					}
@@ -206,7 +209,7 @@ class TestResultBackend extends Backend
 				}
 			}
 		}
-		// Get all records
+		
 		$this->import('Database');
 		$sql="SELECT tr.id,DATE(FROM_UNIXTIME(tr.submission_date)) as TestDate,if(tr.result_passed='yes','Passed','Failed') as result,tr.result_percentage,f.title,CONCAT(m.firstname,' ',m.lastname) as name FROM `tl_test_result` tr
 			left JOIN tl_form f on tr.test=f.id
@@ -217,7 +220,6 @@ class TestResultBackend extends Backend
 
 		if (empty($testResults)) {
 			$csvContent='No test results found to export.';
-			// Send headers to trigger CSV download
 			header('Content-Type: text/csv; charset=utf-8');
 			header('Content-Disposition: attachment; filename="test_results_' . date('Ymd_His') . '.csv"');
 			header('Pragma: no-cache');
@@ -229,7 +231,14 @@ class TestResultBackend extends Backend
 
 		// Build CSV headers dynamically from field names
 		$headers = array_keys($testResults[0]);
-		$csvContent = implode(',', $headers) . "\n";
+		$csvContent = "\xEF\xBB\xBF";
+		$arrHeaders[] = '"ID"';
+		$arrHeaders[] = '"Testing Date"';
+		$arrHeaders[] = '"Result"';
+		$arrHeaders[] = '"Result (Percentage)"';
+		$arrHeaders[] = '"Test"';
+		$arrHeaders[] = '"Test Subject"';
+		$csvContent .= implode(',', $arrHeaders) . "\n";
 
 		// Build CSV rows
 		foreach ($testResults as $row) {
@@ -251,7 +260,6 @@ class TestResultBackend extends Backend
 		echo $csvContent;
 		exit;
 	}
-
 
 
     public function applyCustomFilter(DataContainer $dc = null)
