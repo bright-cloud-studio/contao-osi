@@ -12,6 +12,6 @@ namespace Bcs\OSI;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BcsOSIBundle extends Bundle
+class BcsOSI extends Bundle
 {
 }
