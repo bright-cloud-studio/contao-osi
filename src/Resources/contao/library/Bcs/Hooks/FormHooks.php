@@ -30,8 +30,6 @@ class FormHooks
 
     public function onSubmitTest($answers, $formData, $files, $labels, $test)
     {
-        
-        
     }
 
     public function onPrepareFormData(&$answers, $labels, $fields, $test, &$files)
@@ -79,9 +77,6 @@ class FormHooks
                 
             }
 
-            
-            
-            
             // Get Member
             $member = FrontendUser::getInstance();
 
@@ -111,8 +106,6 @@ class FormHooks
             $this->sendCertificateEmail($member->email, $test_result->result_passed, $test_result->result_percentage, $test_result->id);
             
 
-            
-            
             // Pass our result ID to the result page
             $_SESSION['test_results_id'] = $test_result->id;
             
