@@ -29,6 +29,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields'] += [
             'filesOnly'   => true,
             'fieldType'   => 'radio',
             'extensions'  => Config::get('validImageTypes'),
+            'tl_class'    => 'clr w50'
         ),
         'sql'       => "binary(16) NULL"
     ]
