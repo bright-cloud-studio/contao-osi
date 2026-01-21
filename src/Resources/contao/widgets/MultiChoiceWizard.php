@@ -63,7 +63,7 @@ class MultiChoiceWizard extends OptionWizard
                         // add value to hidden input so it gets into the db
                         document.getElementById("' . $this->strId . '_upload_' . $i . '").value = value;
                         // add value to label, wrapping in image tag
-                        document.getElementById("' . $this->strId . '_label_' . $i . '").value += "[img]" + value + "[img]";
+                        document.getElementById("' . $this->strId . '_label_' . $i . '").value += " [img]" + value + "[img]";
                       }
                     }).post();
                   }
