@@ -26,7 +26,6 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields'] += [
         'inputType' => 'fileTree',
         'eval'      => array(
             'filesOnly'   => true,
-            'extensions'  => Config::get('validImageTypes'),
             'fieldType'   => 'radio'
         ),
         'sql'       => "binary(16) NULL"
