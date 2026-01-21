@@ -1,5 +1,6 @@
 <?php
 
+use Contao\Config;
 use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\DataContainer;
 use Contao\Database;
@@ -26,7 +27,8 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields'] += [
         'inputType' => 'fileTree',
         'eval'      => array(
             'filesOnly'   => true,
-            'fieldType'   => 'radio'
+            'fieldType'   => 'radio',
+            'extensions'  => Config::get('validImageTypes'),
         ),
         'sql'       => "binary(16) NULL"
     ]
