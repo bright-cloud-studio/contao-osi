@@ -31,7 +31,6 @@ class tl_test_field extends \tl_form_field
         $parent_form = FormModel::findOneBy('id', $dc->activeRecord->pid);
         if($parent_form->formType == 'test') {
             $fields[] = 'multiple_choice_question';
-            $fields[] = 'multiple_choice_image_question';
             $fields[] = 'submit';
             return $fields;
         } else {
