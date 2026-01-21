@@ -20,6 +20,19 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['options']['inputType'] = 'multi_c
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['label']['eval']['maxlength'] = null;
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['label']['sql'] = "text NULL";
 
+$GLOBALS['TL_DCA']['tl_form_field']['fields'] += [
+    'label_image' => [
+        'label'             => &$GLOBALS['TL_LANG']['tl_form_field']['label_image'],
+        'inputType' => 'fileTree',
+        'eval'      => array(
+            'filesOnly'   => true,
+            'extensions'  => Config::get('validImageTypes'),
+            'fieldType'   => 'radio'
+        ),
+        'sql'       => "binary(16) NULL"
+    ]
+];
+
 // customized extension of the 'tl_form_field' class
 class tl_test_field extends \tl_form_field
 {
