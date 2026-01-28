@@ -47,6 +47,16 @@ class FormHooks
             $total_correct_answers = 0;
             
             foreach($answers as $question_id => $answer) {
+                
+                // If submitting out "BCS - Testing Test" form
+                if($test->id == '2102') {
+                    echo "Question ID: " . $question_id . "<br>";
+                    echo "Answer: " . $answer . "<br>";
+                    die();
+                }
+                
+                
+                
                 $total_questions++;
                 
                 $questions = FormFieldModel::findBy(['type = ?', 'pid = ?'], ['multiple_choice_question', $test->id]);
@@ -55,6 +65,7 @@ class FormHooks
                     if($question->name == $question_id) {
                         $options =  unserialize($question->options);
                         foreach($options as $option) {
+                            
                             if($option['value'] == $answer) {
                                 if($option['correct'] == 1) {
                                     $total_correct_answers++;
@@ -70,6 +81,9 @@ class FormHooks
                                     $our_answers[$question->name]['answer'] = $option['label'];
                                 }
                             }
+                            
+                            
+                            
                             
                         }
                     }
