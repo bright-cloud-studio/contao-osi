@@ -10,6 +10,7 @@ use Contao\System;
 
 // Add our custom 'multiple_choice_question' palette
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question'] = '{type_legend},type,name,label,label_image;{fconfig_legend},mandatory,help;{options_legend},options;{expert_legend:hide},class;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
+$GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_question_multiple_answers'] = '{type_legend},type,name,label,label_image;{fconfig_legend},mandatory,help;{options_legend},options;{expert_legend:hide},class;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_image_question'] = '{type_legend},type,name,label;{fconfig_legend},mandatory,help;{options_legend},options;{expert_legend:hide},class;{template_legend:hide},customTpl;{invisible_legend:hide},invisible';
 
 // Override the default 'options_callback' for the 'type' field with our custom function below
@@ -46,6 +47,7 @@ class tl_test_field extends \tl_form_field
         $parent_form = FormModel::findOneBy('id', $dc->activeRecord->pid);
         if($parent_form->formType == 'test') {
             $fields[] = 'multiple_choice_question';
+            $fields[] = 'multiple_choice_question_multiple_answers';
             $fields[] = 'submit';
             return $fields;
         } else {
@@ -57,7 +59,7 @@ class tl_test_field extends \tl_form_field
     		{
     			if ($security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_FIELD_TYPE, $k))
     			{
-                    if($k != 'multiple_choice_question')
+                    if($k != 'multiple_choice_question' && $k != 'multiple_choice_question_multiple_answers')
     				    $fields[] = $k;
     			}
     		}
