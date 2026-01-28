@@ -47,46 +47,76 @@ class FormHooks
             $total_correct_answers = 0;
             
             foreach($answers as $question_id => $answer) {
-                
-                // If submitting out "BCS - Testing Test" form
-                if($test->id == '2102') {
-                    echo "Question ID: " . $question_id . "<br>";
-                    echo "Answer: " . $answer . "<br>";
-                    die();
-                }
-                
-                
-                
+
                 $total_questions++;
                 
-                $questions = FormFieldModel::findBy(['type = ?', 'pid = ?'], ['multiple_choice_question', $test->id]);
+                $questions = FormFieldModel::findBy(
+                    ['type IN (?, ?)', 'pid = ?', 'invisible != ?'], 
+                    ['multiple_choice_question', 'multiple_choice_question_multiple_answers', $test->id, 1]
+                );
                 
                 foreach($questions as $question) {
-                    if($question->name == $question_id) {
-                        $options =  unserialize($question->options);
-                        foreach($options as $option) {
+                    
+                    if($question->type == 'multiple_choice_question_multiple_answers') {
+                        if($question->name == $question_id) {
                             
-                            if($option['value'] == $answer) {
-                                if($option['correct'] == 1) {
-                                    $total_correct_answers++;
-                                    
-                                    $correct_answers[] = $option['value'];
-                                    $answers[$question->name] = 'correct';
-                                    $our_answers[$question->name]['correct'] = 'yes';
-                                    $our_answers[$question->name]['answer'] = $option['label'];
-                                    
-                                } else {
-                                    $answers[$question->name] = 'incorrect';
-                                    $our_answers[$question->name]['correct'] = 'no';
-                                    $our_answers[$question->name]['answer'] = $option['label'];
+                            $question_passed = true;
+                            
+                            $options =  unserialize($question->options);
+                            $first_label = true;
+                            foreach($options as $option) {
+
+                                $answered = in_array($option['value'], $answer);
+
+                                // If the option is a correct answer and the user checked it
+                                if($option['correct'] && !$answered) {
+                                    $question_passed = false;
+                                }
+                                // If the option isnt a correct answer and the user checked it
+                                if(!$option['correct'] && $answered) {
+                                    $question_passed = false;
+                                }
+                                
+                                if($option['correct'] && $answered) {
+                                    $our_answers[$question->name]['answer'] .= $option['label'] . ", ";
                                 }
                             }
                             
+                            $our_answers[$question->name]['answer'] = rtrim($our_answers[$question->name]['answer'], ", ");
                             
-                            
-                            
+                            if($question_passed) {
+                                $total_correct_answers++;
+                                $answers[$question->name] = 'correct';
+                                $our_answers[$question->name]['correct'] = 'yes';
+                            }
                         }
+
+                    } else {
+                        if($question->name == $question_id) {
+                            $options =  unserialize($question->options);
+                            foreach($options as $option) {
+                                
+                                if($option['value'] == $answer) {
+                                    if($option['correct'] == 1) {
+                                        $total_correct_answers++;
+                                        
+                                        $correct_answers[] = $option['value'];
+                                        $answers[$question->name] = 'correct';
+                                        $our_answers[$question->name]['correct'] = 'yes';
+                                        $our_answers[$question->name]['answer'] = $option['label'];
+                                        
+                                    } else {
+                                        $answers[$question->name] = 'incorrect';
+                                        $our_answers[$question->name]['correct'] = 'no';
+                                        $our_answers[$question->name]['answer'] = $option['label'];
+                                    }
+                                }
+     
+                            }
+                        }
+                        
                     }
+                    
                 }
                 
             }
