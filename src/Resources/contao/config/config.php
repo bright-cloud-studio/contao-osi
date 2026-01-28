@@ -2,6 +2,7 @@
 
 use Contao\System;
 use Bcs\OSIBundle\FormMultipleChoiceQuestion;
+use Bcs\OSIBundle\FormMultipleChoiceQuestionMultipleAnswers;
 use Bcs\MultiChoiceWizard;
 
 // Module to display a Test's results
