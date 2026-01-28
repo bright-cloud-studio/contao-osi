@@ -15,6 +15,7 @@ $GLOBALS['FE_MOD']['osi']['mod_generate_certificate'] = 'Bcs\Module\ModGenerateC
 
 // Customized version of Contao's Form Checkbox field
 $GLOBALS['TL_FFL']['multiple_choice_question'] = 'Bcs\OSIBundle\FormMultipleChoiceQuestion';
+$GLOBALS['TL_FFL']['multiple_choice_question_multiple_answers'] = 'Bcs\OSIBundle\FormMultipleChoiceQuestionMultipleAnswers';
 
 // Customized version of the "OptionWizard" Contao Backend Form Widget
 $GLOBALS['BE_FFL']['multi_choice_wizard'] = 'Bcs\MultiChoiceWizard';
