@@ -62,17 +62,37 @@ class ModTestResults extends \Contao\Module
             $results_data['result_passed'] = $results->result_passed;
             $results_data['test_name'] = $test->title;
             
-            
             // Questions
-            $questions = FormFieldModel::findBy('pid', $results->test);
+            $questions = FormFieldModel::findBy(
+                ['pid = ?', 'invisible != ?'], 
+                [$test->id, 1]
+            );
+            
             // Answers
             $answers = json_decode($results->answers, true);
 
-            
             $question_counter = 0;
             foreach($questions as $question) {
                 
                 if($question->type == 'multiple_choice_question') {
+                    // Add question text to template data
+                    $results_data['questions'][$question_counter]['question'] = $question->label;
+                    
+                    $options =  unserialize($question->options);
+                    foreach($options as $option) {
+
+                        if($answers[$question->name]['correct'] == 'yes') {
+                            $results_data['questions'][$question_counter]['correct'] = 'true';
+                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name]['answer'];
+                        } else {
+                            $results_data['questions'][$question_counter]['correct'] = 'false';
+                            $results_data['questions'][$question_counter]['answer'] = $answers[$question->name]['answer'];
+                        }
+
+                    }
+                    
+                    $question_counter++;
+                } else if($question->type == 'multiple_choice_question_multiple_answers') {
                     // Add question text to template data
                     $results_data['questions'][$question_counter]['question'] = $question->label;
                     
