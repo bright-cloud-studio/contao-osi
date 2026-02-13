@@ -177,19 +177,23 @@ class FormHooks
             if($member->id == '30284') {
 
                 $dirty_results = TestResult::findAll();
+                //$dirty_results = TestResult::findBy(
+                //    ['ID = ?'], 
+                //    ['83404']
+                //);
                 
                 
                 if($dirty_results) {
                     foreach($dirty_results as $dirty_result) {
                         
-                        $form = FormModel::findById($dirty_result->id);
+                        $form = FormModel::findById($dirty_result->test);
                         echo "Test Result ID: " . $dirty_result->id . "<br>";
                         echo "Test Title: " . $form->title . "<br>";
 
                         
                         $mgs = MemberGroupModel::findBy(
                             ['test_assignment LIKE ?'], 
-                            ['%"' . $dirty_result->test . '"%']
+                            ['%i:'.$form->id.';%']
                         );
                         
                         $g_ids = array();
@@ -198,9 +202,6 @@ class FormHooks
                             foreach($mgs as $mg) {
                                 $g_ids[] = (string)$mg->id;
                                 echo "Member Group ID " . $mg->id . ": ".$mg->name."<br>";
-                                echo "<pre>";
-                                print_r(unserialize($mg->test_assignment));
-                                echo "</pre>";
                             }
                             echo "<br><hr><br>";
                         } else {
@@ -208,10 +209,10 @@ class FormHooks
                         }
                         
                         
-                        //$dirty_result->member_groups = serialize($g_ids);
-                        //$dirty_result->save();
+                        $dirty_result->member_groups = serialize($g_ids);
+                        $dirty_result->save();
                         
-                        //$dirty_result->member_groups = $g_ids;
+                        //$dirty_result->member_group = $g_ids;
                     }
                 }
                 
