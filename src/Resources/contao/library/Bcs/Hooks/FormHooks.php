@@ -153,7 +153,7 @@ class FormHooks
             
             $member_groups = MemberGroupModel::findBy(
                 ['test_assignment LIKE ?'], 
-                ['%' . $test->id . '%']
+                ['%i:'.$test->id.';%']
             );
             
             $group_ids = array();
@@ -174,6 +174,7 @@ class FormHooks
             
             
             /* MEMBER GROUPS FIX FOR FILTERS */
+            /*
             if($member->id == '30284') {
 
                 $dirty_results = TestResult::findAll();
@@ -218,6 +219,7 @@ class FormHooks
                 
                 die();
             }
+            */
             /* MEMBER GROUPS FIX FOR FILTERS - END */
             
             
