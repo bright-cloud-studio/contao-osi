@@ -38,3 +38,4 @@ $GLOBALS['TL_LANG']['tl_test_result']['result_percentage']              = array(
 
 $GLOBALS['TL_LANG']['tl_test_result']['member_groups_legend']    = 'Member Group Details';
 $GLOBALS['TL_LANG']['tl_test_result']['member_groups']           = array('Member Groups', 'Used to allow filtering by Member Group for Test Results.');
+$GLOBALS['TL_LANG']['tl_test_result']['member_group_filter']     = array('Member Group Filter', 'Stores the ID of the Member Group this came from');
