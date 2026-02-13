@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{test_legend},test,member;{submission_legend},submission_date,answers;{results_legend},result_total_correct,result_percentage;{member_group_legend}, member_groups;{publish_legend},published;'
+        'default'                       => '{test_legend},test,member;{submission_legend},submission_date,answers;{results_legend},result_total_correct,result_percentage;{member_group_legend},member_group_filter, member_groups;{publish_legend},published;'
     ),
  
     // Fields
@@ -209,6 +209,18 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         		array('Bcs\Backend\TestResultBackend', 'saveCallback')
         	),
             'sql'              => "blob NULL"
+        ),1
+
+
+        'member_group_filter' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['member_group_filter'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'filter'                  => false,
+            'search'                  => false,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ),
 
         
