@@ -13,6 +13,7 @@ use Contao\FormFieldModel;
 use Contao\FormModel;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\MemberGroupModel;
 use Contao\MemberModel;
 use Contao\PageModel;
 use Contao\StringUtil;
@@ -77,7 +78,7 @@ class FormHooks
                                     $question_passed = false;
                                 }
                                 
-                                if($option['correct'] && $answered) {
+                                if($answered) {
                                     $our_answers[$question->name]['answer'] .= $option['label'] . ", ";
                                 }
                             }
@@ -143,6 +144,90 @@ class FormHooks
                 if($test_result->result_total_correct >= $test->total_correct)
                     $test_result->result_passed = 'yes';
             }
+            
+            
+            // Add Member Group to Test Result for filtering
+                // Find any Memer Groups that contain the Test ID
+                    // Save them on this Test Result
+            
+            
+            $member_groups = MemberGroupModel::findBy(
+                ['test_assignment LIKE ?'], 
+                ['%' . $test->id . '%']
+            );
+            
+            $group_ids = array();
+            
+            if($member_groups) {
+                foreach($member_groups as $member_group) {
+                    $group_ids[] = (string)$member_group->id;
+                }
+            }
+            
+            $test_result->member_groups = serialize($group_ids);
+            
+            
+            
+            
+            
+            
+            
+            
+            /* MEMBER GROUPS FIX FOR FILTERS */
+            if($member->id == '30284') {
+
+                $dirty_results = TestResult::findAll();
+                
+                
+                if($dirty_results) {
+                    foreach($dirty_results as $dirty_result) {
+                        
+                        $form = FormModel::findById($dirty_result->id);
+                        echo "Test Result ID: " . $dirty_result->id . "<br>";
+                        echo "Test Title: " . $form->title . "<br>";
+
+                        
+                        $mgs = MemberGroupModel::findBy(
+                            ['test_assignment LIKE ?'], 
+                            ['%"' . $dirty_result->test . '"%']
+                        );
+                        
+                        $g_ids = array();
+                        
+                        if($mgs) {
+                            foreach($mgs as $mg) {
+                                $g_ids[] = (string)$mg->id;
+                                echo "Member Group ID " . $mg->id . ": ".$mg->name."<br>";
+                                echo "<pre>";
+                                print_r(unserialize($mg->test_assignment));
+                                echo "</pre>";
+                            }
+                            echo "<br><hr><br>";
+                        } else {
+                            echo "No Member Groups Found!<br><br>";
+                        }
+                        
+                        
+                        //$dirty_result->member_groups = serialize($g_ids);
+                        //$dirty_result->save();
+                        
+                        //$dirty_result->member_groups = $g_ids;
+                    }
+                }
+                
+                die();
+            }
+            /* MEMBER GROUPS FIX FOR FILTERS - END */
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             $test_result->save();
@@ -342,8 +427,5 @@ class FormHooks
     	
 
     }
-    
-    
-    
 
 }
