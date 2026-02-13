@@ -209,7 +209,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
         		array('Bcs\Backend\TestResultBackend', 'saveCallback')
         	),
             'sql'              => "blob NULL"
-        ),1
+        ),
 
 
         'member_group_filter' => array
