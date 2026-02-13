@@ -214,13 +214,19 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
 
         'member_group_filter' => array
         (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['member_group_filter'],
-            'inputType'               => 'text',
-            'default'                 => '',
-            'filter'                  => false,
-            'search'                  => false,
-            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
-            'sql'                     => "varchar(255) NOT NULL default ''"
+            'label'            => &$GLOBALS['TL_LANG']['tl_test_result']['member_group_filter'],
+            'filter'           => true,
+            'inputType'        => 'checkboxWizard',
+            'foreignKey'       => 'tl_member_group.name',
+            'eval'             => array('multiple'=> true, 'mandatory'=>false, 'tl_class'=>'long'),
+            'relation'         => array('type'=>'belongsToMany', 'load'=>'lazy'),
+            'flag'             => DataContainer::SORT_ASC,
+            'options_callback' => array('Bcs\Backend\TestResultBackend', 'getMemberGroups'),
+            'save_callback' => array
+        	(
+        		array('Bcs\Backend\TestResultBackend', 'saveCallback')
+        	),
+            'sql'              => "blob NULL"
         ),
 
         
