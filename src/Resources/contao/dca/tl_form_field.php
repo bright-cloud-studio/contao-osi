@@ -16,6 +16,9 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['multiple_choice_image_question'
 // Override the default 'options_callback' for the 'type' field with our custom function below
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['type']['options_callback'] = array('tl_test_field', 'getFilteredFields');
 
+// Add numbering to the list view
+$GLOBALS['TL_DCA']['tl_form_field']['list']['sorting']['child_record_callback'] = array('Bcs\Backend\TestBackend', 'generateRow');
+
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['options']['inputType'] = 'multi_choice_wizard';
 
 // Change the SQL definition of the “label” field to TEXT so Contao’s database updater will ALTER the column for you.

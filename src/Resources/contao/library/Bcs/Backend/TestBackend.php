@@ -13,6 +13,49 @@ use Contao\StringUtil;
 class TestBackend extends Backend
 {
 
+    private static $fieldPositions = [];
+
+    /**
+     * @param array $row
+     * @return string
+     */
+    public function generateRow($row)
+    {
+        $pid = $row['pid'];
+
+        if (!isset(self::$fieldPositions[$pid])) {
+            self::$fieldPositions[$pid] = [];
+            
+            // Fetch all field IDs for this PID, sorted by sorting
+            $this->import('Database');
+            $objFields = $this->Database
+                ->prepare("SELECT id FROM tl_form_field WHERE pid=? ORDER BY sorting")
+                ->execute($pid);
+
+            $index = 1;
+            while ($objFields->next()) {
+                self::$fieldPositions[$pid][$objFields->id] = $index++;
+            }
+        }
+
+        $number = isset(self::$fieldPositions[$pid][$row['id']]) ? self::$fieldPositions[$pid][$row['id']] : '?';
+        
+        $originalHtml = '';
+        if (class_exists('tl_form_field')) {
+            $tlFormField = new \tl_form_field();
+            $originalHtml = $tlFormField->listFormFields($row);
+        } else {
+             // Fallback if class not found
+             $originalHtml = $row['label'] . ' (' . $row['name'] . ')';
+        }
+
+        return sprintf(
+            '<div style="display:flex; align-items:center;"><div style="color:#999; margin:10px; font-weight:bold; min-width:20px;">#%s</div><div style="flex-grow:1;">%s</div></div>',
+            $number,
+            $originalHtml
+        );
+    }
+
     public function getTrainingImages(DataContainer $dc) { 
 
         // Hold the psys
