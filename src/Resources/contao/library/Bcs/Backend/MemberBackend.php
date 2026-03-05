@@ -43,48 +43,52 @@ class MemberBackend extends Backend
                 foreach ($filter as $field => $value) {
                     if ($field === 'limit' || $value === '' || $value === null) continue;
 
-                    if(is_array($value))
+                    if(is_array($value) || is_object($value))
                     {
                          continue;
                     }
                     
+                    $safeField = preg_replace('/[^a-zA-Z0-9_]/', '', $field);
+                    if (empty($safeField)) {
+                        continue;
+                    }
 
-                    if ($field === 'groups') {
-                         $columns[] = "`$field` LIKE ?";
+                    if ($safeField === 'groups') {
+                         $columns[] = "tl_member.`$safeField` LIKE ?";
                          $values[] = '%"' . $value . '"%';
                          continue;
                     }
 
-                    $columns[] = "`$field`=?";
+                    $columns[] = "tl_member.`$safeField`=?";
                     $values[] = $value;
                 }
             }
             
-            if (is_array($search) && !empty($search['value'])) {
+            if (is_array($search) && !empty($search['value']) && is_scalar($search['value'])) {
                 $term = $search['value'];
-                if(!empty($search['field'])) {
-                     $columns[] = "`" . $search['field'] . "` LIKE ?";
-                     $values[] = "%$term%";
+                if(!empty($search['field']) && is_scalar($search['field'])) {
+                     $safeSearchField = preg_replace('/[^a-zA-Z0-9_]/', '', $search['field']);
+                     if (!empty($safeSearchField)) {
+                         $columns[] = "tl_member.`$safeSearchField` LIKE ?";
+                         $values[] = "%$term%";
+                     }
                 }
             }
             
-            $order = '';
-            if ($sorting && is_array($sorting) && isset($sorting['field'])) {
-                $order = " ORDER BY " . $sorting['field'] . " " . ($sorting['order'] ?? 'ASC');
+            $options = [];
+            if ($sorting && is_array($sorting) && isset($sorting['field']) && is_scalar($sorting['field'])) {
+                $sortField = preg_replace('/[^a-zA-Z0-9_]/', '', $sorting['field']);
+                $sortOrder = (isset($sorting['order']) && is_scalar($sorting['order']) && strtoupper($sorting['order']) === 'DESC') ? 'DESC' : 'ASC';
+                if (!empty($sortField)) {
+                    $options['order'] = "tl_member.`$sortField` $sortOrder";
+                } else {
+                    $options['order'] = "tl_member.`firstname` ASC"; 
+                }
             } else {
-                $order = " ORDER BY firstname ASC"; 
+                $options['order'] = "tl_member.`firstname` ASC"; 
             }
-            
-            $where = !empty($columns) ? " WHERE " . implode(" AND ", $columns) : "";
 
-            $this->import('Database');
-            $sql = "SELECT * FROM tl_member" . $where . $order;
-
-            if (!empty($values)) {
-                $result = $this->Database->prepare($sql)->execute(...$values);
-            } else {
-                $result = $this->Database->prepare($sql)->execute();
-            }
+            $models = !empty($columns) ? MemberModel::findBy($columns, $values, $options) : MemberModel::findAll($options);
 
             ob_end_clean();
             header('Content-Type: text/csv; charset=utf-8');
@@ -97,28 +101,30 @@ class MemberBackend extends Backend
             fputcsv($handle, ['ID', 'Firstname', 'Lastname', 'Username', 'Email', 'Company', 'Groups', 'Date Added']);
             
             try {
-                while ($result->next()) {
-                    $groups = StringUtil::deserialize($result->groups);
-                    $groupNames = [];
-                    if (is_array($groups) && !empty($groups)) {
-                        $objGroups = MemberGroupModel::findMultipleByIds($groups);
-                        if ($objGroups) {
-                            while ($objGroups->next()) {
-                                $groupNames[] = $objGroups->name;
+                if ($models !== null) {
+                    while ($models->next()) {
+                        $groups = StringUtil::deserialize($models->groups);
+                        $groupNames = [];
+                        if (is_array($groups) && !empty($groups)) {
+                            $objGroups = MemberGroupModel::findMultipleByIds($groups);
+                            if ($objGroups) {
+                                while ($objGroups->next()) {
+                                    $groupNames[] = $objGroups->name;
+                                }
                             }
                         }
+                        
+                        fputcsv($handle, [
+                            $models->id,
+                            $models->firstname,
+                            $models->lastname,
+                            $models->username,
+                            $models->email,
+                            $models->company,
+                            implode(', ', $groupNames),
+                            date('Y-m-d H:i', (int)$models->dateAdded) // Cast to int to be safe
+                        ]);
                     }
-                    
-                    fputcsv($handle, [
-                        $result->id,
-                        $result->firstname,
-                        $result->lastname,
-                        $result->username,
-                        $result->email,
-                        $result->company,
-                        implode(', ', $groupNames),
-                        date('Y-m-d H:i', (int)$result->dateAdded) // Cast to int to be safe
-                    ]);
                 }
             } catch (\Exception $e) {
                 fputcsv($handle, ['ERROR: ' . $e->getMessage()]);
