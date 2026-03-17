@@ -29,7 +29,7 @@ class TestBackend extends Backend
             // Fetch all field IDs for this PID, sorted by sorting
             $this->import('Database');
             $objFields = $this->Database
-                ->prepare("SELECT id FROM tl_form_field WHERE pid=? ORDER BY sorting")
+                ->prepare("SELECT id FROM tl_form_field WHERE pid=? ORDER BY sorting,id")
                 ->execute($pid);
 
             $index = 1;
