@@ -24,10 +24,23 @@ class TestBackend extends Backend
         $pid = $row['pid'];
     
         if (!isset(self::$fieldPositions[$pid])) {
-            self::$fieldPositions[$pid] = 1;
+            self::$fieldPositions[$pid] = [];
+            
+            // Fetch only visible fields for this PID to establish the numbering sequence
+            $this->import('Database');
+            $objFields = $this->Database
+                ->prepare("SELECT id FROM tl_form_field WHERE pid=? AND (invisible='' OR invisible='0') ORDER BY sorting")
+                ->execute($pid);
+
+            $index = 1;
+            while ($objFields->next()) {
+                self::$fieldPositions[$pid][$objFields->id] = $index++;
+            }
         }
-    
-        $number = self::$fieldPositions[$pid]++;
+
+        // Assign number only if it's a visible field, otherwise show '-'
+        $number = isset(self::$fieldPositions[$pid][$row['id']]) ? self::$fieldPositions[$pid][$row['id']] : '-';
+
     
         $originalHtml = '';
         if (class_exists('tl_form_field')) {
