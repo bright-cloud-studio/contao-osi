@@ -74,6 +74,14 @@ class ModDisplayForm extends \Contao\Module
             $this->Template->test_title = $test->title;
             $this->Template->embed_code = $test->embed_code;
             $this->Template->additional_info = $test->additional_info;
+            
+            $session = System::getContainer()->get('request_stack')->getCurrentRequest()->getSession();
+            $sessionKey = 'test_start_time_' . $test_id;
+
+            if (!$session->has($sessionKey)) {
+                $session->set($sessionKey, time());
+            }
+            
         } else
             $this->Template->has_permission = 'false';
         

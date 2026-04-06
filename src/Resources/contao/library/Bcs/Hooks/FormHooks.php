@@ -130,6 +130,18 @@ class FormHooks
             $test_result->test = $test->id;
             $test_result->member = $member->id;
             $test_result->submission_date = time();
+            
+            // Fetch the start time from the session
+            $session = System::getContainer()->get('request_stack')->getCurrentRequest()->getSession();
+            $sessionKey = 'test_start_time_' . $test->id;
+
+            if ($session->has($sessionKey)) {
+                $test_result->start_date = $session->get($sessionKey);
+                $session->remove($sessionKey);
+            } else {
+                $test_result->start_date = time();
+            }
+
             $test_result->answers = json_encode($our_answers);
             $test_result->result_total_correct = $total_correct_answers;
             $test_result->result_percentage = round(($total_correct_answers / $total_questions) * 100, 2);

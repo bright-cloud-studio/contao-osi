@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['tl_test_result']['member']              = array('Member', '
 
 $GLOBALS['TL_LANG']['tl_test_result']['submission_legend']    = 'Submission Details';
 $GLOBALS['TL_LANG']['tl_test_result']['submission_date']              = array('Submission Date', 'Date this submission was made');
+$GLOBALS['TL_LANG']['tl_test_result']['start_date']                   = array('Start Date', 'Date and time the test was started');
 $GLOBALS['TL_LANG']['tl_test_result']['answers']              = array('Answers', 'Saved Answers');
 
 $GLOBALS['TL_LANG']['tl_test_result']['results_legend']    = 'Result Details';

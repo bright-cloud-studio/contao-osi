@@ -211,7 +211,7 @@ class TestResultBackend extends Backend
 		}
 		
 		$this->import('Database');
-		$sql="SELECT tr.id,DATE(FROM_UNIXTIME(tr.submission_date)) as TestDate,if(tr.result_passed='yes','Passed','Failed') as result,tr.result_percentage,f.title,CONCAT(m.firstname,' ',m.lastname) as name FROM `tl_test_result` tr
+		$sql="SELECT tr.id,tr.submission_date,tr.start_date,(CAST(tr.submission_date AS UNSIGNED) - CAST(tr.start_date AS UNSIGNED)) as duration_seconds,tr.result_passed,tr.result_percentage,tr.result_total_correct,f.title,CONCAT(m.firstname,' ',m.lastname) as name FROM `tl_test_result` tr
 			left JOIN tl_form f on tr.test=f.id
 			left JOIN tl_member m on tr.member=m.id
 			Where 1 ".($whereConditionFilter ? " AND ".$whereConditionFilter : "").($whereConditionSearch!='' ? " AND ".$whereConditionSearch : "")."
@@ -230,23 +230,57 @@ class TestResultBackend extends Backend
 		}
 
 		// Build CSV headers dynamically from field names
-		$headers = array_keys($testResults[0]);
 		$csvContent = "\xEF\xBB\xBF";
-		$arrHeaders[] = '"ID"';
-		$arrHeaders[] = '"Testing Date"';
-		$arrHeaders[] = '"Result"';
-		$arrHeaders[] = '"Result (Percentage)"';
-		$arrHeaders[] = '"Test"';
-		$arrHeaders[] = '"Test Subject"';
+		$arrHeaders = array();
+		$arrHeaders[] = '"Screen name"';
+		$arrHeaders[] = '"Entry title"';
+		$arrHeaders[] = '"Start"';
+		$arrHeaders[] = '"Finish"';
+                $arrHeaders[] = '"Duration"';
+		$arrHeaders[] = '"Percent"';
+		$arrHeaders[] = '"Passed"';
+		$arrHeaders[] = '"Failed"';
+		$arrHeaders[] = '"Answered"';
+		$arrHeaders[] = '"Status"';
 		$csvContent .= implode(',', $arrHeaders) . "\n";
 
 		// Build CSV rows
 		foreach ($testResults as $row) {
+            
+            $durationStr = "";
+            $durationSeconds = (int)$row['duration_seconds'];
+            if ($durationSeconds > 0 && $row['start_date'] > 0) {
+                $minutes = floor($durationSeconds / 60);
+                $seconds = $durationSeconds % 60;
+                $durationStr = ($minutes > 0 ? $minutes . "m " : "") . $seconds . "s";
+            }
+
+            $startStr = ($row['start_date'] > 0) ? date('m/d/Y H:i:s', (int)$row['start_date']) : "";
+            $finishStr = ($row['submission_date'] > 0) ? date('m/d/Y H:i:s', (int)$row['submission_date']) : "";
+            
+            $passed = ($row['result_passed'] == 'yes') ? 1 : 0;
+            $failed = ($row['result_passed'] == 'no') ? 1 : 0;
+            $status = 'Completed';
+            
+            // Map row to clean schema
+            $cleanRow = [
+                $row['name'],
+                $row['title'],
+                $startStr,
+                $finishStr,
+                $durationStr,
+                $row['result_percentage'],
+                $passed,
+                $failed,
+                $row['result_total_correct'],
+                $status
+            ];
+
 			// Convert array values to CSV-safe format
 			$escaped = array_map(function ($value) {
-				$value = str_replace('"', '""', $value); // escape quotes
+				$value = str_replace('"', '""', (string)$value); // escape quotes
 				return '"' . $value . '"';
-			}, $row);
+			}, $cleanRow);
 
 			$csvContent .= implode(',', $escaped) . "\n";
 		}
