@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{test_legend},test,member;{submission_legend},submission_date,answers;{results_legend},result_total_correct,result_percentage;{member_group_legend}, member_groups;{publish_legend},published;'
+        'default'                       => '{test_legend},test,member;{submission_legend},start_date,submission_date,answers;{results_legend},result_total_correct,result_percentage;{member_group_legend}, member_groups;{publish_legend},published;'
     ),
  
     // Fields
@@ -148,6 +148,13 @@ $GLOBALS['TL_DCA']['tl_test_result'] = array
             'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'mandatory'=>true, 'tl_class'=>'w50 wizard'),
             'sql'                     => "varchar(10) NOT NULL default ''",
             'default'                 => time()
+        ),
+        'start_date' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_test_result']['start_date'],
+            'inputType'               => 'text',
+            'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
+            'sql'                     => "varchar(10) NOT NULL default ''"
         ),
         'answers' => array
         (
