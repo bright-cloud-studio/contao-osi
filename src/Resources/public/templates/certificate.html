@@ -1,103 +1,115 @@
 <html>
 	<head>
-
 		<style>
-		
-		    @font-face {
-		        font-family: industry;
-		        src: url('../fonts/industry_2.ttf');
-		    }
-		    @font-face {
-		        font-family: industry_italic;
-		        src: url('../fonts/industry_2_italic.ttf');
-		    }
-		
-		    /* These are necessary to remove the margin on the paper */
 		    @page { margin: 5px; }
-        body{
-            margin: 5px;
-            border: 5px double #000;
-            font-family: industry;
-        }
-        
-        .cert_wrapper {
-            text-align: center;
-            margin: 10px;
-        }
-        
-        img {
-            width: 300px;
-            height: auto;
-        }
-        
-        
-        /* Elements */
-        
-        h1 {
-            font-weight: 400;
-            font-size: 60px;
-            margin-top: 60px;
-            margin-bottom: 100px;
-        }
-        
-        .presented_to {
-            font-size: 30px;
-            padding-bottom: 20px;
-        }
-        
-        .name {
-            font-family: industry_italic;
-            font-style: italic;
-            font-weight: 500;
-            font-size: 40px;
-            padding-bottom: 20px;
-        }
-        
-        .for_the_successful {
-            font-size: 22px;
-            padding-bottom: 20px;
-        }
-        
-        .test_title {
-            font-size: 35px;
-            font-weight: 500;
-            padding-bottom: 20px;
-        }
-        
-        .submission_date {
-            text-transform: uppercase;
-            font-size: 30px;
-            padding-bottom: 20px;
-        }
-        
-        .logo_wrapper {
-            position: fixed;
-            bottom: 30px;
-            left: 36%;
-        }
-        
+			body{
+				margin: 5px;
+				$options->set("defaultFont", "Verdana");
+				font-size: 1.1em;
+			}
+			.page-break {
+				page-break-after: always;
+			}
+			h1 {
+				font-weight: 600;
+				font-size: 1.3em;
+				margin-bottom: 60px;
+				margin-top: 0;
+				text-align: center;
+			}
+			.cert_wrapper {
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 600px;
+			}
+			.divider {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			.logo_wrapper {
+				text-align: center;
+				margin-top: 100px;
+			}
+			.logo {
+				width: 100px;
+				height: auto;
+			}
+			.n_a {
+			    padding-bottom: 60px;
+			}
+			.field_name, .field_date, .field_signature {
+			    border-bottom: 1px solid black;
+			}
+			.signature {
+			    width: 400px;
+			    height: auto;
+			}
 		</style>
 	</head>
 	<body>
 	    
 	    <div class="cert_wrapper">
 	        
-            <h1>CERTIFICATE OF COMPLETION</h1>
+	        <div class="logo_wrapper">
+                <img class="logo" src="{{server::root}}/bundles/contaosignatureformfield/images/pdf_logo.png">
+            </div>
+            
+            <h1>Volunteer Conflict of Interest</h1>
     
-            <div class="presented_to">PRESENTED TO</div>
+            <div>
+            	
+            	<p>It is the policy of Old Colony Elder Services, (OCES) that both the fact and appearance of any conflict of interest shall be prohibited. The following outlines and explains this policy.</p>
+            	
+            	<ul>
+					<li>All members, officers, directors, volunteers, and employees of OCES shall:
+						<ul class="sub-list">
+							<li>disclose to the Board of Directors, the Chief Executive Officer (CEO) or immediate Supervisor the existence and extent of their interest in, or association with, any agency or organization that may be the subject of consideration for the award of a contract or grant utilizing funds administered by OCES;</li>
+							<li>bring to the attention of the Board, the CEO or immediate Supervisor any facts or circumstances known to that person that bears upon the fairness of the proposed grant or contract, including any information that the award of the grant or contract would not be in the best interest of OCES; and</li>
+							<li>abstain from participation in the consideration of any contract or grant award to any agency or organization in which the individual has an interest of with which the individual is associated.</li>
+						</ul>
+					</li>
+					<li>No current or former employee may serve on the Board of Directors of OCES.</li>
+					<li>The offices of OCES are not to be used for any type of activity that is not associated with the functions or interests of OCES. The use of OCES’ offices for the private practice of a staff member and/or volunteer is prohibited.</li>
+				</ul>
+				
+				<p>All new volunteers including Board of Directors shall be required to complete and sign the  Disclosure Statement. Any change in status affecting this policy should be reported to the Board, the CEO or immediate Supervisor. All forms are to be reviewed and updated annually. </p>
+				
+				<p>This policy shall be distributed to and discussed with all new Board members, employees, and volunteers as part of OCES’ orientation program.</p>
+				
+            </div>
             
-            <div class="name">{{member::name}}</div>
             
-            <div class="for_the_successful">FOR THE SUCCESSFUL COMPLETION OF THE FOLLOWING COURSE</div>
             
-            <div class="test_title">{{test::title}}</div>
             
-            <div class="submission_date">{{result::submission_date}}</div>
+            
+            
+            <div class="page-break"></div>
+            
+            
+            
+            
+            
             
             <div class="logo_wrapper">
-                <img class="logo" src="{{server::root}}/../files/structure/images/logos/logo_for_pdf.jpg">
-                <div class="url">www.occserv.com</div>
+                <img class="logo" src="{{server::root}}/bundles/contaosignatureformfield/images/pdf_logo.png">
             </div>
+            
+            <h1 class="p2">Conflict of Interest Disclosure Statement</h1>
+            
+            <p class="field_name"><strong>Volunteer Name:</strong> {{submitted::name}}</p>
+            
+            <p class="field_date"><strong>Date:</strong> {{submitted::date}}</p>
+            
+            <p>OCES’ policy on Conflict of Interest has been given to me in writing and explained to me during my orientation as a Volunteer.</p>
+            
+            <p>I understand the meaning and intent of this policy regarding Conflict of Interest and agree to adhere to it during the course of my volunteer duties.</p>
+            
+            <p>In addition, if there is any perceived, potential or actual conflict of interest, I have described this below.</p>
+            
+            <p class="field_na">If none, please write N/A _____________</p>
+            
+            <p class="field_signature"><strong>Signed:</strong> <img class="signature" src="{{submitted::signature}}"></p>
+            <p class="field_date"><strong>Date:</strong> {{submitted::date}}</p>
 	        
 	    </div>
 
