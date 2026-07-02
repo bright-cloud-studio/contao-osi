@@ -443,4 +443,29 @@ class FormHooks
 
     }
 
+    public function checkLoginForProtectedPages($objPage, $objLayout, $objPageRegular): void
+    {
+        // Only check in frontend context
+        $container = System::getContainer();
+        $request = $container->get('request_stack')->getCurrentRequest();
+        if (!$request || !$container->get('contao.routing.scope_matcher')->isFrontendRequest($request)) {
+            return;
+        }
+
+        $protected = [
+            'client-portal/my-trainings',
+            'client-portal/my-certificates',
+            'client-portal/my-test-history',
+            'client-portal/test-reader-page',
+        ];
+
+        if (in_array($objPage->alias, $protected, true)) {
+            $security = $container->get('security.helper');
+            if (!$security->isGranted('ROLE_MEMBER')) {
+                $loginPage = PageModel::findByIdOrAlias('client-portal');
+                Controller::redirect($loginPage ? $loginPage->getFrontendUrl() : 'client-portal');
+            }
+        }
+    }
+
 }
