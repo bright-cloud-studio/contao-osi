@@ -35,3 +35,45 @@ function removeOldTrainingImage() {
     if(deleteOld != null)
         deleteOld.remove();
 }
+
+// Member list group popup handler
+document.addEventListener('mouseover', function(e) {
+    var wrap = e.target.closest('.group-more-wrap');
+    if (!wrap) return;
+
+    var popup = wrap.querySelector('.group-popup');
+    if (!popup) return;
+
+    popup.style.display = 'block';
+    popup.style.top = '100%';
+    popup.style.bottom = 'auto';
+    popup.style.left = 'auto';
+    popup.style.right = '0';
+
+    var r = popup.getBoundingClientRect();
+    if (r.bottom > window.innerHeight) {
+        popup.style.top = 'auto';
+        popup.style.bottom = '100%';
+    }
+
+    if (r.right > window.innerWidth) {
+        popup.style.left = 'auto';
+        popup.style.right = '0';
+    } else if (r.left < 0) {
+        popup.style.left = '0';
+        popup.style.right = 'auto';
+    }
+});
+
+document.addEventListener('mouseout', function(e) {
+    var wrap = e.target.closest('.group-more-wrap');
+    if (!wrap) return;
+
+    if (!wrap.contains(e.relatedTarget)) {
+        var popup = wrap.querySelector('.group-popup');
+        if (popup) {
+            popup.style.display = 'none';
+        }
+    }
+});
+
