@@ -160,7 +160,30 @@ class MemberBackend extends Backend
                 }
             }
 
-            $args[$groupIndex] = implode(', ', $groupNames);
+            $limit = 2;
+
+            if (count($groupNames) > $limit) {
+                $visible = array_slice($groupNames, 0, $limit);
+
+                $listItems = '';
+                foreach ($groupNames as $name) {
+                    $listItems .= '<li>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</li>';
+                }
+
+                $totalCount = count($groupNames);
+
+                $popupHtml = '<span class="group-more-wrap">'
+                    . '<button type="button" class="group-more-btn">see more</button>'
+                    . '<span class="group-popup">'
+                    . '<span class="group-popup-title">All Groups (' . $totalCount . ')</span>'
+                    . '<ul class="group-popup-list">' . $listItems . '</ul>'
+                    . '</span>'
+                    . '</span>';
+
+                $args[$groupIndex] = implode(', ', $visible) . ' ' . $popupHtml;
+            } else {
+                $args[$groupIndex] = implode(', ', $groupNames);
+            }
         }
 
         return $args;
