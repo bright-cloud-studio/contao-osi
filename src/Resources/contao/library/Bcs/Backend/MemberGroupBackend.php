@@ -16,55 +16,79 @@ use Bcs\Model\TestResult;
 
 class MemberGroupBackend extends Backend
 {
-
     public function saveCallback($varValue, DataContainer $dc) {
 
-        // Get the Test IDs
-        $group_ids = unserialize($varValue);
-        
-        // Loop through each ID, add to new array where the key is the title
-        $sorted = [];
-        foreach($group_ids as $id) {
-            $test = FormModel::findBy(['id = ?'], [$id]);
-            $sorted[$test->title] = $test->id;
-        }
-        
+        // Get clean integer Test IDs
+        $data = StringUtil::deserialize($varValue, true);
+        $group_ids = !empty($data)
+            ? array_values(array_unique(array_filter(array_map('intval', array_values($data)))))
+            : [];
 
-        // Foreach Test
-        foreach($group_ids as $id) {
-            
-            // Get any Test Results that are assigned to this Test
-            $test_results = TestResult::findBy(['test = ?'], [$id]);
-            if($test_results) {
-                foreach($test_results as $test_result) {
-                    
-                    // Get any current Member Group values as an array
-                    $mem_groups = unserialize($test_result->member_groups);
-                    // Add our current Member Group to the list of selected Member Groups
-                    $mem_groups[] = $dc->activeRecord->id;
-                    // Save our changes
-                    $test_result->member_groups = serialize($mem_groups);
-                    $test_result->save();
+        if (empty($group_ids)) {
+            return serialize([]);
+        }
+
+        // Fetch all assigned tests in 1 single query using Contao findMultipleByIds (fixes N+1 issue)
+        $sorted = [];
+        $tests = FormModel::findMultipleByIds($group_ids, ['order' => 'title ASC']);
+        if ($tests !== null) {
+            foreach ($tests as $test) {
+                $key = $test->title ?: ('Test ' . $test->id);
+                // Prevent duplicate titles from overwriting each other
+                if (isset($sorted[$key])) {
+                    $key .= ' [' . $test->id . ']';
+                }
+                $sorted[$key] = (int)$test->id;
+            }
+        }
+
+        // Only process test results for newly added tests to prevent timeouts from re-processing all tests
+        $old_ids = [];
+        if ($dc->activeRecord && isset($dc->activeRecord->test_assignment)) {
+            $oldData = StringUtil::deserialize($dc->activeRecord->test_assignment, true);
+            $old_ids = array_values(array_unique(array_filter(array_map('intval', array_values($oldData)))));
+        } elseif ($dc->id) {
+            $group = MemberGroupModel::findById($dc->id);
+            if ($group !== null && $group->test_assignment) {
+                $oldData = StringUtil::deserialize($group->test_assignment, true);
+                $old_ids = array_values(array_unique(array_filter(array_map('intval', array_values($oldData)))));
+            }
+        }
+        $added_tests = array_diff($group_ids, $old_ids);
+
+        // Update TestResult in 1 single batch query using Contao Model (fixes N+1 issue)
+        $groupId = (string)($dc->id ?: ($dc->activeRecord ? $dc->activeRecord->id : ''));
+        if (!empty($added_tests) && $groupId !== '' && $groupId !== '0') {
+            $inClause = implode(',', array_map('intval', $added_tests));
+            $test_results = TestResult::findBy(["test IN ($inClause)"], []);
+
+            if ($test_results !== null) {
+                foreach ($test_results as $test_result) {
+                    $mem_groups = StringUtil::deserialize($test_result->member_groups, true);
+                    if (!in_array($groupId, $mem_groups, true)) {
+                        $mem_groups[] = $groupId;
+                        $test_result->member_groups = serialize($mem_groups);
+                        $test_result->save();
+                    }
                 }
             }
-            
         }
-        
-        // send back a serialized array of our sorted version of selected values.
+
+        // Send back a serialized array of our sorted version of selected values
         return serialize($sorted);
-        //return $varValue;
-    }
-    
-    // Get Members as options for a Select DCA field
-    public function getTests(DataContainer $dc) {
-        $tests = array();
-        $this->import('Database');
-        $result = $this->Database->prepare("SELECT * FROM tl_form WHERE formType='test' ORDER BY title ASC")->execute();
-        while($result->next())
-        {
-            $tests = $tests + array($result->id => $result->title . '[' . $result->id . ']');   
-        }
-        return $tests;
     }
 
+    // Get Tests as options for DCA field using Contao FormModel
+    public function getTests(DataContainer $dc) {
+        $tests = [];
+        $objForms = FormModel::findBy(['formType = ?'], ['test'], ['order' => 'title ASC']);
+
+        if ($objForms !== null) {
+            foreach ($objForms as $form) {
+                $tests[$form->id] = $form->title . '[' . $form->id . ']';
+            }
+        }
+
+        return $tests;
+    }
 }
